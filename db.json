@@ -1,0 +1,158 @@
+[
+  {
+    "title": "experience",
+    "emoji": "💼",
+    "subtitle": "Work and Education Experience",
+    "content": {
+      "work": [
+        {
+          "logoUrl": "../../public/logos/etsylogo.jpeg",
+          "companyName": "Etsy",
+          "role": "Software Engineering Intern",
+          "isInternship": true,
+          "isPresent": false,
+          "startDate": "2024-05-01",
+          "endDate": "2024-08-15",
+          "description": [
+            "Built internal automation tools to streamline the app partnerships workflow using PHP and Postman APIs.",
+            "Implemented backend API endpoints and improved data consistency across microservices."
+          ],
+          "location": "New York, NY (Hybrid)",
+          "technologies": ["PHP", "Postman", "MySQL", "API Design"],
+          "link": "https://www.etsy.com"
+        },
+        {
+          "logoUrl": "../../public/logos/etsylogo.jpeg",
+          "companyName": "Kroger Technology & Digital",
+          "role": "Data Engineering Intern",
+          "isInternship": true,
+          "isPresent": false,
+          "startDate": "2023-05-01",
+          "endDate": "2023-08-10",
+          "description": [
+            "Developed a freshness analytics dashboard for the supply chain team.",
+            "Optimized SQL queries and data pipelines in Databricks for real-time insights."
+          ],
+          "location": "Cincinnati, OH",
+          "technologies": ["Python", "SQL", "Databricks", "Tableau"],
+          "link": "https://www.kroger.com"
+        }
+      ],
+      "education": [
+        {
+          "logoUrl": "../../public/logos/osulogo.jpeg",
+          "companyName": "Ohio State University",
+          "role": "BS in Computer Science, Minor in Business",
+          "isInternship": false,
+          "isPresent": true,
+          "startDate": "Aug 2023",
+          "endDate": "May 2027",
+          "description": [
+            "Developed a freshness analytics dashboard for the supply chain team.",
+            "Optimized SQL queries and data pipelines in Databricks for real-time insights."
+          ],
+          "location": "Cincinnati, OH",
+          "technologies": ["Python", "SQL", "Databricks", "Tableau"],
+          "link": "https://www.kroger.com"
+        }
+      ]
+    }
+  },
+  {
+    "title": "projects",
+    "emoji": "🚀",
+    "subtitle": "Products and Experiments",
+    "content": {
+      "items": [
+        {
+          "name": "Casey",
+          "description": "An AI-powered case study generator for instructors that dynamically builds teaching materials based on real-world input from industry professionals.",
+          "technologies": ["FastAPI", "React", "Claude API", "DynamoDB", "AWS S3"],
+          "link": "https://casey.ai",
+          "status": "In Development"
+        },
+        {
+          "name": "Pokeodoro",
+          "description": "A Pokémon-themed productivity app that gamifies focus sessions through a FastAPI backend and React frontend.",
+          "technologies": ["FastAPI", "React", "Tailwind CSS"],
+          "link": "https://pokeodoro.app",
+          "status": "Prototype"
+        },
+        {
+          "name": "OmniDoc",
+          "description": "A voice-to-voice AI agent for healthcare intake that uses Whisper and GPT-4o to generate medical summaries for doctors in real time.",
+          "technologies": ["LangChain", "Whisper", "GPT-4o", "Django", "Supabase"],
+          "link": "https://omnidoc.ai",
+          "status": "Prototype"
+        }
+      ]
+    }
+  },
+  {
+    "title": "digital_bookshelf",
+    "emoji": "📚",
+    "subtitle": "Currently Enjoying and Future Queue",
+    "content": {
+      "current": [
+        {
+          "title": "The Lean Startup",
+          "creator": "Eric Ries",
+          "type": "Book",
+          "category": "Entrepreneurship",
+          "notes": "Great framework for iterative product building and user feedback loops."
+        },
+        {
+          "title": "Oppenheimer",
+          "creator": "Christopher Nolan",
+          "type": "Movie",
+          "category": "Historical Drama",
+          "notes": "A powerful exploration of ambition and moral responsibility."
+        },
+        {
+          "title": "The Daily",
+          "creator": "The New York Times",
+          "type": "Podcast",
+          "category": "News & Current Affairs",
+          "notes": "Concise insights into major global stories every morning."
+        },
+        {
+          "title": "Saga, Vol. 1",
+          "creator": "Brian K. Vaughan & Fiona Staples",
+          "type": "Comic",
+          "category": "Sci-Fi / Fantasy",
+          "notes": "A stunning mix of space opera and family drama with breathtaking art."
+        }
+      ],
+      "future": [
+        {
+          "title": "Zero to One",
+          "creator": "Peter Thiel",
+          "type": "Book",
+          "category": "Startups",
+          "notes": "Explores unconventional thinking in entrepreneurship."
+        },
+        {
+          "title": "Everything Everywhere All at Once",
+          "creator": "Daniel Kwan & Daniel Scheinert",
+          "type": "Movie",
+          "category": "Sci-Fi / Multiverse",
+          "notes": "Known for its emotional storytelling and chaotic creativity."
+        },
+        {
+          "title": "Lex Fridman Podcast – Episode #418",
+          "creator": "Lex Fridman",
+          "type": "Podcast",
+          "category": "Technology & Philosophy",
+          "notes": "Planned listen for insights into AI and consciousness."
+        },
+        {
+          "title": "Batman: Year One",
+          "creator": "Frank Miller & David Mazzucchelli",
+          "type": "Comic",
+          "category": "Superhero / Noir",
+          "notes": "Classic retelling of Batman’s origin with gritty realism."
+        }
+      ]
+    }
+  }
+]

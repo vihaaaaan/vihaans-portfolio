@@ -1,11 +1,19 @@
+import type { ComponentType } from 'react';
+import type { IconBaseProps } from 'react-icons';
+
 export interface ContentHeaderProps {
     sectionTitle: string;
     sectionSubtitle: string;
 }
 
 export interface ContentBoxProps {
-    ContentHeaderProps: ContentHeaderProps;
+    data: Array<any>
     children?: React.ReactNode;
+}
+
+export interface ExperienceContentProps {
+    workExp: Array<ExperienceBlockProps>;
+    educationExp: Array<ExperienceBlockProps>;
 }
 
 export interface ExperienceBlockProps {
@@ -19,4 +27,8 @@ export interface ExperienceBlockProps {
     description: string;
 }
 
+export interface SocialLinkProps {
+    icon: ComponentType<IconBaseProps>;
+    link: string;
+}
 
