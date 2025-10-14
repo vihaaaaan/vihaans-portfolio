@@ -36,11 +36,35 @@ export function ContentBox({ data, children }: ContentBoxProps) {
 
         <div className="flex-1 flex-col rounded-r-lg bg-gray-200">
             { db.map((tab, index) => (
-                <div className="flex flex-1 justify-center rounded-lg">
-                    <button onClick={() => handleActiveTabChange(index)} className={"h-14 w-full rounded-r-lg flex items-center justify-center group hover:cursor-pointer" + (activeTab === index ? ' bg-gray-100' : 'bg-gray-200')}>
-                        <span className="group-hover:scale-[1.25] transition-transform duration-200 ease-in-out">{tab.emoji}</span>
-                    </button>
-                </div>
+                <button
+                onClick={() => handleActiveTabChange(index)}
+                className={
+                    "h-14 w-full rounded-r-lg flex items-center justify-center group hover:cursor-pointer " +
+                    (activeTab === index ? "bg-gray-100" : "bg-gray-200")
+                }
+                >
+                    <span className="relative inline-block">
+                        <span className="m-2 inline-block transform transition-transform duration-200 ease-in-out group-hover:scale-125">
+                            {tab.emoji}
+                        </span>
+
+                        {/* Tooltip (LEFT side, triangle pointing right toward emoji) */}
+                        <span
+                        className="
+                            absolute right-full top-1/2 -translate-y-1/2 mr-2
+                            bg-gray-800 text-white text-[10px] px-1.5 py-0.5 rounded-sm
+                            opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out
+                            pointer-events-none whitespace-nowrap
+
+                            before:content-[''] before:absolute before:left-full before:top-1/2 before:-translate-y-1/2
+                            before:border-4 before:border-transparent before:border-l-gray-800
+                        "
+                        >
+                        {tab.title.replace('_', ' ')}
+                        </span>
+                    </span>
+                </button>
+
                 ))
             }
         </div>

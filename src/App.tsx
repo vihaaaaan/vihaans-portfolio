@@ -1,4 +1,4 @@
-import { ContentBox, ExperienceBlock } from '@components';
+import { ContentBox } from '@components';
 import db from '../db.json';
 import { SocialLink } from '@components/SocialLink';
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
@@ -22,13 +22,13 @@ function App() {
           </div>
 
           <p className='text-sm font-sans text-gray-500 mb-2'> 
-            I'm building <a className="text-base font-serif italic underline hover:text-gray-700 leading-none">Paneld</a>, the Letterboxd for comic books, while working on AI agents for VCs at <a href="https://www.lioncrest.vc/" className="text-base font-serif italic underline hover:text-gray-700 leading-none">Lioncrest</a>. I'm also a student at <a href="https://cse.osu.edu/" className="text-base font-serif italic underline hover:text-gray-700 leading-none">Ohio State University</a>, where I'm exploring my interests in software engineering, design, and startups.
+             I'm currently building <a className="text-base font-serif italic underline hover:text-gray-700 leading-none">Paneld</a>, the Letterboxd for comic books, while working on AI agents for VCs at <a href="https://www.lioncrest.vc/" className="text-base font-serif italic underline hover:text-gray-700 leading-none">Lioncrest</a>. I'm also a student at <a href="https://cse.osu.edu/" className="text-base font-serif italic underline hover:text-gray-700 leading-none">Ohio State University</a>, where I'm exploring my interests in software engineering, design, and startups.
           </p>
           {/* <p className='text-sm font-sans text-gray-500 mb-2'> 
             In my free time I consume superhero media, watch Ohio sports, and play pickup basketball.
           </p> */}
           <p className="text-sm font-sans text-gray-500">
-            I love meeting new people and am always open to exploring new opportunities! Feel free to reach out → <a href="mailto:vihaanv14@gmail.com" className="font-bold underline hover:text-gray-700">vihaanv14@gmail.com</a>
+            I love meeting new people and am always open to exploring new opportunities! Feel free to reach out at <a href="mailto:vihaanv14@gmail.com" className="hover:text-gray-700">vihaanv14@gmail.com</a>
           </p>  
         </div>
 

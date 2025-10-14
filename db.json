@@ -6,7 +6,7 @@
     "content": {
       "work": [
         {
-          "logoUrl": "../../public/logos/etsylogo.jpeg",
+          "logoUrl": "../../logos/etsylogo.jpeg",
           "companyName": "Etsy",
           "role": "Software Engineering Intern",
           "isInternship": true,
@@ -22,7 +22,7 @@
           "link": "https://www.etsy.com"
         },
         {
-          "logoUrl": "../../public/logos/etsylogo.jpeg",
+          "logoUrl": "../../logos/etsylogo.jpeg",
           "companyName": "Kroger Technology & Digital",
           "role": "Data Engineering Intern",
           "isInternship": true,
@@ -40,7 +40,7 @@
       ],
       "education": [
         {
-          "logoUrl": "../../public/logos/osulogo.jpeg",
+          "logoUrl": "../../logos/osulogo.jpeg",
           "companyName": "Ohio State University",
           "role": "BS in Computer Science, Minor in Business",
           "isInternship": false,
