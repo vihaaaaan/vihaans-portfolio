@@ -32,3 +32,21 @@ export interface SocialLinkProps {
     link: string;
 }
 
+export interface BookshelfRowProps {
+    title: string;
+    books: Array<BookItemProps>;
+}
+
+export interface BookItemProps {
+    title: string;
+    creators: Array<string>;
+    type: string;
+    category: string;
+    notes: string;
+}
+
+export interface DigitalBookshelfContentProps {
+    current: BookshelfRowProps;
+    future: BookshelfRowProps;
+}
+

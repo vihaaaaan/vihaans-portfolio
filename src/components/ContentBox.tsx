@@ -1,4 +1,4 @@
-import { ContentHeader, ExperienceContent } from "@components";
+import { ContentHeader, ExperienceContent, DigitalBookshelfContent} from "@components";
 import type { ContentBoxProps } from "../types";
 import { useState } from "react";
 import db from '../../db.json';
@@ -24,7 +24,7 @@ export function ContentBox({ data, children }: ContentBoxProps) {
                         case "projects":
                             return null;
                         case "digital_bookshelf":
-                            return null;
+                            return <DigitalBookshelfContent current={currData.content.current} future={currData.content.future} />;
                         default:
                             return null;
                     }

@@ -2,7 +2,7 @@
   {
     "title": "experience",
     "emoji": "💼",
-    "subtitle": "Work and Education Experience",
+    "subtitle": "Where I've worked and what I've built",
     "content": {
       "work": [
         {
@@ -121,33 +121,33 @@
   {
     "title": "digital_bookshelf",
     "emoji": "📚",
-    "subtitle": "Currently Enjoying and Future Queue",
+    "subtitle": "What I'm reading, watching, and listening to",
     "content": {
       "current": [
         {
           "title": "The Lean Startup",
-          "creator": "Eric Ries",
+          "creators": ["Eric Ries"],
           "type": "Book",
           "category": "Entrepreneurship",
           "notes": "Great framework for iterative product building and user feedback loops."
         },
         {
           "title": "Oppenheimer",
-          "creator": "Christopher Nolan",
+          "creators": ["Eric Ries"],
           "type": "Movie",
           "category": "Historical Drama",
           "notes": "A powerful exploration of ambition and moral responsibility."
         },
         {
           "title": "The Daily",
-          "creator": "The New York Times",
+          "creators": ["Eric Ries"],
           "type": "Podcast",
           "category": "News & Current Affairs",
           "notes": "Concise insights into major global stories every morning."
         },
         {
           "title": "Saga, Vol. 1",
-          "creator": "Brian K. Vaughan & Fiona Staples",
+          "creators": ["Eric Ries"],
           "type": "Comic",
           "category": "Sci-Fi / Fantasy",
           "notes": "A stunning mix of space opera and family drama with breathtaking art."
@@ -156,28 +156,28 @@
       "future": [
         {
           "title": "Zero to One",
-          "creator": "Peter Thiel",
+          "creators": ["Eric Ries"],
           "type": "Book",
           "category": "Startups",
           "notes": "Explores unconventional thinking in entrepreneurship."
         },
         {
           "title": "Everything Everywhere All at Once",
-          "creator": "Daniel Kwan & Daniel Scheinert",
+          "creators": ["Eric Ries"],
           "type": "Movie",
           "category": "Sci-Fi / Multiverse",
           "notes": "Known for its emotional storytelling and chaotic creativity."
         },
         {
           "title": "Lex Fridman Podcast – Episode #418",
-          "creator": "Lex Fridman",
+          "creators": ["Eric Ries"],
           "type": "Podcast",
           "category": "Technology & Philosophy",
           "notes": "Planned listen for insights into AI and consciousness."
         },
         {
           "title": "Batman: Year One",
-          "creator": "Frank Miller & David Mazzucchelli",
+          "creators": ["Eric Ries"],
           "type": "Comic",
           "category": "Superhero / Noir",
           "notes": "Classic retelling of Batman’s origin with gritty realism."
