@@ -1,17 +1,33 @@
 import type { ExperienceBlockProps } from "../types";
 import { useState } from "react";
+import etsyLogo from '@assets/logos/etsylogo.jpeg';
+import lioncrestLogo from '@assets/logos/lioncrestlogo.png';
+import osuLogo from '@assets/logos/osulogo.jpeg';
+import krogerLogo from '@assets/logos/krogerlogo.png';
+import raziLogo from '@assets/logos/razilogo.png';
+import unbaneLogo from '@assets/logos/unbanelogo.png';
+
+const logoMap: Record<string, string> = {
+    'etsy': etsyLogo,
+    'lioncrest': lioncrestLogo,
+    'kroger': krogerLogo,
+    'razi': raziLogo,
+    'unbane': unbaneLogo,
+    'osu': osuLogo
+};
 
 export function ExperienceBlock({logoUrl, companyName, role, isInternship, isPresent, startDate, endDate, description}: ExperienceBlockProps) {
     const [ showDescription, setShowDescription ] = useState(false);
+    const logo = logoMap[logoUrl as keyof typeof logoMap] || '';
 
     const toggleDescription = () => setShowDescription(!showDescription);
 
     return (
         <div className="flex items-start group hover:scale-[1.02] transition-transform duration-200 ease-in-out pt-4" onClick={toggleDescription}>
-            <img src={logoUrl} className="w-10 h-10 mr-4 rounded-md shadow-md"/>
+            {logo && (<img src={logo} className="w-9 h-9 mr-4 rounded-md"/>)}
             <div className="flex flex-col">
                 <div className="flex items-center">
-                    <h3 className="text-lg text-gray-700 font-serif mr-6">{companyName}</h3>
+                    <h3 className="text-md text-gray-700 font-serif mr-6">{companyName}</h3>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

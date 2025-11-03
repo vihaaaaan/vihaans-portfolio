@@ -6,33 +6,66 @@
     "content": {
       "work": [
         {
-          "logoUrl": "../../logos/etsylogo.jpeg",
+          "logoUrl": "etsy",
           "companyName": "Etsy",
-          "role": "Software Engineering Intern",
+          "role": "Software Engineer",
           "isInternship": true,
           "isPresent": false,
           "startDate": "2024-05-01",
           "endDate": "2024-08-15",
-          "description": [
-            "Built internal automation tools to streamline the app partnerships workflow using PHP and Postman APIs.",
-            "Implemented backend API endpoints and improved data consistency across microservices."
-          ],
+          "description": "Built internal automation tools to streamline the app partnerships workflow using PHP and Postman APIs. Implemented backend API endpoints and improved data consistency across microservices.",
+          "location": "New York, NY (Hybrid)",
+          "technologies": ["PHP", "Postman", "MySQL", "API Design"],
+          "link": "https://www.etsy.com"
+        },
+      {
+          "logoUrl": "lioncrest",
+          "companyName": "Lioncrest Ventures",
+          "role": "Software Engineer",
+          "isInternship": false,
+          "isPresent": true,
+          "startDate": "2024-05-01",
+          "endDate": "2024-08-15",
+          "description": "Building tools to help VCs streamline operations involving deal flow, LP relations, and research at a $100M venture + private credit fund",
           "location": "New York, NY (Hybrid)",
           "technologies": ["PHP", "Postman", "MySQL", "API Design"],
           "link": "https://www.etsy.com"
         },
         {
-          "logoUrl": "../../logos/etsylogo.jpeg",
+          "logoUrl": "etsy",
+          "companyName": "Etsy",
+          "role": "Software Engineer",
+          "isInternship": true,
+          "isPresent": false,
+          "startDate": "2024-05-01",
+          "endDate": "2024-08-15",
+          "description": "Built internal automation tools to streamline the app partnerships workflow using PHP and Postman APIs. Implemented backend API endpoints and improved data consistency across microservices.",
+          "location": "New York, NY (Hybrid)",
+          "technologies": ["PHP", "Postman", "MySQL", "API Design"],
+          "link": "https://www.etsy.com"
+        },
+        {
+          "logoUrl": "kroger",
           "companyName": "Kroger Technology & Digital",
-          "role": "Data Engineering Intern",
+          "role": "Product Engineer",
           "isInternship": true,
           "isPresent": false,
           "startDate": "2023-05-01",
           "endDate": "2023-08-10",
-          "description": [
-            "Developed a freshness analytics dashboard for the supply chain team.",
-            "Optimized SQL queries and data pipelines in Databricks for real-time insights."
-          ],
+          "description": "Developed a freshness analytics dashboard for the supply chain team. Optimized SQL queries and data pipelines in Databricks for real-time insights.",
+          "location": "Cincinnati, OH",
+          "technologies": ["Python", "SQL", "Databricks", "Tableau"],
+          "link": "https://www.kroger.com"
+        },
+        {
+          "logoUrl": "razi",
+          "companyName": "Razi Exchange",
+          "role": "Software Engineer",
+          "isInternship": true,
+          "isPresent": false,
+          "startDate": "2023-05-01",
+          "endDate": "2023-08-10",
+          "description": "Developed a freshness analytics dashboard for the supply chain team. Optimized SQL queries and data pipelines in Databricks for real-time insights.",
           "location": "Cincinnati, OH",
           "technologies": ["Python", "SQL", "Databricks", "Tableau"],
           "link": "https://www.kroger.com"
@@ -40,18 +73,15 @@
       ],
       "education": [
         {
-          "logoUrl": "../../logos/osulogo.jpeg",
+          "logoUrl": "osu",
           "companyName": "Ohio State University",
           "role": "BS in Computer Science, Minor in Business",
           "isInternship": false,
           "isPresent": true,
           "startDate": "Aug 2023",
           "endDate": "May 2027",
-          "description": [
-            "Developed a freshness analytics dashboard for the supply chain team.",
-            "Optimized SQL queries and data pipelines in Databricks for real-time insights."
-          ],
-          "location": "Cincinnati, OH",
+          "description": "Pursuing a comprehensive computer science education with focus on software engineering, algorithms, and data structures. Complementing technical studies with business fundamentals.",
+          "location": "Columbus, OH",
           "technologies": ["Python", "SQL", "Databricks", "Tableau"],
           "link": "https://www.kroger.com"
         }
