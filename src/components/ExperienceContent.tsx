@@ -14,6 +14,9 @@ export function ExperienceContent({ workExp, educationExp }: ExperienceContentPr
                     startDate={experience.startDate}
                     endDate={experience.endDate}
                     description={experience.description}
+                    technologies={experience.technologies}
+                    location={experience.location}
+                    link={experience.link}
                 />
             )) }
             <h3 className="text-lg font-serif italic underline mt-4">education</h3>
@@ -27,6 +30,9 @@ export function ExperienceContent({ workExp, educationExp }: ExperienceContentPr
                     startDate={experience.startDate}
                     endDate={experience.endDate}
                     description={experience.description}
+                    technologies={experience.technologies}
+                    location={experience.location}
+                    link={experience.link}
                 />
             )) }
         </>

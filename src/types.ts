@@ -25,6 +25,9 @@ export interface ExperienceBlockProps {
     startDate: string;
     endDate?: string;
     description: string;
+    technologies?: Array<string>;
+    location?: string;
+    link?: string;
 }
 
 export interface SocialLinkProps {
