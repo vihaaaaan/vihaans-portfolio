@@ -6,7 +6,6 @@ import osuLogo from '@assets/logos/osulogo.jpeg';
 import krogerLogo from '@assets/logos/krogerlogo.png';
 import raziLogo from '@assets/logos/razilogo.png';
 import unbaneLogo from '@assets/logos/unbanelogo.png';
-import db from '../../db.json'
 
 const logoMap: Record<string, string> = {
     'etsy': etsyLogo,

@@ -78,11 +78,11 @@
           "role": "BS in Computer Science, Minor in Business",
           "isInternship": false,
           "isPresent": true,
-          "startDate": "Aug '23'",
+          "startDate": "Aug '23",
           "endDate": "May '27",
           "description": "Pursuing a comprehensive computer science education with focus on software engineering, algorithms, and data structures. Complementing technical studies with business fundamentals.",
           "location": "Columbus, OH",
-          "technologies": ["Python", "SQL", "Databricks", "Tableau"],
+          "technologies": null,
           "link": "https://www.kroger.com"
         }
       ]

@@ -1,19 +1,34 @@
 import { ContentHeader, ExperienceContent, DigitalBookshelfContent} from "@components";
 import type { ContentBoxProps } from "../types";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import db from '../../db.json';
 
 export function ContentBox({ data, children }: ContentBoxProps) {
   const [ activeTab, setActiveTab ] = useState(0);
+  const [ isTransitioning, setIsTransitioning ] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
   const currData = data[activeTab] ?? data[0];
 
   const handleActiveTabChange = (index: number) => {
-    setActiveTab(index);
+    if (index === activeTab) return;
+    
+    // Fade out content
+    setIsTransitioning(true);
+    
+    // Wait for fade out, then switch tabs
+    setTimeout(() => {
+      setActiveTab(index);
+      
+      // Fade content back in after a brief delay
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 50);
+    }, 200);
   } 
 
 
   return (
-    <div className="bg-gray-100 rounded-lg shadow-md h-full w-full flex flex-col">
+    <div className="bg-gray-100 rounded-lg shadow-md w-full flex flex-col">
         {/* Mobile tabs - Top */}
         <div className="sm:hidden w-full flex-shrink-0 flex justify-start gap-0 rounded-t-lg bg-gray-200">
             { db.map((tab, index) => (
@@ -21,7 +36,7 @@ export function ContentBox({ data, children }: ContentBoxProps) {
                 key={index}
                 onClick={() => handleActiveTabChange(index)}
                 className={
-                    "w-14 h-12 rounded-t-lg flex items-center justify-center group hover:cursor-pointer " +
+                    "w-14 h-12 rounded-t-lg flex items-center justify-center group hover:cursor-pointer transition-colors duration-200 " +
                     (activeTab === index ? "bg-gray-100" : "bg-gray-200")
                 }
                 >
@@ -34,7 +49,10 @@ export function ContentBox({ data, children }: ContentBoxProps) {
         </div>
 
         <div className="flex-1 p-4 sm:p-6 flex flex-col sm:flex-row min-w-0">
-            <div className="flex-1 min-w-0 sm:mr-6">
+            <div 
+              ref={contentRef}
+              className={`flex-1 min-w-0 sm:mr-6 transition-opacity duration-200 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}
+            >
                 <ContentHeader sectionTitle={currData.title} sectionSubtitle={currData.subtitle}/>
                 {
                     (() => {
@@ -60,7 +78,7 @@ export function ContentBox({ data, children }: ContentBoxProps) {
                     key={index}
                     onClick={() => handleActiveTabChange(index)}
                     className={
-                        "h-14 w-full rounded-r-lg flex items-center justify-center group hover:cursor-pointer " +
+                        "h-14 w-full rounded-r-lg flex items-center justify-center group hover:cursor-pointer transition-colors duration-200 " +
                         (activeTab === index ? "bg-gray-100" : "bg-gray-200")
                     }
                     >
