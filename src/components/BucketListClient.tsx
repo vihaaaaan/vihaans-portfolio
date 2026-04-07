@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { DatePicker } from '@/components/DatePicker'
-
 const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 const GRADUATION = new Date(2026, 4, 10, 10, 0, 0)
 
@@ -125,6 +124,7 @@ function LinkPreview({ url }: { url: string }) {
 }
 
 export function BucketListClient({ data, isAdmin }: Props) {
+
   // Auth
   const [adminUnlocked, setAdminUnlocked] = useState(isAdmin)
   const [showPasswordModal, setShowPasswordModal] = useState(false)
