@@ -367,8 +367,8 @@ export function BucketListClient({ data, isAdmin }: Props) {
             <Image
               src="/assets/bucket-list/shoe.png"
               alt="shoe"
-              width={200}
-              height={200}
+              width={150}
+              height={150}
               className="rounded-sm object-contain mr-4"
             />
           </motion.div>
