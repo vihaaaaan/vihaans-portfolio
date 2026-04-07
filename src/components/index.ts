@@ -1,7 +1,8 @@
-import { ContentBox } from "./ContentBox";
-import { ContentHeader } from "./ContentHeader";
-import { ExperienceBlock } from "./ExperienceBlock";
-import { ExperienceContent } from "./ExperienceContent";
-import { DigitalBookshelfContent } from "./DigitalBookshelfContent";
-
-export { ContentBox, ContentHeader, ExperienceBlock, ExperienceContent, DigitalBookshelfContent };
+export { ContentBox } from './ContentBox'
+export { ContentHeader } from './ContentHeader'
+export { ExperienceBlock } from './ExperienceBlock'
+export { ExperienceContent } from './ExperienceContent'
+export { DigitalBookshelfContent } from './DigitalBookshelfContent'
+export { ProjectsContent } from './ProjectsContent'
+export { LocationIndicator } from './LocationIndicator'
+export { HomeClient } from './HomeClient'

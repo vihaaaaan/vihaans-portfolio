@@ -1,0 +1,207 @@
+{
+  "location": "Columbus, OH",
+  "tabs": [
+    {
+      "title": "experience",
+      "emoji": "💼",
+      "subtitle": "Where I've worked and what I've built",
+      "content": {
+        "work": [
+          {
+            "logoUrl": "unbane",
+            "companyName": "Unbane",
+            "role": "engineering",
+            "isInternship": false,
+            "isPresent": true,
+            "startDate": "Nov '25",
+            "endDate": null,
+            "description": ["working on early engineering/product, a lot of 0→1. building a voice-first intelligence layer for the built world, starting with data capture."],
+            "location": "Columbus, OH",
+            "technologies": ["SvelteKit"],
+            "link": "https://www.unbane.com"
+          },
+          {
+            "logoUrl": "etsy",
+            "companyName": "Etsy",
+            "role": "engineering",
+            "isInternship": true,
+            "isPresent": false,
+            "startDate": "May",
+            "endDate": "Aug '25",
+            "description": ["worked on a backend/api team supporting the etsy mobile app. shipped api services that enabled a new, really cool user hub with improved access to order tracking, reviwing, and gift card management. also built out some dev tooling for api engineers across the company.", "fun fact: i lived a 10 min walk from the brooklyn prison where diddy and nicholas maduro were held"],
+            "location": "Brooklyn, NY",
+            "technologies": ["API Design", "PHP", "Javascript", "Postman"],
+            "link": "https://www.etsy.com"
+          },
+          {
+            "logoUrl": "kroger",
+            "companyName": "Kroger Co.",
+            "role": "product + eng.",
+            "isInternship": true,
+            "isPresent": false,
+            "startDate": "May",
+            "endDate": "Aug '24",
+            "description": ["the summer after my first year of school, i built and internally launched a reporting platform to help kroger monitor the freshness of fruits, vegetables, meat etc. across their supply chain(s).", "didn't write a lot of code (unless you're counting dax), but i learned how to get shit done in corporate america."],
+            "location": "Cincinnati, OH",
+            "technologies": ["PowerBI", "Figma", "Power Automate", "DAX"],
+            "link": "https://www.kroger.com"
+          },
+          {
+            "logoUrl": "razi",
+            "companyName": "Razi Exchange",
+            "role": "engineering",
+            "isInternship": true,
+            "isPresent": false,
+            "startDate": "Nov '23",
+            "endDate": "April '24",
+            "description": ["spent most of my free time freshman year working as an engineer at a prop-tech startup building tools for the title industry.  ", "this was my first experience getting off localhost and building something for more than just myself. figured out what it was like to ship to prod (and also break it sometimes)."],
+            "location": "Columbus, OH",
+            "technologies": ["Python", "Django", "JQuery", "Django", "Postgres"],
+            "link": "https://www.razititle.com"
+          }
+        ],
+        "education": [
+          {
+            "logoUrl": "osu",
+            "companyName": "Ohio State University",
+            "role": "bs in computer science",
+            "isInternship": false,
+            "isPresent": true,
+            "startDate": "Aug '23",
+            "endDate": "May '26",
+            "description": ["learned a lot in (but mostly outside) the classroom and met a lot of really cool people. saw the buckeyes win the national championship. graduating a year early to start building full time."],
+            "location": "Columbus, OH",
+            "technologies": null,
+            "link": "https://www.osu.edu"
+          }
+        ]
+      }
+    },
+    {
+      "title": "projects",
+      "emoji": "🚀",
+      "subtitle": "Products and Experiments",
+      "content": {
+        "items": [
+          {
+            "name": "Casey",
+            "emoji": "🧠",
+            "blurb": "helping educators create case studies based on real experiences",
+            "description": ["An AI-powered case study generator for instructors that dynamically builds teaching materials based on real-world input from industry professionals."],
+            "technologies": ["FastAPI", "React", "Claude API", "DynamoDB", "AWS S3"],
+            "containsImages": false,
+            "links": [
+              ["presentation/demo", "https://casey.ai"]
+            ],
+            "status": "In Development"
+          },
+          {
+            "name": "OmniDoc",
+            "emoji": "🏥",
+            "blurb": "Voice agent for outpatient intake",
+            "description": ["A voice-to-voice AI agent for healthcare intake that uses Whisper and GPT-4o to generate medical summaries for doctors in real time."],
+            "technologies": ["LangChain", "Whisper", "GPT-4o", "Django", "Supabase"],
+            "containsImages": false,
+            "links": [
+              ["Demo", "https://omnidoc.ai"],
+              ["GitHub", "https://github.com/vihaaaaan/omnidoc"]
+            ],
+            "status": "Prototype"
+          },
+          {
+            "name": "Postr",
+            "emoji": "🎬",
+            "blurb": "create hyper-minimalist movie posters",
+            "description": ["A Pokémon-themed productivity app that gamifies focus sessions through a FastAPI backend and React frontend."],
+            "technologies": ["FastAPI", "React", "Tailwind CSS"],
+            "containsImages": false,
+            "links": [
+              ["Live Site", "https://pokeodoro.app"],
+              ["GitHub", "https://github.com/vihaaaaan/pokeodoro"]
+            ],
+            "status": "Prototype"
+          },
+          {
+            "name": "BuckeyeClaw",
+            "emoji": "💬",
+            "blurb": "sms based agent providing one interface for all ohio state student needs",
+            "description": ["A Pokémon-themed productivity app that gamifies focus sessions through a FastAPI backend and React frontend."],
+            "technologies": ["FastAPI", "React", "Tailwind CSS"],
+            "containsImages": false,
+            "links": [
+              ["Live Site", "https://pokeodoro.app"],
+              ["GitHub", "https://github.com/vihaaaaan/pokeodoro"]
+            ],
+            "status": "Prototype"
+          }
+        ]
+      }
+    },
+    {
+      "title": "digital_bookshelf",
+      "emoji": "📚",
+      "subtitle": "What I'm reading, watching, and listening to",
+      "content": {
+        "current": [
+          {
+            "title": "Red Rising",
+            "creators": ["Pierce Brown"],
+            "type": "Book",
+            "category": "Sci-Fi / Fantasy"
+          },
+          {
+            "title": "Shrinking",
+            "creators": ["Brett Goldstein", "Jason Segel", "Bill Lawrence"],
+            "type": "TV Show",
+            "category": "Comedy Drama",
+            "notes": "Hilarious and surprisingly emotional. Harrison Ford is unreal in this."
+          },
+          {
+            "title": "Founders",
+            "creators": ["David Senra"],
+            "type": "Podcast",
+            "category": "Entrepreneurship",
+            "notes": "Concise insights into major global stories every morning."
+          },
+          {
+            "title": "Project Hail Mary",
+            "creators": ["Phil Lord", "Christopher Miller"],
+            "type": "Movie",
+            "category": "Sci-Fi",
+            "notes": "A stunning mix of space opera and family drama with breathtaking art."
+          }
+        ],
+        "future": [
+          {
+            "title": "The Odyssey",
+            "creators": ["Christopher Nolan"],
+            "type": "Movie",
+            "category": "Mythology",
+            "notes": "Explores unconventional thinking in entrepreneurship."
+          },
+          {
+            "title": "The Drama",
+            "creators": ["Kristoffer Borgli"],
+            "type": "Movie",
+            "category": "Thriller",
+            "notes": "Known for its emotional storytelling and chaotic creativity."
+          },
+          {
+            "title": "House of the Dragon",
+            "creators": ["Ryan Condal"],
+            "type": "TV Show",
+            "category": "Fantasy",
+            "notes": "Planned listen for insights into AI and consciousness."
+          },
+          {
+            "title": "A Game of Thrones",
+            "creators": ["George R. R. Martin"],
+            "type": "Book",
+            "category": "Fantasy",
+            "notes": "Classic retelling of Batman's origin with gritty realism."
+          }
+        ]
+      }
+    }
+  ]
+}
