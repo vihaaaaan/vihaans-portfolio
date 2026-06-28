@@ -1,6 +1,7 @@
 'use client'
 
 import { ContentHeader } from '@/components/ContentHeader'
+import { AboutContent } from '@/components/AboutContent'
 import { ExperienceContent } from '@/components/ExperienceContent'
 import { DigitalBookshelfContent } from '@/components/DigitalBookshelfContent'
 import { ProjectsContent } from '@/components/ProjectsContent'
@@ -19,6 +20,7 @@ const slideVariants = {
 
 // Map tab titles to URL hash fragments
 const TAB_HASHES: Record<string, string> = {
+  about: 'about',
   experience: 'experience',
   projects: 'projects',
   digital_bookshelf: 'bookshelf',
@@ -57,26 +59,26 @@ export function ContentBox({ data }: ContentBoxProps) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 w-full flex flex-col">
+    <div className="w-full flex flex-col">
 
       {/* Mobile tabs — Top */}
-      <div className="sm:hidden w-full flex-shrink-0 flex justify-start gap-0 rounded-t-lg bg-gray-100">
+      <div className="sm:hidden flex-shrink-0 flex justify-start gap-2 mb-4">
         {data.map((tab, index) => (
           <button
             key={index}
             onClick={() => handleActiveTabChange(index)}
-            className="w-14 h-12 rounded-t-lg flex items-center justify-center relative hover:cursor-pointer"
+            className="relative w-11 h-11 flex items-center justify-center hover:cursor-pointer"
           >
             {activeTab === index && (
               <motion.div
-                layoutId="tab-pill-mobile"
-                className="absolute inset-0 bg-white rounded-t-lg"
+                layoutId="tab-indicator-mobile"
+                className="absolute inset-0 rounded-full bg-gray-100"
                 transition={{ type: 'spring', stiffness: 420, damping: 32 }}
               />
             )}
             <motion.span
-              className="m-1 inline-block text-lg relative z-10"
-              whileHover={{ scale: 1.25 }}
+              className="inline-block text-lg relative z-10"
+              whileHover={{ scale: 1.2 }}
               transition={{ type: 'spring', stiffness: 400, damping: 20 }}
             >
               {tab.emoji}
@@ -85,7 +87,7 @@ export function ContentBox({ data }: ContentBoxProps) {
         ))}
       </div>
 
-      <div className="flex-1 p-4 sm:p-6 flex flex-col sm:flex-row min-w-0">
+      <div className="flex-1 flex flex-col sm:flex-row sm:items-start min-w-0">
         <div className="flex-1 min-w-0 sm:mr-6 overflow-hidden">
           <AnimatePresence mode="wait" custom={directionRef.current}>
             <motion.div
@@ -96,11 +98,15 @@ export function ContentBox({ data }: ContentBoxProps) {
               animate="center"
               exit="exit"
             >
-              <ContentHeader sectionTitle={currData.title} sectionSubtitle={currData.subtitle} />
+              {currData.title.toLowerCase() !== 'about' && (
+                <ContentHeader sectionTitle={currData.title} sectionSubtitle={currData.subtitle} />
+              )}
               {(() => {
                 switch (currData.title.toLowerCase()) {
+                  case 'about':
+                    return <AboutContent />
                   case 'experience':
-                    return <ExperienceContent workExp={currData.content.work} educationExp={currData.content.education} />
+                    return <ExperienceContent current={currData.content.current} prev={currData.content.prev} />
                   case 'projects':
                     return <ProjectsContent items={currData.content.items} />
                   case 'digital_bookshelf':
@@ -114,30 +120,30 @@ export function ContentBox({ data }: ContentBoxProps) {
         </div>
 
         {/* Desktop tabs — Right side */}
-        <div className="hidden sm:flex w-16 flex-shrink-0 flex-col rounded-r-lg bg-gray-100 -mr-6 -my-6">
+        <div className="hidden sm:flex flex-shrink-0 flex-col gap-2">
           {data.map((tab, index) => (
             <button
               key={index}
               onClick={() => handleActiveTabChange(index)}
-              className="h-14 w-full rounded-r-lg flex items-center justify-center group relative hover:cursor-pointer"
+              className="relative w-12 h-12 flex items-center justify-center group hover:cursor-pointer"
             >
               {activeTab === index && (
                 <motion.div
-                  layoutId="tab-pill-desktop"
-                  className="absolute inset-0 bg-white rounded-r-lg"
+                  layoutId="tab-indicator-desktop"
+                  className="absolute inset-0 rounded-full bg-gray-100"
                   transition={{ type: 'spring', stiffness: 420, damping: 32 }}
                 />
               )}
               <span className="relative inline-block z-10">
                 <motion.span
-                  className="m-2 inline-block text-xl"
-                  whileHover={{ scale: 1.25 }}
+                  className="inline-block text-xl"
+                  whileHover={{ scale: 1.2 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                 >
                   {tab.emoji}
                 </motion.span>
                 <span className="
-                  absolute right-full top-1/2 -translate-y-1/2 mr-2
+                  absolute right-full top-1/2 -translate-y-1/2 mr-3
                   bg-gray-800 text-white text-[10px] px-1.5 py-0.5 rounded-sm
                   opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out
                   pointer-events-none whitespace-nowrap

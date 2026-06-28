@@ -63,7 +63,7 @@ export function BookshelfRow({ title, books }: BookshelfRowProps) {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <motion.div
-                className={`${sizeClass} rounded-sm overflow-hidden shadow-sm border border-gray-200 bg-gray-100`}
+                className={`${sizeClass} overflow-hidden shadow-sm border border-gray-200 bg-gray-100`}
                 whileHover={{ y: -7, boxShadow: '0 6px 16px rgba(0,0,0,0.12)' }}
                 transition={{ type: 'spring', stiffness: 320, damping: 20 }}
               >

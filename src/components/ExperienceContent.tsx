@@ -18,10 +18,13 @@ const itemVariants = {
   },
 }
 
-export function ExperienceContent({ workExp, educationExp }: ExperienceContentProps) {
+export function ExperienceContent({ current, prev }: ExperienceContentProps) {
   return (
     <motion.div variants={listVariants} initial="hidden" animate="visible">
-      {workExp.map((experience, index) => (
+      <motion.h3 variants={itemVariants} className="text-lg font-serif italic">
+        current
+      </motion.h3>
+      {current.map((experience, index) => (
         <motion.div key={index} variants={itemVariants}>
           <ExperienceBlock
             companyName={experience.companyName}
@@ -37,10 +40,10 @@ export function ExperienceContent({ workExp, educationExp }: ExperienceContentPr
           />
         </motion.div>
       ))}
-      <motion.h3 variants={itemVariants} className="text-lg font-serif italic underline mt-4">
-        education
+      <motion.h3 variants={itemVariants} className="text-lg font-serif italic mt-4">
+        prev
       </motion.h3>
-      {educationExp.map((experience, index) => (
+      {prev.map((experience, index) => (
         <motion.div key={index} variants={itemVariants}>
           <ExperienceBlock
             companyName={experience.companyName}

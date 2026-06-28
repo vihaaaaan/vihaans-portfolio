@@ -13,7 +13,7 @@ export function ExperienceBlock({ companyName, role, isInternship, isPresent, st
       <div className="flex items-center cursor-pointer" onClick={() => setShowDescription(!showDescription)}>
         {link && (
           <img
-            className="w-7 h-7 mr-4 rounded-sm flex-shrink-0"
+            className="w-7 h-7 mr-4 flex-shrink-0"
             src={`https://img.logo.dev/${hostname}?token=${process.env.NEXT_PUBLIC_LOGO_DEV_KEY}`}
             alt={`${companyName} logo`}
           />
@@ -101,7 +101,7 @@ export function ExperienceBlock({ companyName, role, isInternship, isPresent, st
                     key={index}
                     whileHover={{ y: -2 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 18 }}
-                    className="inline-block rounded-sm shadow-sm bg-gray-100 px-1.5 py-0.5 font-sans"
+                    className="inline-block bg-gray-100 px-1.5 py-0.5 font-sans"
                   >
                     <span className="font-sans text-[10px]">{tech.toLowerCase()}</span>
                   </motion.div>

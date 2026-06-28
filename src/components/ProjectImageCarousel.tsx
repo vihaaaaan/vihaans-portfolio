@@ -33,7 +33,7 @@ export function ProjectImageCarousel({ images, projectName }: ProjectImageCarous
   }
 
   return (
-    <div className="relative mb-3 rounded-md overflow-hidden border border-gray-200 bg-gray-50">
+    <div className="relative mb-3 overflow-hidden border border-gray-200 bg-gray-50">
       <div
         className="relative w-full overflow-hidden"
         onTouchStart={handleTouchStart}

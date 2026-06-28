@@ -6,7 +6,7 @@
       "emoji": "💼",
       "subtitle": "Where I've worked and what I've built",
       "content": {
-        "work": [
+        "current": [
           {
             "logoUrl": "unbane",
             "companyName": "Unbane",
@@ -20,6 +20,21 @@
             "technologies": ["SvelteKit"],
             "link": "https://www.unbane.com"
           },
+          {
+            "logoUrl": "osu",
+            "companyName": "Ohio State University",
+            "role": "bs in computer science",
+            "isInternship": false,
+            "isPresent": true,
+            "startDate": "Aug '23",
+            "endDate": "May '26",
+            "description": ["learned a lot in (but mostly outside) the classroom and met a lot of really cool people. saw the buckeyes win the national championship. graduating a year early to start building full time."],
+            "location": "Columbus, OH",
+            "technologies": null,
+            "link": "https://www.osu.edu"
+          }
+        ],
+        "prev": [
           {
             "logoUrl": "etsy",
             "companyName": "Etsy",
@@ -58,21 +73,6 @@
             "location": "Columbus, OH",
             "technologies": ["Python", "Django", "JQuery", "Django", "Postgres"],
             "link": "https://www.razititle.com"
-          }
-        ],
-        "education": [
-          {
-            "logoUrl": "osu",
-            "companyName": "Ohio State University",
-            "role": "bs in computer science",
-            "isInternship": false,
-            "isPresent": true,
-            "startDate": "Aug '23",
-            "endDate": "May '26",
-            "description": ["learned a lot in (but mostly outside) the classroom and met a lot of really cool people. saw the buckeyes win the national championship. graduating a year early to start building full time."],
-            "location": "Columbus, OH",
-            "technologies": null,
-            "link": "https://www.osu.edu"
           }
         ]
       }

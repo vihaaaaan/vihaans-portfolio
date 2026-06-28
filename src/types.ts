@@ -12,8 +12,8 @@ export interface ContentBoxProps {
 }
 
 export interface ExperienceContentProps {
-  workExp: Array<ExperienceBlockProps>
-  educationExp: Array<ExperienceBlockProps>
+  current: Array<ExperienceBlockProps>
+  prev: Array<ExperienceBlockProps>
 }
 
 export interface ExperienceBlockProps {
