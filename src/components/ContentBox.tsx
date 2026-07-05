@@ -18,15 +18,15 @@ const slideVariants = {
   exit: (dir: number) => ({ x: dir * -36, opacity: 0, transition: { duration: 0.2, ease } }),
 }
 
-// Map tab titles to URL hash fragments
+// Map tab keys to URL hash fragments
 const TAB_HASHES: Record<string, string> = {
   about: 'about',
-  experience: 'experience',
+  work: 'work',
   projects: 'projects',
   digital_bookshelf: 'bookshelf',
 }
 
-export function ContentBox({ data }: ContentBoxProps) {
+export function ContentBox({ data, admin }: ContentBoxProps) {
   const router = useRouter()
   const pathname = usePathname()
 
@@ -38,7 +38,7 @@ export function ContentBox({ data }: ContentBoxProps) {
   useEffect(() => {
     const syncHash = () => {
       const hash = window.location.hash.replace('#', '')
-      const idx = data.findIndex((t) => TAB_HASHES[t.title] === hash)
+      const idx = data.findIndex((t) => TAB_HASHES[t.key] === hash)
       if (idx >= 0 && idx !== activeTab) {
         directionRef.current = idx > activeTab ? 1 : -1
         setActiveTab(idx)
@@ -54,7 +54,7 @@ export function ContentBox({ data }: ContentBoxProps) {
     if (index === activeTab) return
     directionRef.current = index > activeTab ? 1 : -1
     setActiveTab(index)
-    const hash = TAB_HASHES[data[index].title]
+    const hash = TAB_HASHES[data[index].key]
     router.push(`${pathname}#${hash}`, { scroll: false })
   }
 
@@ -98,19 +98,19 @@ export function ContentBox({ data }: ContentBoxProps) {
               animate="center"
               exit="exit"
             >
-              {currData.title.toLowerCase() !== 'about' && (
-                <ContentHeader sectionTitle={currData.title} sectionSubtitle={currData.subtitle} />
+              {currData.key !== 'about' && (
+                <ContentHeader sectionTitle={currData.label} sectionSubtitle={currData.subtitle} />
               )}
               {(() => {
-                switch (currData.title.toLowerCase()) {
+                switch (currData.key) {
                   case 'about':
-                    return <AboutContent />
-                  case 'experience':
+                    return <AboutContent bio={currData.content.bio} />
+                  case 'work':
                     return <ExperienceContent current={currData.content.current} prev={currData.content.prev} />
                   case 'projects':
                     return <ProjectsContent items={currData.content.items} />
                   case 'digital_bookshelf':
-                    return <DigitalBookshelfContent current={currData.content.current} future={currData.content.future} />
+                    return <DigitalBookshelfContent current={currData.content.current} future={currData.content.future} buckets={currData.content.buckets} admin={admin} />
                   default:
                     return null
                 }
@@ -150,7 +150,7 @@ export function ContentBox({ data }: ContentBoxProps) {
                   before:content-[''] before:absolute before:left-full before:top-1/2 before:-translate-y-1/2
                   before:border-4 before:border-transparent before:border-l-gray-800
                 ">
-                  {tab.title.replace('_', ' ')}
+                  {tab.label}
                 </span>
               </span>
             </button>

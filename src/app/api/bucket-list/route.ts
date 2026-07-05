@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import fs from 'fs'
 import path from 'path'
+import { isValidSession } from '@/lib/session'
 
 const DATA_PATH = path.join(process.cwd(), 'src', 'data', 'bucket-list.json')
 
@@ -15,7 +16,7 @@ function writeData(data: any) {
 
 async function checkAdmin() {
   const cookieStore = await cookies()
-  return cookieStore.get('admin_session')?.value === 'true'
+  return isValidSession(cookieStore.get('admin_session')?.value)
 }
 
 export async function GET() {
