@@ -6,14 +6,20 @@ export interface ContentHeaderProps {
   sectionSubtitle: string
 }
 
+export interface BookshelfAdmin {
+  unlocked: boolean
+  updateBucket: (bucketKey: 'current' | 'future', books: Array<BookItemProps>) => void | Promise<void>
+}
+
 export interface ContentBoxProps {
   data: Array<any>
+  admin?: BookshelfAdmin
   children?: React.ReactNode
 }
 
 export interface ExperienceContentProps {
-  workExp: Array<ExperienceBlockProps>
-  educationExp: Array<ExperienceBlockProps>
+  current: Array<ExperienceBlockProps>
+  prev: Array<ExperienceBlockProps>
 }
 
 export interface ExperienceBlockProps {
@@ -52,6 +58,7 @@ export interface SocialLinkProps {
 export interface BookshelfRowProps {
   title: string
   books: Array<BookItemProps>
+  onOpenCatalog?: () => void
 }
 
 export interface BookItemProps {
@@ -59,11 +66,14 @@ export interface BookItemProps {
   creators: Array<string>
   type: string
   category: string
-  notes: string
+  notes?: string
   coverSearchQuery?: string
+  coverUrl?: string
 }
 
 export interface DigitalBookshelfContentProps {
   current: Array<BookItemProps>
   future: Array<BookItemProps>
+  buckets?: { current?: string; future?: string }
+  admin?: BookshelfAdmin
 }

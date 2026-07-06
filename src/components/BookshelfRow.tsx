@@ -33,7 +33,7 @@ const bookVariants = {
   },
 }
 
-export function BookshelfRow({ title, books }: BookshelfRowProps) {
+export function BookshelfRow({ title, books, onOpenCatalog }: BookshelfRowProps) {
   const displayItems = books.slice(0, MAX_ITEMS)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const coverImages = useBookshelfImages()
@@ -63,7 +63,7 @@ export function BookshelfRow({ title, books }: BookshelfRowProps) {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <motion.div
-                className={`${sizeClass} rounded-sm overflow-hidden shadow-sm border border-gray-200 bg-gray-100`}
+                className={`${sizeClass} overflow-hidden shadow-sm border border-gray-200 bg-gray-100`}
                 whileHover={{ y: -7, boxShadow: '0 6px 16px rgba(0,0,0,0.12)' }}
                 transition={{ type: 'spring', stiffness: 320, damping: 20 }}
               >
@@ -102,7 +102,15 @@ export function BookshelfRow({ title, books }: BookshelfRowProps) {
       </motion.div>
 
       <div className="w-full border-b-4 sm:border-b-6 border-gray-300 shadow-[0_3px_4px_-2px_rgba(0,0,0,0.25)]" />
-      <h3 className="text-base sm:text-lg font-serif text-gray-400 italic mt-1 flex justify-end">{title}</h3>
+      <div className="mt-1 flex justify-end">
+        <button
+          onClick={onOpenCatalog}
+          className="group/label inline-flex items-center gap-1 text-base sm:text-lg font-serif text-gray-400 italic hover:text-gray-600 transition-colors duration-200 cursor-pointer"
+        >
+          {title}
+          <span className="text-xs not-italic opacity-0 -translate-x-1 group-hover/label:opacity-100 group-hover/label:translate-x-0 transition-all duration-200">→</span>
+        </button>
+      </div>
     </div>
   )
 }
