@@ -75,7 +75,7 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
     const title = form.title.trim()
 
     // Resolve + store the cover once, at save time.
-    const prev = editing !== 'new' ? books[editing] : undefined
+    const prev = typeof editing === 'number' ? books[editing] : undefined
     let coverUrl = prev?.coverUrl
     const titleChanged = !prev || prev.title !== title || prev.type !== type
     if (titleChanged || !coverUrl) {
