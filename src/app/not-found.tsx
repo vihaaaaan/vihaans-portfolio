@@ -19,7 +19,7 @@ export default function NotFound() {
           <h1 className="text-3xl font-serif tracking-tight text-gray-800">
             you took a wrong turn.
           </h1>
-          <p className="text-sm font-sans text-gray-400 italic">
+          <p className="text-sm font-sans text-gray-400">
             this page doesn&apos;t exist.
           </p>
         </div>

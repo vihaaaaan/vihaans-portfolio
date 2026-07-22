@@ -33,6 +33,7 @@ export interface ExperienceBlockProps {
   technologies?: Array<string>
   location?: string
   link?: string
+  text?: string
 }
 
 export interface ProjectItemProps {
@@ -40,7 +41,7 @@ export interface ProjectItemProps {
   emoji: string
   blurb: string
   description: string[]
-  technologies: Array<string>
+  tags: Array<string>
   containsImages: boolean
   links: Array<[string, string]>
   status: string

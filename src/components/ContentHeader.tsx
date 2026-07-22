@@ -2,11 +2,10 @@
 
 import type { ContentHeaderProps } from '@/types'
 
-export function ContentHeader({ sectionTitle, sectionSubtitle }: ContentHeaderProps) {
+export function ContentHeader({ sectionSubtitle }: ContentHeaderProps) {
+  // Section title is intentionally not rendered (it still lives in the DB and
+  // powers the emoji hover tooltip). We show only the subtitle, forced lowercase.
   return (
-    <>
-      <h3 className="text-base sm:text-lg font-serif italic">{sectionTitle}</h3>
-      <h2 className="text-lg sm:text-xl font-serif text-gray-400">{sectionSubtitle}</h2>
-    </>
+    <h2 className="text-sm sm:text-base font-sans text-gray-500 lowercase">{sectionSubtitle}</h2>
   )
 }

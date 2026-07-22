@@ -24,7 +24,7 @@ const badgeVariants = {
   },
 }
 
-export function ProjectCard({ name, emoji, blurb, description, technologies, containsImages, links, status, isExpanded, onToggle }: ProjectCardProps) {
+export function ProjectCard({ name, emoji, blurb, description, tags, containsImages, links, status, isExpanded, onToggle }: ProjectCardProps) {
   const [images, setImages] = useState<string[]>([])
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export function ProjectCard({ name, emoji, blurb, description, technologies, con
   return (
     <motion.div
       className={
-        'border overflow-hidden cursor-pointer ' +
+        'border-[0.5px] rounded-md overflow-hidden cursor-pointer ' +
         (isExpanded ? 'border-gray-300 bg-gray-50 shadow-sm' : 'border-gray-200 bg-white')
       }
       animate={{ borderColor: isExpanded ? '#d1d5db' : '#e5e7eb' }}
@@ -110,7 +110,7 @@ export function ProjectCard({ name, emoji, blurb, description, technologies, con
                 initial="hidden"
                 animate="visible"
               >
-                {technologies.map((tech, index) => (
+                {tags.map((tag, index) => (
                   <motion.div
                     key={index}
                     variants={badgeVariants}
@@ -118,7 +118,7 @@ export function ProjectCard({ name, emoji, blurb, description, technologies, con
                     transition={{ type: 'spring', stiffness: 400, damping: 18 }}
                     className="inline-block bg-gray-100 px-1.5 py-0.5"
                   >
-                    <span className="font-sans text-[10px] text-gray-500">{tech.toLowerCase()}</span>
+                    <span className="font-sans text-[10px] text-gray-500">{tag.toLowerCase()}</span>
                   </motion.div>
                 ))}
               </motion.div>

@@ -15,7 +15,7 @@ export function LocationIndicator({ location }: LocationIndicatorProps) {
       animate="rest"
     >
       <motion.span
-        className="text-[11px] sm:text-sm font-serif italic text-gray-500 relative"
+        className="text-[11px] sm:text-sm font-serif text-gray-500 relative"
         variants={{ rest: { x: 0 }, hover: { x: 1 } }}
         transition={{ type: 'spring', stiffness: 300, damping: 24 }}
       >
