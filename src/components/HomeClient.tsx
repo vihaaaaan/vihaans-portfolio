@@ -1,6 +1,7 @@
 'use client'
 
 import { ContentBox } from '@/components/ContentBox'
+import { RotatingQuote } from '@/components/RotatingQuote'
 import { SocialLink } from '@/components/SocialLink'
 import { FaGithub, FaLinkedin, FaTwitter, FaLock, FaLockOpen } from 'react-icons/fa'
 import Image from 'next/image'
@@ -28,7 +29,7 @@ const itemVariants = {
 
 interface Profile {
   headline: string
-  subline: string
+  sublines?: Array<{ quote: string; author: string }>
   bio: string[]
   location: string
   socials: { github?: string; linkedin?: string; twitter?: string }
@@ -115,7 +116,7 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
   return (
     <BookshelfImagesContext.Provider value={coverImages}>
       <motion.div
-        className="min-h-screen max-w-2xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col"
+        className="min-h-screen max-w-2xl mx-auto px-6 sm:px-8 md:px-8 flex flex-col"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -126,9 +127,9 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif tracking-tight text-gray-900">
                 {profile.headline}
               </h1>
-              <h3 className="text-sm sm:text-lg font-sans tracking-tight text-gray-500">
-                {profile.subline}
-              </h3>
+              {profile.sublines && profile.sublines.length > 0 && (
+                <RotatingQuote quotes={profile.sublines} />
+              )}
             </motion.div>
 
             <motion.div
@@ -144,7 +145,7 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
                   alt="vihaan illustration"
                   width={140}
                   height={140}
-                  className="mr-4"
+                  className="mr-4 w-16 h-16 sm:w-24 sm:h-24 md:w-[140px] md:h-[140px]"
                 />
               </motion.div>
             </motion.div>
@@ -187,7 +188,7 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
               exit={{ opacity: 0, y: 12, scale: 0.98 }}
               transition={{ duration: 0.2 }}
             >
-              <h2 className="text-base font-serif italic text-gray-700">enter password</h2>
+              <h2 className="text-base font-serif text-gray-700">enter password</h2>
               <input
                 autoFocus
                 type="password"

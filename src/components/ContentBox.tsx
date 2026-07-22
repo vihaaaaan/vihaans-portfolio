@@ -62,29 +62,31 @@ export function ContentBox({ data, admin }: ContentBoxProps) {
     <div className="w-full flex flex-col">
 
       {/* Mobile tabs — Top */}
-      <div className="sm:hidden flex-shrink-0 flex justify-start gap-2 mb-4">
-        {data.map((tab, index) => (
-          <button
-            key={index}
-            onClick={() => handleActiveTabChange(index)}
-            className="relative w-11 h-11 flex items-center justify-center hover:cursor-pointer"
-          >
-            {activeTab === index && (
-              <motion.div
-                layoutId="tab-indicator-mobile"
-                className="absolute inset-0 rounded-full bg-gray-100"
-                transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-              />
-            )}
-            <motion.span
-              className="inline-block text-lg relative z-10"
-              whileHover={{ scale: 1.2 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+      <div className="sm:hidden flex-shrink-0 flex justify-center mb-4">
+        <div className="flex items-center gap-0.5 rounded-full border-[0.5px] border-gray-200 bg-white px-1.5 py-1">
+          {data.map((tab, index) => (
+            <button
+              key={index}
+              onClick={() => handleActiveTabChange(index)}
+              className="relative w-9 h-9 flex items-center justify-center hover:cursor-pointer"
             >
-              {tab.emoji}
-            </motion.span>
-          </button>
-        ))}
+              {activeTab === index && (
+                <motion.div
+                  layoutId="tab-indicator-mobile"
+                  className="absolute inset-0 rounded-full bg-gray-100"
+                  transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                />
+              )}
+              <motion.span
+                className="inline-block text-base relative z-10"
+                whileHover={{ scale: 1.2 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              >
+                {tab.emoji}
+              </motion.span>
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="flex-1 flex flex-col sm:flex-row sm:items-start min-w-0">
@@ -120,7 +122,7 @@ export function ContentBox({ data, admin }: ContentBoxProps) {
         </div>
 
         {/* Desktop tabs — Right side */}
-        <div className="hidden sm:flex flex-shrink-0 flex-col gap-2">
+        <div className="hidden sm:flex flex-shrink-0 flex-col items-center gap-1 rounded-full border-[0.5px] border-gray-200 bg-white px-1.5 py-2">
           {data.map((tab, index) => (
             <button
               key={index}

@@ -89,7 +89,7 @@ export function BookshelfRow({ title, books, onOpenCatalog }: BookshelfRowProps)
                     transition={{ duration: 0.15 }}
                   >
                     <div className="bg-gray-800 text-white text-[10px] px-2 py-1.5 rounded-sm whitespace-nowrap max-w-48 text-center shadow-lg">
-                      <p className="font-serif italic leading-tight">{item.title.toLowerCase()}</p>
+                      <p className="font-serif leading-tight">{item.title.toLowerCase()}</p>
                       <p className="text-gray-300 mt-0.5">{item.type.toLowerCase()} · {item.category.toLowerCase()}</p>
                       <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800" />
                     </div>
@@ -105,7 +105,7 @@ export function BookshelfRow({ title, books, onOpenCatalog }: BookshelfRowProps)
       <div className="mt-1 flex justify-end">
         <button
           onClick={onOpenCatalog}
-          className="group/label inline-flex items-center gap-1 text-base sm:text-lg font-serif text-gray-400 italic hover:text-gray-600 transition-colors duration-200 cursor-pointer"
+          className="group/label inline-flex items-center gap-1 text-base sm:text-lg font-serif text-gray-400 hover:text-gray-600 transition-colors duration-200 cursor-pointer"
         >
           {title}
           <span className="text-xs not-italic opacity-0 -translate-x-1 group-hover/label:opacity-100 group-hover/label:translate-x-0 transition-all duration-200">→</span>

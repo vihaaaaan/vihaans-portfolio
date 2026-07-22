@@ -1,6 +1,5 @@
 import { cookies } from 'next/headers'
 import { HomeClient } from '@/components/HomeClient'
-import { UnderConstruction } from '@/components/UnderConstruction'
 import { getDB } from '@/lib/adapters/mongodb'
 import { isValidSession } from '@/lib/session'
 
@@ -9,12 +8,6 @@ export const dynamic = 'force-dynamic'
 export default async function Page() {
   const cookieStore = await cookies()
   const isAdmin = isValidSession(cookieStore.get('admin_session')?.value)
-
-  // Public visitors see the construction splash. The real (editable) site is
-  // only rendered for a valid admin session — hidden behind it until launch.
-  if (!isAdmin) {
-    return <UnderConstruction />
-  }
 
   const db = await getDB()
   const [profile, work, projects, bookshelf] = await Promise.all([

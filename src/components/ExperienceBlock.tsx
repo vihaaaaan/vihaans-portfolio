@@ -77,7 +77,7 @@ export function ExperienceBlock({ companyName, role, isInternship, isPresent, st
               <div className="sm:hidden text-xs text-gray-500 group-hover:text-gray-600">
                 <div className="inline-block">
                   <span className="mr-1">📍</span>
-                  <span className="font-serif italic text-xs">{location?.toLowerCase()}</span>
+                  <span className="font-serif text-xs">{location?.toLowerCase()}</span>
                 </div>
               </div>
             </div>
@@ -110,7 +110,7 @@ export function ExperienceBlock({ companyName, role, isInternship, isPresent, st
               <div className="hidden sm:block text-xs text-gray-500 group-hover:text-gray-600 mb-2">
                 <div className="inline-block">
                   <span className="mr-1">📍</span>
-                  <span className="font-serif italic text-xs">{location?.toLowerCase()}</span>
+                  <span className="font-serif text-xs">{location?.toLowerCase()}</span>
                 </div>
               </div>
             </div>

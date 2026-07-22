@@ -118,7 +118,7 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
         transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         <div className="flex items-baseline justify-between mb-5">
-          <h3 className="text-lg sm:text-xl font-serif italic text-gray-900">{title}</h3>
+          <h3 className="text-lg sm:text-xl font-serif text-gray-900">{title}</h3>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-700 transition-colors duration-200 text-sm cursor-pointer leading-none"
@@ -188,7 +188,7 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
             )}
 
             {books.length === 0 ? (
-              <p className="text-sm font-sans text-gray-400 italic py-6 text-center">nothing here yet</p>
+              <p className="text-sm font-sans text-gray-400 py-6 text-center">nothing here yet</p>
             ) : (
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-x-4 gap-y-6">
                 {books.map((item, index) => {
@@ -234,7 +234,7 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
                         )}
                       </div>
 
-                      <p className="mt-1.5 text-[11px] font-serif italic text-gray-800 leading-tight line-clamp-2">
+                      <p className="mt-1.5 text-[11px] font-serif text-gray-800 leading-tight line-clamp-2">
                         {item.title.toLowerCase()}
                       </p>
                       {item.creators?.length > 0 && (
