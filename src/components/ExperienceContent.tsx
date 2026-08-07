@@ -55,20 +55,9 @@ function WorkEntry({ e }: { e: ExperienceBlockProps }) {
         className={`flex items-start gap-3 ${hasMore ? 'cursor-pointer group' : ''}`}
         onClick={hasMore ? () => setOpen((o) => !o) : undefined}
       >
-        {logoUrl && (
-          <img
-            src={logoUrl}
-            alt=""
-            className="h-5 w-auto max-w-8 flex-shrink-0 mt-0.5 object-contain"
-            onError={(ev) => {
-              if (BRANDFETCH_ID && !triedLogoFallback) {
-                setTriedLogoFallback(true)
-              } else {
-                ev.currentTarget.style.visibility = 'hidden'
-              }
-            }}
-          />
-        )}
+        {/* Company/school logos are hidden here for now — moved into the expanded
+            detail card below instead of sitting in the collapsed row. */}
+        <span className="flex-shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-gray-600" aria-hidden="true" />
         <p className="flex-1 min-w-0 text-xs sm:text-sm font-sans text-gray-600 group-hover:text-gray-800 leading-relaxed transition-colors duration-200">
           <InlineMarkdown text={e.text ?? ''} />
           {hasMore && (
@@ -92,9 +81,22 @@ function WorkEntry({ e }: { e: ExperienceBlockProps }) {
             className="overflow-hidden ml-8 mt-2"
           >
             <div className="border-[0.5px] border-gray-300 bg-gray-50 shadow-sm rounded-md p-3 flex flex-col gap-1.5">
-              <div className="flex items-baseline justify-between gap-2 text-[11px] sm:text-xs font-sans text-gray-400">
-                <span>{e.location && `📍 ${e.location.toLowerCase()}`}</span>
-                <span>{dateRange(e)}</span>
+              <div className="flex items-center justify-between gap-2">
+                {logoUrl && (
+                  <img
+                    src={logoUrl}
+                    alt=""
+                    className="h-5 w-auto max-w-8 flex-shrink-0 object-contain"
+                    onError={(ev) => {
+                      if (BRANDFETCH_ID && !triedLogoFallback) {
+                        setTriedLogoFallback(true)
+                      } else {
+                        ev.currentTarget.style.visibility = 'hidden'
+                      }
+                    }}
+                  />
+                )}
+                <span className="text-[11px] sm:text-xs font-sans text-gray-400 flex-shrink-0">{dateRange(e)}</span>
               </div>
               {details.map((para, i) => (
                 <p key={i} className="text-xs sm:text-sm font-sans text-gray-500 flex gap-1.5">
@@ -102,6 +104,11 @@ function WorkEntry({ e }: { e: ExperienceBlockProps }) {
                   <span>{para}</span>
                 </p>
               ))}
+              {e.location && (
+                <span className="text-[11px] sm:text-xs font-sans text-gray-400 text-right">
+                  📍 {e.location.toLowerCase()}
+                </span>
+              )}
             </div>
           </motion.div>
         )}
@@ -113,10 +120,10 @@ function WorkEntry({ e }: { e: ExperienceBlockProps }) {
 export function ExperienceContent({ current, prev }: ExperienceContentProps) {
   return (
     <motion.div variants={listVariants} initial="hidden" animate="visible" className="mt-3 lowercase">
-      <motion.h3 variants={itemVariants} className="text-base sm:text-lg font-sans text-gray-900 mb-1">current</motion.h3>
+      <motion.h3 variants={itemVariants} className="text-lg sm:text-xl font-serif text-gray-900 mb-1">current</motion.h3>
       {current.map((e, i) => <WorkEntry key={i} e={e} />)}
 
-      <motion.h3 variants={itemVariants} className="text-base sm:text-lg font-sans text-gray-900 mt-4 mb-1">prev</motion.h3>
+      <motion.h3 variants={itemVariants} className="text-lg sm:text-xl font-serif text-gray-900 mt-4 mb-1">prev</motion.h3>
       {prev.map((e, i) => <WorkEntry key={i} e={e} />)}
     </motion.div>
   )
