@@ -49,8 +49,8 @@ export function ProjectCard({ name, emoji, blurb, description, tags, containsIma
       <div className="flex items-center justify-between p-3 sm:p-4">
         <div className="flex items-center gap-3 min-w-0">
           <div className="flex items-center gap-2">
-            <span className="text-lg">{emoji}</span>
-            <h3 className="text-md text-gray-700 font-serif whitespace-nowrap">{name.toLowerCase()}</h3>
+            {/* Project emoji hidden for now — reads inconsistently against the serif/grayscale look. */}
+            <h3 className="text-lg text-gray-900 font-serif whitespace-nowrap">{name.toLowerCase()}</h3>
           </div>
           <motion.svg
             xmlns="http://www.w3.org/2000/svg"

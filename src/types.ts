@@ -70,6 +70,9 @@ export interface BookItemProps {
   notes?: string
   coverSearchQuery?: string
   coverUrl?: string
+  // Set to 'letterboxd' on entries pulled in by the automated sync, so re-syncing
+  // can replace just those without touching anything added by hand.
+  source?: string
 }
 
 export interface DigitalBookshelfContentProps {

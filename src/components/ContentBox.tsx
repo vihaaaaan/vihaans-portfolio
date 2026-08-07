@@ -9,6 +9,8 @@ import type { ContentBoxProps } from '@/types'
 import { useState, useRef, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
+import { PiUserCircleFill, PiLaptopFill, PiFlaskFill, PiBookOpenFill } from 'react-icons/pi'
+import type { IconType } from 'react-icons'
 
 const ease = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 
@@ -24,6 +26,18 @@ const TAB_HASHES: Record<string, string> = {
   work: 'work',
   projects: 'projects',
   digital_bookshelf: 'bookshelf',
+}
+
+// Icon stand-ins for the nav tabs — swapped in for the old per-tab emoji, which
+// read as colorful/inconsistent against the rest of the serif+grayscale look.
+// (Heroicons outline felt too thin/sterile; Heroicons solid's rocket for
+// "projects" didn't land either — Phosphor's rounder filled set + a flask
+// (ties to the section's "products and experiments" subtitle) instead.)
+const TAB_ICONS: Record<string, IconType> = {
+  about: PiUserCircleFill,
+  work: PiLaptopFill,
+  projects: PiFlaskFill,
+  digital_bookshelf: PiBookOpenFill,
 }
 
 export function ContentBox({ data, admin }: ContentBoxProps) {
@@ -64,28 +78,31 @@ export function ContentBox({ data, admin }: ContentBoxProps) {
       {/* Mobile tabs — Top */}
       <div className="sm:hidden flex-shrink-0 flex justify-center mb-4">
         <div className="flex items-center gap-0.5 rounded-full border-[0.5px] border-gray-200 bg-white px-1.5 py-1">
-          {data.map((tab, index) => (
-            <button
-              key={index}
-              onClick={() => handleActiveTabChange(index)}
-              className="relative w-9 h-9 flex items-center justify-center hover:cursor-pointer"
-            >
-              {activeTab === index && (
-                <motion.div
-                  layoutId="tab-indicator-mobile"
-                  className="absolute inset-0 rounded-full bg-gray-100"
-                  transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                />
-              )}
-              <motion.span
-                className="inline-block text-base relative z-10"
-                whileHover={{ scale: 1.2 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+          {data.map((tab, index) => {
+            const Icon = TAB_ICONS[tab.key]
+            return (
+              <button
+                key={index}
+                onClick={() => handleActiveTabChange(index)}
+                className="relative w-9 h-9 flex items-center justify-center hover:cursor-pointer"
               >
-                {tab.emoji}
-              </motion.span>
-            </button>
-          ))}
+                {activeTab === index && (
+                  <motion.div
+                    layoutId="tab-indicator-mobile"
+                    className="absolute inset-0 rounded-full bg-gray-100"
+                    transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                  />
+                )}
+                <motion.span
+                  className={`inline-flex relative z-10 ${activeTab === index ? 'text-gray-900' : 'text-gray-500'}`}
+                  whileHover={{ scale: 1.2 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                >
+                  {Icon && <Icon size={17} />}
+                </motion.span>
+              </button>
+            )
+          })}
         </div>
       </div>
 
@@ -123,40 +140,43 @@ export function ContentBox({ data, admin }: ContentBoxProps) {
 
         {/* Desktop tabs — Right side */}
         <div className="hidden sm:flex flex-shrink-0 flex-col items-center gap-1 rounded-full border-[0.5px] border-gray-200 bg-white px-1.5 py-2">
-          {data.map((tab, index) => (
-            <button
-              key={index}
-              onClick={() => handleActiveTabChange(index)}
-              className="relative w-12 h-12 flex items-center justify-center group hover:cursor-pointer"
-            >
-              {activeTab === index && (
-                <motion.div
-                  layoutId="tab-indicator-desktop"
-                  className="absolute inset-0 rounded-full bg-gray-100"
-                  transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                />
-              )}
-              <span className="relative inline-block z-10">
-                <motion.span
-                  className="inline-block text-xl"
-                  whileHover={{ scale: 1.2 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                >
-                  {tab.emoji}
-                </motion.span>
-                <span className="
-                  absolute right-full top-1/2 -translate-y-1/2 mr-3
-                  bg-gray-800 text-white text-[10px] px-1.5 py-0.5 rounded-sm
-                  opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out
-                  pointer-events-none whitespace-nowrap
-                  before:content-[''] before:absolute before:left-full before:top-1/2 before:-translate-y-1/2
-                  before:border-4 before:border-transparent before:border-l-gray-800
-                ">
-                  {tab.label}
+          {data.map((tab, index) => {
+            const Icon = TAB_ICONS[tab.key]
+            return (
+              <button
+                key={index}
+                onClick={() => handleActiveTabChange(index)}
+                className="relative w-12 h-12 flex items-center justify-center group hover:cursor-pointer"
+              >
+                {activeTab === index && (
+                  <motion.div
+                    layoutId="tab-indicator-desktop"
+                    className="absolute inset-0 rounded-full bg-gray-100"
+                    transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                  />
+                )}
+                <span className="relative inline-block z-10">
+                  <motion.span
+                    className={`inline-flex ${activeTab === index ? 'text-gray-900' : 'text-gray-500'} group-hover:text-gray-800 transition-colors duration-200`}
+                    whileHover={{ scale: 1.2 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                  >
+                    {Icon && <Icon size={21} />}
+                  </motion.span>
+                  <span className="
+                    absolute right-full top-1/2 -translate-y-1/2 mr-3
+                    bg-gray-800 text-white text-[10px] px-1.5 py-0.5 rounded-sm
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out
+                    pointer-events-none whitespace-nowrap
+                    before:content-[''] before:absolute before:left-full before:top-1/2 before:-translate-y-1/2
+                    before:border-4 before:border-transparent before:border-l-gray-800
+                  ">
+                    {tab.label}
+                  </span>
                 </span>
-              </span>
-            </button>
-          ))}
+              </button>
+            )
+          })}
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ export default function NotFound() {
           className="rounded-xl opacity-90"
         />
         <div className="flex flex-col gap-1">
-          <h1 className="text-3xl font-serif tracking-tight text-gray-800">
+          <h1 className="text-4xl font-serif tracking-tight text-gray-900">
             you took a wrong turn.
           </h1>
           <p className="text-sm font-sans text-gray-400">

@@ -20,7 +20,7 @@ export function ExperienceBlock({ companyName, role, isInternship, isPresent, st
         )}
         <div className="flex flex-col w-full">
           <div className="flex items-center">
-            <h3 className="text-md text-gray-700 font-serif mr-2">{companyName.toLowerCase()}</h3>
+            <h3 className="text-lg text-gray-900 font-serif mr-2">{companyName.toLowerCase()}</h3>
             <motion.svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

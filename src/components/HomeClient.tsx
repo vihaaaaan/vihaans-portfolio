@@ -122,9 +122,9 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
         animate="visible"
       >
         <div className="flex-1 flex flex-col pt-20 sm:pt-28 pb-8 sm:pb-10">
-          <div className="flex items-center justify-between mb-4 gap-4">
-            <motion.div variants={itemVariants}>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif tracking-tight text-gray-900">
+          <div className="flex flex-col items-center text-center sm:flex-row sm:items-end sm:justify-between sm:text-left mb-4 gap-4">
+            <motion.div variants={itemVariants} className="order-2 sm:order-1">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif tracking-normal text-gray-900">
                 {profile.headline}
               </h1>
               {profile.sublines && profile.sublines.length > 0 && (
@@ -134,7 +134,7 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
 
             <motion.div
               variants={itemVariants}
-              className="flex-shrink-0"
+              className="order-1 sm:order-2 flex-shrink-0"
             >
               <motion.div
                 whileHover={{ scale: 1.06, rotate: 1.5 }}
@@ -145,7 +145,7 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
                   alt="vihaan illustration"
                   width={140}
                   height={140}
-                  className="mr-4 w-16 h-16 sm:w-24 sm:h-24 md:w-[140px] md:h-[140px]"
+                  className="sm:mr-4 w-20 h-20 sm:w-28 sm:h-28 md:w-[140px] md:h-[140px]"
                 />
               </motion.div>
             </motion.div>
@@ -188,7 +188,7 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
               exit={{ opacity: 0, y: 12, scale: 0.98 }}
               transition={{ duration: 0.2 }}
             >
-              <h2 className="text-base font-serif text-gray-700">enter password</h2>
+              <h2 className="text-lg font-serif text-gray-900">enter password</h2>
               <input
                 autoFocus
                 type="password"
