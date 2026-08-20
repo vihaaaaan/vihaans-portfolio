@@ -50,3 +50,7 @@ next-env.d.ts
 # Misc
 *.local
 .claude/settings.local.json
+
+# Claude Code tooling (skills, local critique/config state) — not app code
+.claude/
+.impeccable/
