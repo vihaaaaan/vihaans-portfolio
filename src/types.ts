@@ -13,6 +13,8 @@ export interface BookshelfAdmin {
 
 export interface ContentBoxProps {
   data: Array<any>
+  activeTab: number
+  direction: number
   admin?: BookshelfAdmin
   children?: React.ReactNode
 }

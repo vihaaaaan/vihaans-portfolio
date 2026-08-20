@@ -57,18 +57,12 @@ function WorkEntry({ e }: { e: ExperienceBlockProps }) {
       >
         {/* Company/school logos are hidden here for now — moved into the expanded
             detail card below instead of sitting in the collapsed row. */}
-        <span className="flex-shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-gray-600" aria-hidden="true" />
+        <span
+          className="flex-shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-gray-600 group-hover:bg-gray-800 transition-colors duration-200"
+          aria-hidden="true"
+        />
         <p className="flex-1 min-w-0 text-xs sm:text-sm font-sans text-gray-600 group-hover:text-gray-800 leading-relaxed transition-colors duration-200">
           <InlineMarkdown text={e.text ?? ''} />
-          {hasMore && (
-            <motion.span
-              className="inline-block ml-1.5 text-gray-400 align-baseline"
-              animate={{ rotate: open ? 90 : 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-            >
-              ›
-            </motion.span>
-          )}
         </p>
       </div>
 
