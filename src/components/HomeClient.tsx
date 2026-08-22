@@ -198,7 +198,12 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
           </motion.div>
         </div>
 
-        <motion.footer variants={itemVariants} className="pb-20 flex items-center space-x-4">
+        <motion.footer
+          layout="position"
+          variants={itemVariants}
+          transition={{ layout: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] } }}
+          className="pb-20 flex items-center space-x-4"
+        >
           {profile.socials?.github && <SocialLink icon={FaGithub} link={profile.socials.github} />}
           {profile.socials?.linkedin && <SocialLink icon={FaLinkedin} link={profile.socials.linkedin} />}
           {profile.socials?.twitter && <SocialLink icon={FaTwitter} link={profile.socials.twitter} />}
