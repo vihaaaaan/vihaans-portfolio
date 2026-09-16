@@ -1,16 +1,16 @@
 'use client'
 
 import { ContentBox } from '@/components/ContentBox'
-import { TabBarNav, TabRailNav, TAB_HASHES } from '@/components/TabNav'
+import { TabBarNav, TAB_HASHES } from '@/components/TabNav'
 import { RotatingQuote } from '@/components/RotatingQuote'
 import { SocialLink } from '@/components/SocialLink'
-import { FaGithub, FaLinkedin, FaTwitter, FaLock, FaLockOpen } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
 import { useState, useRef, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { BookshelfImagesContext } from '@/context/BookshelfImagesContext'
 import { MarginStickers } from '@/components/MarginStickers'
-import { stickers } from '@/data/stickers'
+import { placedStickers } from '@/data/stickers'
 import type { BookItemProps } from '@/types'
 
 const containerVariants = {
@@ -146,23 +146,38 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
     setAdminUnlocked(false)
   }
 
+  // With the footer lock gone, edit mode is reached by URL: visiting #edit
+  // opens the password prompt, or signs out if already unlocked. The fragment
+  // is cleared straight away so it isn't left sitting in the address bar (and
+  // so the prompt can be reopened by visiting #edit again).
+  useEffect(() => {
+    const openEditor = () => {
+      if (window.location.hash !== '#edit') return
+      history.replaceState(null, '', window.location.pathname + window.location.search)
+      if (adminUnlocked) handleLogout()
+      else setShowPasswordModal(true)
+    }
+    openEditor()
+    window.addEventListener('hashchange', openEditor)
+    return () => window.removeEventListener('hashchange', openEditor)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [adminUnlocked])
+
   return (
     <BookshelfImagesContext.Provider value={coverImages}>
       <div className="relative">
-        <MarginStickers stickers={stickers} />
+        <MarginStickers stickers={placedStickers} />
         <motion.div
         className="min-h-screen max-w-2xl mx-auto px-6 sm:px-8 md:px-8 flex flex-col"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="flex-1 flex flex-col pt-20 sm:pt-28 pb-8 sm:pb-10">
-          {/* Phone widths — compact nav above the heading */}
-          <motion.div variants={itemVariants} className="sm:hidden flex justify-center mb-4">
-            <TabBarNav data={tabs} activeTab={activeTab} onSelect={handleActiveTabChange} />
-          </motion.div>
-
-          <div className="flex flex-col items-center text-center sm:flex-row sm:items-end sm:justify-between sm:text-left mb-4 gap-4">
+        <div className="flex flex-col pt-20 sm:pt-28 pb-8 sm:pb-10">
+          {/* One nav at every width: the pill sits inline to the right of the
+              heading, and wraps beneath it only when the viewport is too narrow
+              to fit both on one line. */}
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-4">
             <motion.div variants={itemVariants}>
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif tracking-normal text-gray-900">
                 {profile.headline}
@@ -172,23 +187,12 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
               )}
             </motion.div>
 
-            {/* Tablet widths — nav inline with the heading, on the right */}
-            <motion.div variants={itemVariants} className="hidden sm:flex lg:hidden flex-shrink-0">
+            <motion.div variants={itemVariants} className="flex-shrink-0">
               <TabBarNav data={tabs} activeTab={activeTab} onSelect={handleActiveTabChange} />
             </motion.div>
           </div>
 
           <motion.div variants={itemVariants} className="flex-1 relative">
-            {/* Desktop widths — outside rail, to the left of the content column */}
-            <div className="hidden lg:flex absolute top-0 right-[calc(100%+1.5rem)] flex-shrink-0">
-              <TabRailNav
-                data={tabs}
-                activeTab={activeTab}
-                onSelect={handleActiveTabChange}
-                layoutId="tab-indicator-desktop"
-                tooltipSide="right"
-              />
-            </div>
             <ContentBox
               data={tabs}
               activeTab={activeTab}
@@ -202,19 +206,11 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
           layout="position"
           variants={itemVariants}
           transition={{ layout: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] } }}
-          className="pb-20 flex items-center space-x-4"
+          className="pb-20 flex items-center space-x-6"
         >
           {profile.socials?.github && <SocialLink icon={FaGithub} link={profile.socials.github} />}
           {profile.socials?.linkedin && <SocialLink icon={FaLinkedin} link={profile.socials.linkedin} />}
           {profile.socials?.twitter && <SocialLink icon={FaTwitter} link={profile.socials.twitter} />}
-          <button
-            onClick={() => (adminUnlocked ? handleLogout() : setShowPasswordModal(true))}
-            className="ml-auto text-gray-300 hover:text-gray-500 transition-colors duration-200 cursor-pointer"
-            title={adminUnlocked ? 'exit edit mode' : 'unlock edit mode'}
-            aria-label={adminUnlocked ? 'exit edit mode' : 'unlock edit mode'}
-          >
-            {adminUnlocked ? <FaLockOpen size={13} /> : <FaLock size={13} />}
-          </button>
         </motion.footer>
         </motion.div>
       </div>

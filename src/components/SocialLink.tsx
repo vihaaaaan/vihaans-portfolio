@@ -3,19 +3,20 @@
 import React from 'react'
 import type { SocialLinkProps } from '@/types'
 import { motion } from 'framer-motion'
+import { ICON_COLOR, ICON_SIZE } from '@/components/icons'
 
 export function SocialLink({ icon, link }: SocialLinkProps) {
   return (
     <motion.a
       href={link}
-      className="flex space-x-4"
+      className="flex"
       target="_blank"
       rel="noopener noreferrer"
       whileHover={{ y: -4 }}
       whileTap={{ scale: 0.9 }}
       transition={{ type: 'spring', stiffness: 420, damping: 18 }}
     >
-      {React.createElement(icon, { size: 18, className: 'sm:w-6 sm:h-6 text-gray-500 hover:text-gray-700' })}
+      {React.createElement(icon, { size: ICON_SIZE, className: ICON_COLOR })}
     </motion.a>
   )
 }

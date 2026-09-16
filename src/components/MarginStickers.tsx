@@ -1,3 +1,5 @@
+import { Sticker } from '@/components/stickers/Sticker'
+import { STICKER_ART } from '@/data/stickers.generated'
 import type { StickerConfig } from '@/data/stickers'
 
 // Content column is max-w-2xl (672px), centered — half-width is 336px.
@@ -10,23 +12,28 @@ export function MarginStickers({ stickers }: { stickers: StickerConfig[] }) {
   if (!stickers.length) return null
 
   return (
-    <div className="hidden xl:block absolute inset-0 pointer-events-none z-0" aria-hidden="true">
-      {stickers.map((s) => (
-        // eslint-disable-next-line @next/next/no-img-element -- unknown intrinsic size per sticker; decorative only
-        <img
-          key={s.src}
-          src={s.src}
-          alt={s.alt}
-          className="absolute select-none"
-          style={{
-            top: s.top,
-            width: s.width,
-            height: 'auto',
-            transform: `rotate(${s.rotate}deg)`,
-            [s.side]: `calc(50% + ${HALF_CONTENT_WIDTH + GAP}px)`,
-          }}
-        />
-      ))}
+    <div className="hidden xl:block absolute inset-0 pointer-events-none z-0 text-gray-700" aria-hidden="true">
+      {stickers.map((s) => {
+        // A sticker in the RIGHT margin is offset from the left edge, and vice
+        // versa — anchoring `right` would push it back across the page.
+        const edge = s.side === 'right' ? 'left' : 'right'
+
+        return (
+          <Sticker
+            key={s.art}
+            art={STICKER_ART[s.art]}
+            width={s.width}
+            move={s.move}
+            flipDuration={s.flipDuration}
+            className="absolute select-none"
+            style={{
+              top: s.top,
+              rotate: s.rotate ? `${s.rotate}deg` : undefined,
+              [edge]: `calc(50% + ${HALF_CONTENT_WIDTH + GAP}px)`,
+            }}
+          />
+        )
+      })}
     </div>
   )
 }

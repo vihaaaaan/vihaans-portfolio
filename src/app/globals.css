@@ -1,13 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;1,14..32,300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+/* Both faces are variable and requested as a weight RANGE (300..600), not a
+   single pinned weight. Pinning Inter at 300 was why every piece of sans text
+   on the site rendered Light no matter what the CSS asked for.
+   Roman only — nothing here sets `italic`, so italic faces would double the
+   font payload to sit unused. Add `ital,` back if that changes. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300..600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", sans-serif;
-  --font-serif: "Cormorant Garamond", serif;
+  /* Newsreader replaces Cormorant Garamond: same literary register, but drawn
+     for screens. Cormorant is a display cut with hairline strokes and an
+     x-height 33% smaller than Inter's, so it never looked the same size beside
+     the sans and turned to mush at the 11-12px it was used at in places. */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Newsreader", Georgia, serif;
+}
+
+/* Weight dials. Both faces are variable across 300..600, so these take any
+   value in that range — not just the 300/400 stops a static font would give
+   you. Nothing in the app sets an explicit font-weight class, so between them
+   these two control every piece of text on the site.
+     300 = the old washed-out Light the sans was stuck at
+     400 = regular, which read too heavy here
+     350 = current */
+:root {
+  --weight-sans: 350;
+  --weight-serif: 350;
+}
+
+@layer base {
+  body {
+    font-weight: var(--weight-sans);
+  }
+  /* Only sets weight, so it never collides with Tailwind's font-serif
+     (font-family) — and living in `base` means a font-* utility still wins if
+     one is ever added at a call site. */
+  .font-serif {
+    font-weight: var(--weight-serif);
+  }
 }
 
 body {
   background: linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%);
   min-height: 100vh;
+}
+
+/* Flipbook stickers: the art is one horizontal strip of frames, and stepping
+   the mask across it plays them back. See components/stickers/Sticker.tsx. */
+@keyframes sticker-flip {
+  to { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
 }

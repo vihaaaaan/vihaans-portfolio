@@ -25,27 +25,13 @@ function dateRange(e: ExperienceBlockProps) {
   return end ? `${start} → ${end}` : start
 }
 
-const BRANDFETCH_ID = process.env.NEXT_PUBLIC_BRANDFETCH_CLIENT_ID
-
-function brandfetchSrc(hostname: string, type: 'symbol' | 'logo') {
-  // fallback and type must be path segments (not query params) or Brandfetch silently
-  // falls back to its own defaults (type=icon, fallback=brandfetch's "B" mark).
-  // fallback/404 makes a missing symbol 404 so onError below can advance to type/logo.
-  return `https://cdn.brandfetch.io/${hostname}/w/64/h/64/fallback/404/type/${type}?c=${BRANDFETCH_ID}`
+interface WorkEntryProps {
+  e: ExperienceBlockProps
+  isExpanded: boolean
+  onToggle: () => void
 }
 
-function logoSrc(hostname: string) {
-  if (!hostname) return ''
-  // Prefer Brandfetch (transparent square symbol) when a client id is set; otherwise fall back to logo.dev.
-  if (BRANDFETCH_ID) return brandfetchSrc(hostname, 'symbol')
-  return `https://img.logo.dev/${hostname}?token=${process.env.NEXT_PUBLIC_LOGO_DEV_KEY}`
-}
-
-function WorkEntry({ e }: { e: ExperienceBlockProps }) {
-  const [open, setOpen] = useState(false)
-  const [triedLogoFallback, setTriedLogoFallback] = useState(false)
-  const hostname = e.link ? new URL(e.link).hostname.replace(/^www\./, '') : ''
-  const logoUrl = triedLogoFallback && BRANDFETCH_ID ? brandfetchSrc(hostname, 'logo') : logoSrc(hostname)
+function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
   const details = e.description ?? []
   const hasMore = details.length > 0 || (e.technologies?.length ?? 0) > 0
 
@@ -53,10 +39,8 @@ function WorkEntry({ e }: { e: ExperienceBlockProps }) {
     <motion.div variants={itemVariants} className="py-1.5">
       <div
         className={`flex items-start gap-3 ${hasMore ? 'cursor-pointer group' : ''}`}
-        onClick={hasMore ? () => setOpen((o) => !o) : undefined}
+        onClick={hasMore ? onToggle : undefined}
       >
-        {/* Company/school logos are hidden here for now — moved into the expanded
-            detail card below instead of sitting in the collapsed row. */}
         <span
           className="flex-shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-gray-600 group-hover:bg-gray-800 transition-colors duration-200"
           aria-hidden="true"
@@ -67,7 +51,7 @@ function WorkEntry({ e }: { e: ExperienceBlockProps }) {
       </div>
 
       <AnimatePresence initial={false}>
-        {open && hasMore && (
+        {isExpanded && hasMore && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1, transition: { height: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }, opacity: { duration: 0.22, delay: 0.05 } } }}
@@ -75,23 +59,7 @@ function WorkEntry({ e }: { e: ExperienceBlockProps }) {
             className="overflow-hidden ml-8 mt-2"
           >
             <div className="border-[0.5px] border-gray-300 bg-gray-50 shadow-sm rounded-md p-3 flex flex-col gap-1.5">
-              <div className="flex items-center justify-between gap-2">
-                {logoUrl && (
-                  <img
-                    src={logoUrl}
-                    alt=""
-                    className="h-5 w-auto max-w-8 flex-shrink-0 object-contain"
-                    onError={(ev) => {
-                      if (BRANDFETCH_ID && !triedLogoFallback) {
-                        setTriedLogoFallback(true)
-                      } else {
-                        ev.currentTarget.style.visibility = 'hidden'
-                      }
-                    }}
-                  />
-                )}
-                <span className="text-[11px] sm:text-xs font-sans text-gray-400 flex-shrink-0">{dateRange(e)}</span>
-              </div>
+              <span className="self-end text-[11px] sm:text-xs font-sans text-gray-400">{dateRange(e)}</span>
               {details.map((para, i) => (
                 <p key={i} className="text-xs sm:text-sm font-sans text-gray-500 flex gap-1.5">
                   <span className="flex-shrink-0">↳</span>
@@ -112,13 +80,32 @@ function WorkEntry({ e }: { e: ExperienceBlockProps }) {
 }
 
 export function ExperienceContent({ current, prev }: ExperienceContentProps) {
+  // One entry open at a time, matching the projects tab. The key is scoped by
+  // section because indices repeat across the two lists — and keeping a single
+  // key (rather than one per list) means opening something under "prev" closes
+  // whatever was open under "current".
+  const [expandedKey, setExpandedKey] = useState<string | null>(null)
+
+  const renderList = (items: ExperienceBlockProps[], section: string) =>
+    items.map((e, i) => {
+      const key = `${section}-${i}`
+      return (
+        <WorkEntry
+          key={key}
+          e={e}
+          isExpanded={expandedKey === key}
+          onToggle={() => setExpandedKey((open) => (open === key ? null : key))}
+        />
+      )
+    })
+
   return (
     <motion.div variants={listVariants} initial="hidden" animate="visible" className="mt-3 lowercase">
       <motion.h3 variants={itemVariants} className="text-lg sm:text-xl font-serif text-gray-900 mb-1">current</motion.h3>
-      {current.map((e, i) => <WorkEntry key={i} e={e} />)}
+      {renderList(current, 'current')}
 
       <motion.h3 variants={itemVariants} className="text-lg sm:text-xl font-serif text-gray-900 mt-4 mb-1">prev</motion.h3>
-      {prev.map((e, i) => <WorkEntry key={i} e={e} />)}
+      {renderList(prev, 'prev')}
     </motion.div>
   )
 }
