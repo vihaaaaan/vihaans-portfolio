@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { PiUserCircleFill, PiLaptopFill, PiFlaskFill, PiBookOpenFill } from 'react-icons/pi'
 import type { IconType } from 'react-icons'
+import { ICON_COLOR, ICON_SIZE } from '@/components/icons'
 
 // Icon stand-ins for the nav tabs — swapped in for the old per-tab emoji, which
 // read as colorful/inconsistent against the rest of the serif+grayscale look.
@@ -33,14 +34,17 @@ interface TabNavProps {
 // Compact horizontal pill — phone widths, sits above the "hi, i'm ___" heading.
 export function TabBarNav({ data, activeTab, onSelect }: TabNavProps) {
   return (
-    <div className="flex items-center gap-0.5 rounded-full border-[0.5px] border-gray-200 bg-white px-1.5 py-1">
+    <div className="flex items-center gap-1 rounded-full border-[0.5px] border-gray-200 bg-white p-1.5">
       {data.map((tab, index) => {
         const Icon = TAB_ICONS[tab.key]
         return (
           <button
             key={index}
             onClick={() => onSelect(index)}
-            className="relative w-9 h-9 flex items-center justify-center hover:cursor-pointer"
+            aria-label={tab.label}
+            aria-current={activeTab === index ? 'page' : undefined}
+            title={tab.label}
+            className="relative w-10 h-10 flex items-center justify-center hover:cursor-pointer"
           >
             {activeTab === index && (
               <motion.div
@@ -50,11 +54,11 @@ export function TabBarNav({ data, activeTab, onSelect }: TabNavProps) {
               />
             )}
             <motion.span
-              className={`inline-flex relative z-10 ${activeTab === index ? 'text-gray-900' : 'text-gray-500'}`}
+              className={`inline-flex relative z-10 ${ICON_COLOR}`}
               whileHover={{ scale: 1.2 }}
               transition={{ type: 'spring', stiffness: 400, damping: 20 }}
             >
-              {Icon && <Icon size={17} />}
+              {Icon && <Icon size={ICON_SIZE} />}
             </motion.span>
           </button>
         )
@@ -80,14 +84,14 @@ export function TabRailNav({ data, activeTab, onSelect, layoutId, tooltipSide = 
       : "right-full mr-3 before:left-full before:border-l-gray-800"
 
   return (
-    <div className="flex flex-col items-center gap-1 rounded-full border-[0.5px] border-gray-200 bg-white px-1.5 py-2">
+    <div className="flex flex-col items-center gap-1 rounded-full border-[0.5px] border-gray-200 bg-white p-1.5">
       {data.map((tab, index) => {
         const Icon = TAB_ICONS[tab.key]
         return (
           <button
             key={index}
             onClick={() => onSelect(index)}
-            className="relative w-12 h-12 flex items-center justify-center group hover:cursor-pointer"
+            className="relative w-10 h-10 flex items-center justify-center group hover:cursor-pointer"
           >
             {activeTab === index && (
               <motion.div
@@ -96,13 +100,13 @@ export function TabRailNav({ data, activeTab, onSelect, layoutId, tooltipSide = 
                 transition={{ type: 'spring', stiffness: 420, damping: 32 }}
               />
             )}
-            <span className="relative inline-block z-10">
+            <span className="relative inline-flex z-10">
               <motion.span
-                className={`inline-flex ${activeTab === index ? 'text-gray-900' : 'text-gray-500'} group-hover:text-gray-800 transition-colors duration-200`}
+                className={`inline-flex ${ICON_COLOR}`}
                 whileHover={{ scale: 1.2 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               >
-                {Icon && <Icon size={21} />}
+                {Icon && <Icon size={ICON_SIZE} />}
               </motion.span>
               <span
                 className={`

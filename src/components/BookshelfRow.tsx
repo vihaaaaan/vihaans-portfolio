@@ -63,7 +63,7 @@ export function BookshelfRow({ title, books, onOpenCatalog }: BookshelfRowProps)
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <motion.div
-                className={`${sizeClass} overflow-hidden shadow-sm border border-gray-200 bg-gray-100`}
+                className={`${sizeClass} relative overflow-hidden shadow-sm border border-gray-200 bg-gray-100`}
                 whileHover={{ y: -7, boxShadow: '0 6px 16px rgba(0,0,0,0.12)' }}
                 transition={{ type: 'spring', stiffness: 320, damping: 20 }}
               >
@@ -77,25 +77,31 @@ export function BookshelfRow({ title, books, onOpenCatalog }: BookshelfRowProps)
                     </span>
                   </div>
                 )}
-              </motion.div>
 
-              <AnimatePresence>
-                {hoveredIndex === index && (
-                  <motion.div
-                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-10 pointer-events-none"
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 4 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <div className="bg-gray-800 text-white text-[10px] px-2 py-1.5 rounded-sm whitespace-nowrap max-w-48 text-center shadow-lg">
-                      <p className="font-serif leading-tight">{item.title.toLowerCase()}</p>
-                      <p className="text-gray-300 mt-0.5">{item.type.toLowerCase()} · {item.category.toLowerCase()}</p>
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800" />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                {/* Caption overlays the cover in place, rather than floating a tooltip
+                    outside it — a floating box can pop past the row (page header above
+                    the first row, container edge below the last) and gets clipped by
+                    ContentBox's overflow-hidden. Staying inside the cover's own bounds
+                    means there's never anywhere for it to overflow into. */}
+                <AnimatePresence>
+                  {hoveredIndex === index && (
+                    <motion.div
+                      className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-gray-900/85 px-1.5 text-center pointer-events-none"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      <p className="text-[8px] sm:text-[11px] font-sans text-white leading-tight line-clamp-3">
+                        {item.title.toLowerCase()}
+                      </p>
+                      <p className="text-[7px] sm:text-[10px] font-sans text-gray-300 mt-1">
+                        {item.type.toLowerCase()} · {item.category.toLowerCase()}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             </motion.div>
           )
         })}
