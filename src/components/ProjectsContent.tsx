@@ -1,6 +1,7 @@
 'use client'
 
 import { ProjectCard } from '@/components/ProjectCard'
+import { GitHubActivity } from '@/components/GitHubActivity'
 import type { ProjectsContentProps } from '@/types'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
@@ -23,21 +24,27 @@ export function ProjectsContent({ items }: ProjectsContentProps) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
 
   return (
-    <motion.div
-      className="flex flex-col gap-2 mt-4"
-      variants={listVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      {items.map((project, index) => (
-        <motion.div key={index} variants={itemVariants}>
-          <ProjectCard
-            {...project}
-            isExpanded={expandedIndex === index}
-            onToggle={() => setExpandedIndex(expandedIndex === index ? null : index)}
-          />
-        </motion.div>
-      ))}
-    </motion.div>
+    <>
+      <motion.div
+        className="flex flex-col gap-2 mt-4"
+        variants={listVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {items.map((project, index) => (
+          <motion.div key={index} variants={itemVariants}>
+            <ProjectCard
+              {...project}
+              isExpanded={expandedIndex === index}
+              onToggle={() => setExpandedIndex(expandedIndex === index ? null : index)}
+            />
+          </motion.div>
+        ))}
+      </motion.div>
+      {/* Sits below the cards: the projects are the content, the calendar is
+          evidence underneath them. Outside the list so the stagger above
+          doesn't reach it. */}
+      <GitHubActivity />
+    </>
   )
 }
