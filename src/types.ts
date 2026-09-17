@@ -50,7 +50,8 @@ export interface ProjectItemProps {
 }
 
 export interface ProjectsContentProps {
-  items: Array<ProjectItemProps>
+  current: Array<ProjectItemProps>
+  prev: Array<ProjectItemProps>
 }
 
 export interface SocialLinkProps {

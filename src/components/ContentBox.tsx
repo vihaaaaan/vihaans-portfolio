@@ -69,7 +69,7 @@ export function ContentBox({ data, activeTab, direction, admin }: ContentBoxProp
                 case 'work':
                   return <ExperienceContent current={currData.content.current} prev={currData.content.prev} />
                 case 'projects':
-                  return <ProjectsContent items={currData.content.items} />
+                  return <ProjectsContent current={currData.content.current} prev={currData.content.prev} />
                 case 'digital_bookshelf':
                   return <DigitalBookshelfContent current={currData.content.current} future={currData.content.future} buckets={currData.content.buckets} admin={admin} />
                 default:
