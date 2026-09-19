@@ -21,7 +21,10 @@ export default async function Page() {
     profile,
     tabs: [
       { key: 'work', label: work?.title ?? 'work', emoji: work?.emoji, subtitle: work?.subtitle, content: { current: work?.current ?? [], prev: work?.prev ?? [] } },
-      { key: 'projects', label: projects?.title ?? 'projects', emoji: projects?.emoji, subtitle: projects?.subtitle, content: { items: projects?.items ?? [] } },
+      // `items` is the pre-bucket shape. Falling back to it keeps the tab
+      // populated if the projects doc hasn't been migrated to current/prev yet,
+      // rather than rendering two empty headers.
+      { key: 'projects', label: projects?.title ?? 'projects', emoji: projects?.emoji, subtitle: projects?.subtitle, content: { current: projects?.current ?? projects?.items ?? [], prev: projects?.prev ?? [] } },
       { key: 'digital_bookshelf', label: bookshelf?.title ?? 'digital bookshelf', emoji: bookshelf?.emoji, subtitle: bookshelf?.subtitle, content: { current: bookshelf?.current ?? [], future: bookshelf?.future ?? [], buckets: bookshelf?.buckets ?? { current: 'current + just finished', future: 'future' } } },
     ],
   }
