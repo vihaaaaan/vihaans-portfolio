@@ -81,61 +81,34 @@
       "title": "projects",
       "emoji": "🚀",
       "subtitle": "Products and Experiments",
-      "content": {
-        "items": [
-          {
-            "name": "Casey",
-            "emoji": "🧠",
-            "blurb": "helping educators create case studies based on real experiences",
-            "description": ["An AI-powered case study generator for instructors that dynamically builds teaching materials based on real-world input from industry professionals."],
-            "technologies": ["FastAPI", "React", "Claude API", "DynamoDB", "AWS S3"],
-            "containsImages": false,
-            "links": [
-              ["presentation/demo", "https://casey.ai"]
-            ],
-            "status": "In Development"
-          },
-          {
-            "name": "OmniDoc",
-            "emoji": "🏥",
-            "blurb": "Voice agent for outpatient intake",
-            "description": ["A voice-to-voice AI agent for healthcare intake that uses Whisper and GPT-4o to generate medical summaries for doctors in real time."],
-            "technologies": ["LangChain", "Whisper", "GPT-4o", "Django", "Supabase"],
-            "containsImages": false,
-            "links": [
-              ["Demo", "https://omnidoc.ai"],
-              ["GitHub", "https://github.com/vihaaaaan/omnidoc"]
-            ],
-            "status": "Prototype"
-          },
-          {
-            "name": "Postr",
-            "emoji": "🎬",
-            "blurb": "create hyper-minimalist movie posters",
-            "description": ["A Pokémon-themed productivity app that gamifies focus sessions through a FastAPI backend and React frontend."],
-            "technologies": ["FastAPI", "React", "Tailwind CSS"],
-            "containsImages": false,
-            "links": [
-              ["Live Site", "https://pokeodoro.app"],
-              ["GitHub", "https://github.com/vihaaaaan/pokeodoro"]
-            ],
-            "status": "Prototype"
-          },
-          {
-            "name": "BuckeyeClaw",
-            "emoji": "💬",
-            "blurb": "sms based agent providing one interface for all ohio state student needs",
-            "description": ["A Pokémon-themed productivity app that gamifies focus sessions through a FastAPI backend and React frontend."],
-            "technologies": ["FastAPI", "React", "Tailwind CSS"],
-            "containsImages": false,
-            "links": [
-              ["Live Site", "https://pokeodoro.app"],
-              ["GitHub", "https://github.com/vihaaaaan/pokeodoro"]
-            ],
-            "status": "Prototype"
-          }
-        ]
-      }
+      "current": [],
+      "prev": [
+        {
+          "name": "OmniDoc",
+          "emoji": "🏥",
+          "blurb": "voice agent for outpatient intake",
+          "description": ["physicians spend too much time, during already short appointments, looking at screens rather than their patients. we built a voice agent to help pcps streamline the diagnosis of common illness symptoms by pre-screening patients, triaging them, and generating informed reports prior to the appointment itself.", "won 1st place at ohio's largest hackathon (hack ohi/o) in 2024 -- 150+ teams and 800+ participants -- and later secured $5,000 in funding from ohio state."],
+          "tags": ["hackathon", "in development"],
+          "containsImages": false,
+          "links": [
+            ["Demo", "https://omnidoc.ai"],
+            ["GitHub", "https://github.com/vihaaaaan/omnidoc"]
+          ],
+          "status": ""
+        },
+        {
+          "name": "BuckeyeClaw",
+          "emoji": "💬",
+          "blurb": "an entire campus, one text away",
+          "description": ["osu students juggle a dozen disconnected apps just to get through the day -- canvas for grades, grubhub for food, the bus tracker, buckeyelink, buckeyemail, each with its own login. buckeyeclaw collapses all of it into a single text conversation -- no app to download, no new password, just a text message.", "we built an agent that runs on top of ibm granite and claude, connecting to 87 tools across 6 campus systems -- some through real apis, others through headless browser automation for the campus services that don't expose one. it also keeps long-term memory to remember things like deadlines, habits, and preferences, so it can send reminders and set up recurring tasks on its own, like a weekly grubhub order or a daily bus alert."],
+          "tags": ["hackathon"],
+          "containsImages": false,
+          "links": [
+            ["GitHub", "https://github.com/ibm-ai-hack/buckeye-claw"]
+          ],
+          "status": ""
+        }
+      ]
     },
     {
       "title": "digital_bookshelf",
