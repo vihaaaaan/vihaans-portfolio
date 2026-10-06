@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { FadeInCoverImage } from '@/components/FadeInCoverImage'
 import type { BookItemProps, BookshelfAdmin } from '@/types'
 import { useBookshelfImages } from '@/context/BookshelfImagesContext'
 
@@ -76,17 +77,39 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
 
     // Resolve + store the cover once, at save time.
     const prev = typeof editing === 'number' ? books[editing] : undefined
-    let coverUrl = prev?.coverUrl
-    const titleChanged = !prev || prev.title !== title || prev.type !== type
-    if (titleChanged || !coverUrl) {
+    let imageFields: Pick<BookItemProps, 'coverUrl' | 'imageWidth' | 'imageHeight' | 'coverSource'> = {
+      coverUrl: prev?.coverUrl,
+      imageWidth: prev?.imageWidth,
+      imageHeight: prev?.imageHeight,
+      coverSource: prev?.coverSource,
+    }
+    const titleChanged = !prev
+      || prev.title !== title
+      || prev.type !== type
+      || prev.category !== form.category.trim()
+      || (prev.creators ?? []).join(', ') !== creators.join(', ')
+    if (titleChanged || !imageFields.coverUrl) {
       try {
-        const params = new URLSearchParams({ title, type, ...(creators[0] ? { creator: creators[0] } : {}) })
+        const params = new URLSearchParams({
+          title,
+          type,
+          ...(creators[0] ? { creator: creators[0] } : {}),
+          ...(type.toLowerCase() === 'movie' && form.category.trim() ? { year: form.category.trim() } : {}),
+        })
         const res = await fetch(`/api/cover?${params}`)
-        if (res.ok) coverUrl = (await res.json()).coverUrl || coverUrl
+        if (res.ok) {
+          const resolved = await res.json()
+          imageFields = {
+            coverUrl: resolved.coverUrl || imageFields.coverUrl,
+            imageWidth: resolved.imageWidth || imageFields.imageWidth,
+            imageHeight: resolved.imageHeight || imageFields.imageHeight,
+            coverSource: resolved.coverSource || imageFields.coverSource,
+          }
+        }
       } catch {}
     }
 
-    const item: BookItemProps = { title, creators, type, category: form.category.trim(), coverUrl }
+    const item: BookItemProps = { title, creators, type, category: form.category.trim(), ...imageFields }
     const next = editing === 'new'
       ? [...books, item]
       : books.map((b, i) => (i === editing ? item : b))
@@ -200,18 +223,20 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
                     <div key={index} className="group/item flex flex-col">
                       <div className="relative">
                         <div
-                          className={`w-full ${isSquare ? 'aspect-square' : 'aspect-[2/3]'} overflow-hidden border border-gray-200 bg-gray-100`}
+                          className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-[2/3]'} overflow-hidden border border-gray-200 bg-gray-100`}
                         >
-                          {coverUrl ? (
-                            <img src={coverUrl} alt={item.title} className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex flex-col items-center justify-center p-1">
+                          <FadeInCoverImage
+                            src={coverUrl}
+                            alt={item.title}
+                            fallback={
+                              <div className="w-full h-full flex flex-col items-center justify-center p-1">
                               <span className="text-2xl mb-1">{emoji}</span>
                               <span className="text-[8px] font-sans text-gray-400 text-center leading-tight line-clamp-2">
                                 {item.title.toLowerCase()}
                               </span>
-                            </div>
-                          )}
+                              </div>
+                            }
+                          />
                         </div>
 
                         {canEdit && (

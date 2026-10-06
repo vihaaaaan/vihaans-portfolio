@@ -20,6 +20,7 @@ const STEP = CELL + GAP
 const ROWS = 7
 
 const DAYS_SHOWN = 365
+const SKELETON_WEEKS = 53
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 
@@ -62,19 +63,76 @@ function describe(day: ContributionDay): string {
   return `${count} on ${day.date}`
 }
 
+function GitHubActivityLoading() {
+  const width = SKELETON_WEEKS * STEP - GAP
+  const height = ROWS * STEP - GAP
+
+  return (
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.25 }}
+      className="mt-4 border-[0.5px] border-gray-200 rounded-md bg-white p-3 sm:p-4"
+      aria-label="loading GitHub contribution activity"
+      aria-busy="true"
+    >
+      <div className="relative h-3 mb-1" />
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        className="w-full h-auto block animate-pulse"
+        role="img"
+        aria-label="Loading contribution calendar"
+      >
+        {Array.from({ length: SKELETON_WEEKS }).map((_, w) =>
+          Array.from({ length: ROWS }).map((__, d) => (
+            <rect
+              key={`${w}-${d}`}
+              x={w * STEP}
+              y={d * STEP}
+              width={CELL}
+              height={CELL}
+              rx={2}
+              fill={LEVEL_INK[(w + d) % 5 === 0 ? 1 : 0]}
+            />
+          ))
+        )}
+      </svg>
+      <p className="mt-3 text-xs sm:text-sm font-sans text-gray-400 lowercase">
+        loading github activity
+      </p>
+    </motion.section>
+  )
+}
+
 export function GitHubActivity() {
   const [calendar, setCalendar] = useState<ContributionCalendar | null>(null)
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
 
   useEffect(() => {
-    fetch('/api/github-activity')
-      .then((r) => r.json())
-      .then(setCalendar)
-      .catch(() => {})
+    const controller = new AbortController()
+
+    fetch('/api/github-activity', { signal: controller.signal })
+      .then((r) => {
+        if (!r.ok) throw new Error(`github activity failed (${r.status})`)
+        return r.json()
+      })
+      .then((data) => {
+        setCalendar(data)
+        setStatus('ready')
+      })
+      .catch((err) => {
+        if (err instanceof DOMException && err.name === 'AbortError') return
+        setStatus('error')
+      })
+
+    return () => controller.abort()
   }, [])
+
+  if (status === 'loading') return <GitHubActivityLoading />
 
   // Nothing to say if GitHub was unreachable or the markup moved: the section
   // simply isn't there, rather than showing an empty grid or an error.
-  if (!calendar || calendar.days.length === 0) return null
+  if (status === 'error' || !calendar || calendar.days.length === 0) return null
 
   // GitHub returns a few days more than a year — enough to open on a partial
   // week of the previous September and label it twice at both ends.

@@ -59,12 +59,6 @@ export interface SocialLinkProps {
   link: string
 }
 
-export interface BookshelfRowProps {
-  title: string
-  books: Array<BookItemProps>
-  onOpenCatalog?: () => void
-}
-
 export interface BookItemProps {
   title: string
   creators: Array<string>
@@ -73,6 +67,9 @@ export interface BookItemProps {
   notes?: string
   coverSearchQuery?: string
   coverUrl?: string
+  imageWidth?: number
+  imageHeight?: number
+  coverSource?: string
   // Set to 'letterboxd' on entries pulled in by the automated sync, so re-syncing
   // can replace just those without touching anything added by hand.
   source?: string

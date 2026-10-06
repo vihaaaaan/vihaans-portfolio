@@ -1,4 +1,5 @@
 import { XMLParser } from 'fast-xml-parser'
+import { completeMediaImage, resolveMediaImage } from '@/lib/mediaImages'
 import type { BookItemProps } from '@/types'
 
 // Letterboxd exposes read-only RSS feeds per user — no API key/approval needed.
@@ -28,8 +29,29 @@ function posterFrom(description: string | { __cdata?: string } | undefined): str
   return match?.[1]
 }
 
+function letterboxdKey(title: string, year: string) {
+  return `${title.trim().toLowerCase()}::${year.trim()}`
+}
+
+function savedMediaByKey(items: BookItemProps[] = []) {
+  const saved = new Map<string, Pick<BookItemProps, 'coverUrl' | 'imageWidth' | 'imageHeight' | 'coverSource'>>()
+  for (const item of items) {
+    if (item.source !== 'letterboxd' || !item.coverUrl) continue
+    saved.set(letterboxdKey(item.title, item.category), {
+      coverUrl: item.coverUrl,
+      imageWidth: item.imageWidth,
+      imageHeight: item.imageHeight,
+      coverSource: item.coverSource,
+    })
+  }
+  return saved
+}
+
 async function fetchFeed(url: string): Promise<RssItem[]> {
-  const res = await fetch(url, { headers: { 'User-Agent': 'vihaans-portfolio-sync' } })
+  const res = await fetch(url, {
+    headers: { 'User-Agent': 'vihaans-portfolio-sync' },
+    next: { revalidate: 1800 },
+  })
   if (!res.ok) throw new Error(`letterboxd feed fetch failed (${res.status}): ${url}`)
   const xml = await res.text()
   const parsed = parser.parse(xml)
@@ -38,15 +60,32 @@ async function fetchFeed(url: string): Promise<RssItem[]> {
   return Array.isArray(items) ? items : [items]
 }
 
-function toBookItem(item: RssItem): BookItemProps {
+async function toBookItem(
+  item: RssItem,
+  savedMedia: Map<string, Pick<BookItemProps, 'coverUrl' | 'imageWidth' | 'imageHeight' | 'coverSource'>>,
+  forceImageSearch: boolean
+): Promise<BookItemProps> {
   const title = item['letterboxd:filmTitle'] ?? item.title ?? 'untitled'
   const year = item['letterboxd:filmYear']
+  const titleText = String(title)
+  const yearText = year ? String(year) : ''
+  const saved = savedMedia.get(letterboxdKey(titleText, yearText))
+  const image = saved?.coverUrl && !forceImageSearch
+    ? await completeMediaImage('movie', saved)
+    : await resolveMediaImage({
+      title: titleText,
+      creators: [],
+      type: 'movie',
+      category: yearText,
+      fallbackUrl: posterFrom(item.description),
+    })
+
   return {
-    title: String(title),
+    title: titleText,
     creators: [],
     type: 'movie',
-    category: year ? String(year) : '',
-    coverUrl: posterFrom(item.description),
+    category: yearText,
+    ...image,
     source: 'letterboxd',
   }
 }
@@ -73,25 +112,39 @@ async function fetchFeedSafe(url: string): Promise<{ items: RssItem[]; error: st
 // watchlist has no natural cap, so trim it to keep the row from overflowing.
 export async function syncLetterboxd(
   username: string,
-  { diaryLimit = 6, watchlistLimit = 12 }: { diaryLimit?: number; watchlistLimit?: number } = {}
+  {
+    diaryLimit = 6,
+    watchlistLimit = 12,
+    existingItems = [],
+    forceMovieImages = false,
+  }: {
+    diaryLimit?: number
+    watchlistLimit?: number
+    existingItems?: BookItemProps[]
+    forceMovieImages?: boolean
+  } = {}
 ): Promise<LetterboxdSyncResult> {
   const [diary, watchlist] = await Promise.all([
     fetchFeedSafe(DIARY_FEED(username)),
     fetchFeedSafe(WATCHLIST_FEED(username)),
   ])
+  const savedMedia = savedMediaByKey(existingItems)
 
   // Diary can contain repeat entries for rewatches — de-dupe by title, keep first (most recent).
   const seen = new Set<string>()
   const current: BookItemProps[] = []
   for (const item of diary.items) {
-    const book = toBookItem(item)
-    if (seen.has(book.title)) continue
-    seen.add(book.title)
+    const title = String(item['letterboxd:filmTitle'] ?? item.title ?? 'untitled')
+    if (seen.has(title)) continue
+    seen.add(title)
+    const book = await toBookItem(item, savedMedia, forceMovieImages)
     current.push(book)
     if (current.length >= diaryLimit) break
   }
 
-  const future = watchlist.items.slice(0, watchlistLimit).map(toBookItem)
+  const future = await Promise.all(watchlist.items.slice(0, watchlistLimit).map((item) => (
+    toBookItem(item, savedMedia, forceMovieImages)
+  )))
 
   return { current, future, errors: { current: diary.error, future: watchlist.error } }
 }
