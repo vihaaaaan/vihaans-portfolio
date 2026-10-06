@@ -81,7 +81,18 @@
       "title": "projects",
       "emoji": "🚀",
       "subtitle": "Products and Experiments",
-      "current": [],
+      "current": [
+        {
+          "name": "Garbage Time",
+          "emoji": "🏀",
+          "blurb": "new project i'm working on",
+          "description": ["new project i'm working on."],
+          "tags": ["in development"],
+          "containsImages": false,
+          "links": [],
+          "status": "current"
+        }
+      ],
       "prev": [
         {
           "name": "OmniDoc",

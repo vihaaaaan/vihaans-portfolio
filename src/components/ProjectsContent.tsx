@@ -44,31 +44,23 @@ export function ProjectsContent({ current, prev }: ProjectsContentProps) {
     </div>
   )
 
+  const renderSection = (title: string, items: ProjectItemProps[], bucket: string, className = '') => (
+    <section className={className}>
+      <motion.div variants={itemVariants} className="mb-3 border-b border-gray-200 pb-1">
+        <h3 className="text-lg sm:text-xl font-serif text-gray-900">{title}</h3>
+      </motion.div>
+      {renderList(items, bucket)}
+    </section>
+  )
+
   return (
     <>
       <motion.div variants={listVariants} initial="hidden" animate="visible" className="mt-3 lowercase">
         {/* Headers are dropped when a bucket is empty — an empty "prev" reads as
             a missing section rather than an intentional one. */}
-        {current.length > 0 && (
-          <>
-            <motion.h3 variants={itemVariants} className="text-lg sm:text-xl font-serif text-gray-900 mb-2">
-              current
-            </motion.h3>
-            {renderList(current, 'current')}
-          </>
-        )}
+        {current.length > 0 && renderSection('current', current, 'current')}
 
-        {prev.length > 0 && (
-          <>
-            <motion.h3
-              variants={itemVariants}
-              className={`text-lg sm:text-xl font-serif text-gray-900 mb-2 ${current.length > 0 ? 'mt-5' : ''}`}
-            >
-              prev
-            </motion.h3>
-            {renderList(prev, 'prev')}
-          </>
-        )}
+        {prev.length > 0 && renderSection('prev', prev, 'prev', current.length > 0 ? 'mt-6' : '')}
       </motion.div>
       {/* Sits below the cards: the projects are the content, the calendar is
           evidence underneath them. Outside the list so the stagger above
