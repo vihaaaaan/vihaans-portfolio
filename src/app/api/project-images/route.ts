@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     if (!fs.existsSync(dir)) return NextResponse.json({ images: [] })
     const files = fs
       .readdirSync(dir)
-      .filter((f) => /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(f))
+      .filter((f) => /\.(png|jpg|jpeg|gif|webp|svg|mp4|webm|mov)$/i.test(f))
       .sort()
       .map((f) => `/assets/projects/${folderName}/${f}`)
     return NextResponse.json({ images: files })

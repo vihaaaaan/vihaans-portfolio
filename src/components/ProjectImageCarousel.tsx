@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useRef, useState } from 'react'
 
 interface ProjectImageCarouselProps {
   images: string[]
@@ -14,80 +14,103 @@ export function ProjectImageCarousel({ images, projectName }: ProjectImageCarous
 
   if (images.length === 0) return null
 
-  const goToPrev = () => setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
-  const goToNext = () => setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+  const goToPrev = () => setCurrentIndex((index) => (index === 0 ? images.length - 1 : index - 1))
+  const goToNext = () => setCurrentIndex((index) => (index === images.length - 1 ? 0 : index + 1))
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX
+  const handleTouchStart = (event: React.TouchEvent) => {
+    touchStartX.current = event.touches[0].clientX
     touchEndX.current = null
   }
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX
+
+  const handleTouchMove = (event: React.TouchEvent) => {
+    touchEndX.current = event.touches[0].clientX
   }
+
   const handleTouchEnd = () => {
     if (touchStartX.current === null || touchEndX.current === null) return
-    const diff = touchStartX.current - touchEndX.current
-    if (Math.abs(diff) > 50) diff > 0 ? goToNext() : goToPrev()
+    const difference = touchStartX.current - touchEndX.current
+    if (Math.abs(difference) > 50) difference > 0 ? goToNext() : goToPrev()
     touchStartX.current = null
     touchEndX.current = null
   }
 
   return (
-    <div className="relative mb-3 overflow-hidden border border-gray-200 bg-gray-50">
+    <div className="group relative overflow-hidden bg-gray-950">
       <div
-        className="relative w-full overflow-hidden"
+        className="relative aspect-[16/10] w-full overflow-hidden"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
         <div
-          className="flex transition-transform duration-300 ease-in-out"
+          className="flex h-full transition-transform duration-500 ease-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images.map((src, index) => (
-            <img
-              key={index}
-              src={src}
-              alt={`${projectName} screenshot ${index + 1}`}
-              className="w-full flex-shrink-0 h-auto object-cover"
-              draggable={false}
-            />
+            /\.(mp4|webm|mov)$/i.test(src) ? (
+              <video
+                key={src}
+                src={src}
+                aria-label={`${projectName} video ${index + 1}`}
+                className="h-full w-full flex-shrink-0 object-contain"
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+                preload="metadata"
+              />
+            ) : (
+              <img
+                key={src}
+                src={src}
+                alt={`${projectName} screenshot ${index + 1}`}
+                className="h-full w-full flex-shrink-0 object-contain"
+                draggable={false}
+                decoding="async"
+              />
+            )
           ))}
         </div>
       </div>
 
-      {images.length > 1 && (
+      {images.length > 1 ? (
         <>
           <button
-            onClick={(e) => { e.stopPropagation(); goToPrev() }}
-            className="absolute left-1.5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white/80 hover:bg-white border border-gray-200 flex items-center justify-center transition-all duration-200 hover:scale-110 cursor-pointer"
+            type="button"
+            onClick={goToPrev}
+            aria-label="previous screenshot"
+            className="absolute left-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white/80 opacity-100 backdrop-blur-sm transition hover:bg-black/65 hover:text-white sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3 h-3 text-gray-600">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
+              <path d="m15 18-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
           <button
-            onClick={(e) => { e.stopPropagation(); goToNext() }}
-            className="absolute right-1.5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white/80 hover:bg-white border border-gray-200 flex items-center justify-center transition-all duration-200 hover:scale-110 cursor-pointer"
+            type="button"
+            onClick={goToNext}
+            aria-label="next screenshot"
+            className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white/80 opacity-100 backdrop-blur-sm transition hover:bg-black/65 hover:text-white sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3 h-3 text-gray-600">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
+              <path d="m9 18 6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
-            {images.map((_, index) => (
+
+          <div className="absolute inset-x-0 bottom-3 flex items-center justify-center gap-1.5">
+            {images.map((src, index) => (
               <button
-                key={index}
-                onClick={(e) => { e.stopPropagation(); setCurrentIndex(index) }}
-                className={
-                  'w-1.5 h-1.5 rounded-full transition-all duration-200 cursor-pointer ' +
-                  (index === currentIndex ? 'bg-gray-600 scale-125' : 'bg-gray-300 hover:bg-gray-400')
-                }
+                type="button"
+                key={src}
+                onClick={() => setCurrentIndex(index)}
+                aria-label={`show screenshot ${index + 1}`}
+                aria-current={index === currentIndex ? 'true' : undefined}
+                className={`h-1.5 rounded-full transition-all ${index === currentIndex ? 'w-5 bg-white' : 'w-1.5 bg-white/45 hover:bg-white/70'}`}
               />
             ))}
           </div>
         </>
-      )}
+      ) : null}
     </div>
   )
 }

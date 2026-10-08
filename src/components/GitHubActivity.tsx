@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import type { ContributionCalendar, ContributionDay } from '@/lib/github'
+import { loadTransition, LOAD_Y } from '@/lib/motion'
 
 // Grayscale, not GitHub green. The nav emoji and project emoji were both pulled
 // for reading inconsistently against the serif/grayscale page; a block of green
@@ -69,17 +70,17 @@ function GitHubActivityLoading() {
 
   return (
     <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.25 }}
-      className="mt-4 border-[0.5px] border-gray-200 rounded-md bg-white p-3 sm:p-4"
+      initial={{ opacity: 0, y: LOAD_Y }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={loadTransition}
+      className="border-[0.5px] border-gray-200 rounded-md bg-white p-3 sm:p-4"
       aria-label="loading GitHub contribution activity"
       aria-busy="true"
     >
       <div className="relative h-3 mb-1" />
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="w-full h-auto block animate-pulse"
+        className="block h-auto w-full"
         role="img"
         aria-label="Loading contribution calendar"
       >
@@ -87,12 +88,14 @@ function GitHubActivityLoading() {
           Array.from({ length: ROWS }).map((__, d) => (
             <rect
               key={`${w}-${d}`}
+              className="github-cell-loading"
               x={w * STEP}
               y={d * STEP}
               width={CELL}
               height={CELL}
               rx={2}
               fill={LEVEL_INK[(w + d) % 5 === 0 ? 1 : 0]}
+              style={{ animationDelay: `${-((w * ROWS + d) % 31) * 47}ms` }}
             />
           ))
         )}
@@ -150,10 +153,10 @@ export function GitHubActivity() {
 
   return (
     <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
-      className="mt-4 border-[0.5px] border-gray-200 rounded-md bg-white p-3 sm:p-4"
+      initial={{ opacity: 0, y: LOAD_Y }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={loadTransition}
+      className="border-[0.5px] border-gray-200 rounded-md bg-white p-3 sm:p-4"
       aria-label={`${total} GitHub contributions in the last year`}
     >
       {/* Labels stay HTML at a fixed size rather than scaling inside the SVG,
@@ -184,12 +187,14 @@ export function GitHubActivity() {
             day ? (
               <rect
                 key={`${w}-${d}`}
+                className="github-cell-reveal"
                 x={w * STEP}
                 y={d * STEP}
                 width={CELL}
                 height={CELL}
                 rx={2}
                 fill={LEVEL_INK[day.level] ?? LEVEL_INK[0]}
+                style={{ animationDelay: `${((w * ROWS + d) * 37) % 720}ms` }}
               >
                 <title>{describe(day)}</title>
               </rect>
