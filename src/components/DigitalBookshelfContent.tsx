@@ -185,7 +185,7 @@ function MediaTile({ item, index, width, height }: CollageTile) {
 function BookshelfCollage({ books }: { books: BookItemProps[] }) {
   const ref = useRef<HTMLDivElement | null>(null)
   const [width, setWidth] = useState(620)
-  const gap = 4
+  const gap = 8
   const rows = buildCollageRows(books, width, gap).map((tiles, rowIndex) => ({
     tiles,
     width: rowWidth(tiles, gap),
