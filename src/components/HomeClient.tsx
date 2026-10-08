@@ -11,22 +11,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { BookshelfImagesContext } from '@/context/BookshelfImagesContext'
 import { MarginStickers } from '@/components/MarginStickers'
 import { placedStickers } from '@/data/stickers'
+import { loadItemVariants, LOAD_STAGGER } from '@/lib/motion'
 import type { BookItemProps } from '@/types'
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+    transition: { staggerChildren: LOAD_STAGGER, delayChildren: 0.08 },
   },
 }
 
@@ -178,7 +170,7 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
               heading, and wraps beneath it only when the viewport is too narrow
               to fit both on one line. */}
           <div className="flex flex-wrap items-end justify-between gap-4 mb-4">
-            <motion.div variants={itemVariants}>
+            <motion.div variants={loadItemVariants}>
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif tracking-normal text-gray-900">
                 {profile.headline}
               </h1>
@@ -187,24 +179,24 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
               )}
             </motion.div>
 
-            <motion.div variants={itemVariants} className="flex-shrink-0">
+            <motion.div variants={loadItemVariants} className="flex-shrink-0">
               <TabBarNav data={tabs} activeTab={activeTab} onSelect={handleActiveTabChange} />
             </motion.div>
           </div>
 
-          <motion.div variants={itemVariants} className="flex-1 relative">
+          <div className="flex-1 relative">
             <ContentBox
               data={tabs}
               activeTab={activeTab}
               direction={directionRef.current}
               admin={{ unlocked: adminUnlocked, updateBucket }}
             />
-          </motion.div>
+          </div>
         </div>
 
         <motion.footer
           layout="position"
-          variants={itemVariants}
+          variants={loadItemVariants}
           transition={{ layout: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] } }}
           className="pb-20 flex items-center space-x-6"
         >

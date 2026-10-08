@@ -2,22 +2,9 @@
 
 import type { ExperienceContentProps, ExperienceBlockProps } from '@/types'
 import { InlineMarkdown } from '@/components/InlineMarkdown'
+import { loadItemVariants, loadListVariants } from '@/lib/motion'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
-
-const listVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.07 } },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 14 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.38, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
-  },
-}
 
 function dateRange(e: ExperienceBlockProps) {
   const start = e.startDate?.toLowerCase() ?? ''
@@ -36,7 +23,7 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
   const hasMore = details.length > 0 || (e.technologies?.length ?? 0) > 0
 
   return (
-    <motion.div variants={itemVariants} className="py-1.5">
+    <motion.div variants={loadItemVariants} className="py-1.5">
       <div
         className={`flex items-start gap-3 ${hasMore ? 'cursor-pointer group' : ''}`}
         onClick={hasMore ? onToggle : undefined}
@@ -100,11 +87,11 @@ export function ExperienceContent({ current, prev }: ExperienceContentProps) {
     })
 
   return (
-    <motion.div variants={listVariants} initial="hidden" animate="visible" className="mt-3 lowercase">
-      <motion.h3 variants={itemVariants} className="text-lg sm:text-xl font-serif text-gray-900 mb-1">current</motion.h3>
+    <motion.div variants={loadListVariants} className="mt-3 lowercase">
+      <motion.h3 variants={loadItemVariants} className="text-lg sm:text-xl font-serif text-gray-900 mb-1">current</motion.h3>
       {renderList(current, 'current')}
 
-      <motion.h3 variants={itemVariants} className="text-lg sm:text-xl font-serif text-gray-900 mt-4 mb-1">prev</motion.h3>
+      <motion.h3 variants={loadItemVariants} className="text-lg sm:text-xl font-serif text-gray-900 mt-4 mb-1">prev</motion.h3>
       {renderList(prev, 'prev')}
     </motion.div>
   )

@@ -6,21 +6,20 @@ import { AboutContent } from '@/components/AboutContent'
 import { ExperienceContent } from '@/components/ExperienceContent'
 import { DigitalBookshelfContent } from '@/components/DigitalBookshelfContent'
 import { ProjectsContent } from '@/components/ProjectsContent'
+import { loadItemVariants, LOAD_DURATION, LOAD_EASE, LOAD_STAGGER } from '@/lib/motion'
 import type { ContentBoxProps } from '@/types'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const ease = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
-
-const slideVariants = {
-  enter: (dir: number) => ({ x: dir * -36, opacity: 0 }),
-  center: { x: 0, opacity: 1, transition: { duration: 0.3, ease } },
-  exit: (dir: number) => ({ x: dir * 36, opacity: 0, transition: { duration: 0.2, ease } }),
+const tabVariants = {
+  hidden: {},
+  visible: { transition: { delayChildren: 0.08, staggerChildren: LOAD_STAGGER } },
+  exit: { y: -6, opacity: 0, transition: { duration: 0.24, ease: LOAD_EASE } },
 }
 
 // Nav (mobile bar / tablet & desktop rails) lives in HomeClient now, since its
 // placement moves relative to the "hi, i'm ___" heading at different
 // breakpoints. This just renders whichever tab's content is active.
-export function ContentBox({ data, activeTab, direction, admin }: ContentBoxProps) {
+export function ContentBox({ data, activeTab, admin }: ContentBoxProps) {
   const currData = data[activeTab] ?? data[0]
 
   // Tabs vary a lot in height (a one-line bio vs. a 5-card project list), and
@@ -47,21 +46,22 @@ export function ContentBox({ data, activeTab, direction, admin }: ContentBoxProp
     <motion.div
       className="min-w-0 overflow-hidden"
       animate={{ height }}
-      transition={{ duration: 0.35, ease }}
+      transition={{ duration: LOAD_DURATION, ease: LOAD_EASE }}
     >
       <div ref={innerRef}>
-        <AnimatePresence mode="wait" custom={direction}>
+        <AnimatePresence mode="popLayout">
           <motion.div
             key={activeTab}
-            custom={direction}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
+            variants={tabVariants}
+            initial="hidden"
+            animate="visible"
             exit="exit"
           >
-            {currData.key !== 'about' && (
-              <ContentHeader sectionTitle={currData.label} sectionSubtitle={currData.subtitle} />
-            )}
+            {currData.key !== 'about' ? (
+              <motion.div variants={loadItemVariants}>
+                <ContentHeader sectionTitle={currData.label} sectionSubtitle={currData.subtitle} />
+              </motion.div>
+            ) : null}
             {(() => {
               switch (currData.key) {
                 case 'about':

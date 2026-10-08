@@ -50,3 +50,37 @@ body {
 @keyframes sticker-flip {
   to { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
 }
+
+/* The contribution grid powers on with an uneven CRT-like flicker instead of
+   a generic shimmer. The reveal runs on every mount, even on a warm fetch. */
+@keyframes github-cell-loading {
+  0%, 100% { opacity: 0.18; }
+  24% { opacity: 0.78; }
+  38% { opacity: 0.28; }
+  67% { opacity: 0.92; }
+  76% { opacity: 0.42; }
+}
+
+@keyframes github-cell-reveal {
+  0% { opacity: 0; }
+  28% { opacity: 0.8; }
+  43% { opacity: 0.22; }
+  68% { opacity: 1; }
+  82% { opacity: 0.48; }
+  100% { opacity: 1; }
+}
+
+.github-cell-loading {
+  animation: github-cell-loading 1.35s steps(2, end) infinite;
+}
+
+.github-cell-reveal {
+  animation: github-cell-reveal 0.9s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .github-cell-loading,
+  .github-cell-reveal {
+    animation: none;
+  }
+}

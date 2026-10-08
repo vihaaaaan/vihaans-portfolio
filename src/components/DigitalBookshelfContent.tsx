@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { BookshelfCatalogModal } from '@/components/BookshelfCatalogModal'
+import { loadItemVariants, loadListVariants } from '@/lib/motion'
 import type { BookItemProps, DigitalBookshelfContentProps } from '@/types'
 
 type BucketKey = 'current' | 'future'
@@ -136,10 +137,12 @@ function rowDirection(row: CollageTile[], rowIndex: number): CollageRow['directi
 
 function MediaTile({ item, index, width, height }: CollageTile) {
   const [failed, setFailed] = useState(false)
+  const [loaded, setLoaded] = useState(false)
   const emoji = TYPE_EMOJI[item.type.toLowerCase()] ?? '□'
 
   useEffect(() => {
     setFailed(false)
+    setLoaded(false)
   }, [item.coverUrl])
 
   return (
@@ -157,8 +160,9 @@ function MediaTile({ item, index, width, height }: CollageTile) {
           width={item.imageWidth}
           height={item.imageHeight}
           decoding="async"
+          onLoad={() => setLoaded(true)}
           onError={() => setFailed(true)}
-          className="block h-auto w-full"
+          className={`block h-auto w-full transition-[opacity,transform] duration-[620ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${loaded ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}
         />
       )}
       {(!item.coverUrl || failed) && (
@@ -229,7 +233,7 @@ interface ListSectionProps {
 
 function BookshelfListSection({ title, books, canEdit, onEdit }: ListSectionProps) {
   return (
-    <section className="mt-6 first:mt-4">
+    <motion.section variants={loadItemVariants} className="mt-6 first:mt-4">
       <div className="mb-3 flex items-baseline justify-between gap-3 border-b border-gray-200 pb-1">
         <div className="min-w-0">
           <h3 className="text-lg sm:text-xl font-serif text-gray-900 lowercase">{title}</h3>
@@ -251,7 +255,7 @@ function BookshelfListSection({ title, books, canEdit, onEdit }: ListSectionProp
       ) : (
         <BookshelfCollage books={books} />
       )}
-    </section>
+    </motion.section>
   )
 }
 
@@ -283,18 +287,20 @@ export function DigitalBookshelfContent({ current, future, buckets, admin }: Dig
 
   return (
     <>
-      <BookshelfListSection
-        title={BUCKET_TITLES.current}
-        books={currentBooks}
-        canEdit={canEdit}
-        onEdit={() => setOpenKey('current')}
-      />
-      <BookshelfListSection
-        title={BUCKET_TITLES.future}
-        books={futureBooks}
-        canEdit={canEdit}
-        onEdit={() => setOpenKey('future')}
-      />
+      <motion.div variants={loadListVariants}>
+        <BookshelfListSection
+          title={BUCKET_TITLES.current}
+          books={currentBooks}
+          canEdit={canEdit}
+          onEdit={() => setOpenKey('current')}
+        />
+        <BookshelfListSection
+          title={BUCKET_TITLES.future}
+          books={futureBooks}
+          canEdit={canEdit}
+          onEdit={() => setOpenKey('future')}
+        />
+      </motion.div>
 
       <AnimatePresence>
         {openKey && (

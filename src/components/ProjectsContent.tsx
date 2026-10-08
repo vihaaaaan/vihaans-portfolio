@@ -1,71 +1,66 @@
 'use client'
 
-import { ProjectCard } from '@/components/ProjectCard'
 import { GitHubActivity } from '@/components/GitHubActivity'
+import { ProjectCard } from '@/components/ProjectCard'
+import { ProjectDetailsModal } from '@/components/ProjectDetailsModal'
+import { loadItemVariants, loadListVariants } from '@/lib/motion'
 import type { ProjectItemProps, ProjectsContentProps } from '@/types'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 
-const listVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 14 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.38, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
-  },
+interface SelectedProject {
+  project: ProjectItemProps
+  images: string[]
 }
 
 export function ProjectsContent({ current, prev }: ProjectsContentProps) {
-  // One card open at a time across both buckets, matching the work tab. Indices
-  // repeat between the two lists, so the key is scoped by bucket — and keeping
-  // a single key means opening something under "prev" closes whatever was open
-  // under "current".
-  const [expandedKey, setExpandedKey] = useState<string | null>(null)
+  const [selected, setSelected] = useState<SelectedProject | null>(null)
 
-  const renderList = (items: ProjectItemProps[], bucket: string) => (
-    <div className="flex flex-col gap-2">
-      {items.map((project, i) => {
-        const key = `${bucket}-${i}`
-        return (
-          <motion.div key={key} variants={itemVariants}>
+  const renderSection = (
+    title: string,
+    items: ProjectItemProps[],
+    bucket: string,
+    featured = false,
+  ) => (
+    <section className={bucket === 'prev' && current.length > 0 ? 'mt-7' : ''}>
+      <motion.div variants={loadItemVariants} className="mb-3 border-b border-gray-200 pb-1">
+        <h3 className="font-serif text-lg text-gray-900 sm:text-xl">{title}</h3>
+      </motion.div>
+
+      <div className={featured && items.length === 1 ? 'grid grid-cols-1 gap-3' : 'grid grid-cols-1 gap-3 sm:grid-cols-2'}>
+        {items.map((project) => (
+          <div key={`${bucket}-${project.name}`}>
             <ProjectCard
               {...project}
-              isExpanded={expandedKey === key}
-              onToggle={() => setExpandedKey((open) => (open === key ? null : key))}
+              featured={featured && items.length === 1}
+              onOpen={(images) => setSelected({ project, images })}
             />
-          </motion.div>
-        )
-      })}
-    </div>
-  )
-
-  const renderSection = (title: string, items: ProjectItemProps[], bucket: string, className = '') => (
-    <section className={className}>
-      <motion.div variants={itemVariants} className="mb-3 border-b border-gray-200 pb-1">
-        <h3 className="text-lg sm:text-xl font-serif text-gray-900">{title}</h3>
-      </motion.div>
-      {renderList(items, bucket)}
+          </div>
+        ))}
+      </div>
     </section>
   )
 
   return (
     <>
-      <motion.div variants={listVariants} initial="hidden" animate="visible" className="mt-3 lowercase">
-        {/* Headers are dropped when a bucket is empty — an empty "prev" reads as
-            a missing section rather than an intentional one. */}
-        {current.length > 0 && renderSection('current', current, 'current')}
-
-        {prev.length > 0 && renderSection('prev', prev, 'prev', current.length > 0 ? 'mt-6' : '')}
+      <motion.div variants={loadListVariants} className="mt-3 lowercase">
+        {current.length > 0 && renderSection('current', current, 'current', true)}
+        {prev.length > 0 && renderSection('prev', prev, 'prev')}
       </motion.div>
-      {/* Sits below the cards: the projects are the content, the calendar is
-          evidence underneath them. Outside the list so the stagger above
-          doesn't reach it. */}
-      <GitHubActivity />
+
+      <div className="mt-7 border-t border-gray-200 pt-4">
+        <GitHubActivity />
+      </div>
+
+      <AnimatePresence>
+        {selected ? (
+          <ProjectDetailsModal
+            project={selected.project}
+            images={selected.images}
+            onClose={() => setSelected(null)}
+          />
+        ) : null}
+      </AnimatePresence>
     </>
   )
 }
