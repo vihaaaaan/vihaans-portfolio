@@ -73,7 +73,7 @@ function GitHubActivityLoading() {
       initial={{ opacity: 0, y: LOAD_Y }}
       animate={{ opacity: 1, y: 0 }}
       transition={loadTransition}
-      className="border-[0.5px] border-gray-200 rounded-md bg-white p-3 sm:p-4"
+      className="border-[0.5px] border-gray-200 bg-white p-3 sm:p-4"
       aria-label="loading GitHub contribution activity"
       aria-busy="true"
     >
@@ -156,7 +156,7 @@ export function GitHubActivity() {
       initial={{ opacity: 0, y: LOAD_Y }}
       animate={{ opacity: 1, y: 0 }}
       transition={loadTransition}
-      className="border-[0.5px] border-gray-200 rounded-md bg-white p-3 sm:p-4"
+      className="border-[0.5px] border-gray-200 bg-white p-3 sm:p-4"
       aria-label={`${total} GitHub contributions in the last year`}
     >
       {/* Labels stay HTML at a fixed size rather than scaling inside the SVG,
