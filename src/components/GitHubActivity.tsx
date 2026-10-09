@@ -73,7 +73,7 @@ function GitHubActivityLoading() {
       initial={{ opacity: 0, y: LOAD_Y }}
       animate={{ opacity: 1, y: 0 }}
       transition={loadTransition}
-      className="border-[0.5px] border-gray-200 bg-white p-3 sm:p-4"
+      className="border-[0.5px] border-gray-200 bg-white p-2.5 sm:p-3"
       aria-label="loading GitHub contribution activity"
       aria-busy="true"
     >
@@ -100,7 +100,7 @@ function GitHubActivityLoading() {
           ))
         )}
       </svg>
-      <p className="mt-3 text-xs sm:text-sm font-sans text-gray-400 lowercase">
+      <p className="mt-2 font-sans text-[10px] lowercase text-gray-400 sm:text-[11px]">
         loading github activity
       </p>
     </motion.section>
@@ -156,7 +156,7 @@ export function GitHubActivity() {
       initial={{ opacity: 0, y: LOAD_Y }}
       animate={{ opacity: 1, y: 0 }}
       transition={loadTransition}
-      className="border-[0.5px] border-gray-200 bg-white p-3 sm:p-4"
+      className="border-[0.5px] border-gray-200 bg-white p-2.5 sm:p-3"
       aria-label={`${total} GitHub contributions in the last year`}
     >
       {/* Labels stay HTML at a fixed size rather than scaling inside the SVG,
@@ -167,7 +167,7 @@ export function GitHubActivity() {
           label ? (
             <span
               key={i}
-              className="absolute top-0 text-[10px] leading-none font-sans text-gray-400"
+              className="absolute top-0 font-sans text-[9px] leading-none text-gray-400"
               style={{ left: `${((i * STEP) / width) * 100}%` }}
             >
               {label}
@@ -203,7 +203,7 @@ export function GitHubActivity() {
         )}
       </svg>
 
-      <p className="mt-3 text-xs sm:text-sm font-sans text-gray-500 lowercase">
+      <p className="mt-2 font-sans text-[10px] lowercase text-gray-500 sm:text-[11px]">
         {total.toLocaleString()} contributions in the last year
       </p>
     </motion.section>

@@ -233,15 +233,15 @@ interface ListSectionProps {
 
 function BookshelfListSection({ title, books, canEdit, onEdit }: ListSectionProps) {
   return (
-    <motion.section variants={loadItemVariants} className="mt-6 first:mt-4">
-      <div className="mb-3 flex items-baseline justify-between gap-3 border-b border-gray-200 pb-1">
+    <motion.section variants={loadItemVariants} className="mt-5 first:mt-3">
+      <div className="mb-2 flex items-baseline justify-between gap-2 border-b border-gray-200 pb-0.5">
         <div className="min-w-0">
-          <h3 className="text-lg sm:text-xl font-serif text-gray-900 lowercase">{title}</h3>
+          <h3 className="font-serif text-sm lowercase text-gray-900 sm:text-base">{title}</h3>
         </div>
         {canEdit && (
           <button
             onClick={onEdit}
-            className="shrink-0 text-xs font-sans text-gray-400 hover:text-gray-700 transition-colors duration-200 cursor-pointer"
+            className="shrink-0 cursor-pointer font-sans text-[11px] text-gray-400 transition-colors duration-200 hover:text-gray-700"
           >
             edit
           </button>
@@ -249,7 +249,7 @@ function BookshelfListSection({ title, books, canEdit, onEdit }: ListSectionProp
       </div>
 
       {books.length === 0 ? (
-        <div className="py-5 text-sm font-sans text-gray-400 lowercase">
+        <div className="py-4 font-sans text-xs lowercase text-gray-400">
           nothing here yet
         </div>
       ) : (

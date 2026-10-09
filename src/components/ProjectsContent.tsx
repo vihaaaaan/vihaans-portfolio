@@ -24,10 +24,10 @@ export function ProjectsContent({ current, prev }: ProjectsContentProps) {
   ) => (
     <section className={bucket === 'prev' && current.length > 0 ? 'mt-12' : ''}>
       <motion.div variants={loadItemVariants} className="mb-5 border-b border-gray-200 pb-1">
-        <h3 className="font-serif text-lg text-gray-900 sm:text-xl">{title}</h3>
+        <h3 className="font-serif text-sm text-gray-900 sm:text-base">{title}</h3>
       </motion.div>
 
-      <div className={featured && items.length === 1 ? 'grid grid-cols-1 gap-6' : 'grid grid-cols-1 gap-6 sm:grid-cols-2'}>
+      <div className={featured && items.length === 1 ? 'mx-auto grid w-full max-w-sm grid-cols-1 gap-6' : 'grid grid-cols-1 gap-6 sm:grid-cols-2'}>
         {items.map((project) => (
           <div key={`${bucket}-${project.name}`}>
             <ProjectCard
@@ -43,7 +43,7 @@ export function ProjectsContent({ current, prev }: ProjectsContentProps) {
 
   return (
     <>
-      <motion.div variants={loadListVariants} className="mt-3 lowercase">
+      <motion.div variants={loadListVariants} className="mt-2 lowercase">
         {current.length > 0 && renderSection('current', current, 'current', true)}
         {prev.length > 0 && renderSection('prev', prev, 'prev')}
       </motion.div>

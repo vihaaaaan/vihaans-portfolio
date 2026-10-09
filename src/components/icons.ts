@@ -6,7 +6,7 @@
  * which is how they drifted to 13/17/18/24/21px in the first place. Change it
  * here, not at the call site.
  */
-export const ICON_SIZE = 20
+export const ICON_SIZE = 14
 
 /**
  * One ink for every icon, in every state. The nav's active tab is marked by the
@@ -21,8 +21,8 @@ export const ICON_COLOR = 'text-gray-700'
  * group it's in. That number is reached two different ways, so both have to
  * move together if it changes:
  *
- *   nav bar + rail   40px button - 20px icon = 10px padding a side, + gap-1 (4px) = 24px
- *   footer socials   icons are tight to their links, so space-x-6                 = 24px
+ *   nav bar + rail   28px button - 14px icon = 7px padding a side, + gap-0.5 (2px) = 16px
+ *   footer socials   icons are tight to their links, so space-x-3                  = 12px
  *
  * Tailwind needs those as literal class names, so they can't be read from this
  * file — this comment is the record of where the numbers come from.

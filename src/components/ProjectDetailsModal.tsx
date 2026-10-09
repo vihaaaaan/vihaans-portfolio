@@ -72,7 +72,7 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
         role="dialog"
         aria-modal="true"
         aria-labelledby="project-dialog-title"
-        className="relative z-10 max-h-[94dvh] w-full max-w-3xl overflow-y-auto rounded-t-xl bg-[#f7f6f2] shadow-2xl sm:max-h-[90vh] sm:rounded-lg"
+        className="relative z-10 max-h-[94dvh] w-full max-w-xl overflow-y-auto rounded-t-xl bg-[#f7f6f2] shadow-2xl sm:max-h-[90vh] sm:rounded-lg"
         initial={{ opacity: 0, y: 28, scale: 0.985 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 18, scale: 0.99 }}
@@ -98,13 +98,13 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
           </div>
         )}
 
-        <div className="p-5 lowercase sm:p-7">
+        <div className="p-4 lowercase sm:p-5">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 id="project-dialog-title" className="font-serif text-3xl leading-none text-gray-900 sm:text-4xl">
+              <h2 id="project-dialog-title" className="font-serif text-2xl leading-none text-gray-900 sm:text-3xl">
                 {project.name.toLowerCase()}
               </h2>
-              <p className="mt-2 font-sans text-xs leading-relaxed text-gray-500 sm:text-sm">
+              <p className="mt-1.5 font-sans text-[11px] leading-relaxed text-gray-500 sm:text-xs">
                 {project.blurb.toLowerCase()}
               </p>
             </div>
@@ -116,16 +116,16 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
           </div>
 
           {project.description.length > 0 ? (
-            <div className="mt-5 space-y-2 border-t border-gray-200 pt-5">
+            <div className="mt-4 space-y-1.5 border-t border-gray-200 pt-4">
               {project.description.map((paragraph) => (
-                <p key={paragraph} className="font-sans text-xs leading-relaxed text-gray-600 sm:text-sm">
+                <p key={paragraph} className="font-sans text-[11px] leading-relaxed text-gray-600 sm:text-xs">
                   {paragraph.toLowerCase()}
                 </p>
               ))}
             </div>
           ) : null}
 
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-gray-200 pt-5">
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 pt-4">
             <div className="flex flex-wrap gap-1.5">
               {project.tags.map((tag) => (
                 <span key={tag} className="rounded-sm bg-gray-200/70 px-2 py-1 font-sans text-[9px] text-gray-500">
