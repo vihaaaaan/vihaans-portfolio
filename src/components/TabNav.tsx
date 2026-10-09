@@ -34,7 +34,7 @@ interface TabNavProps {
 // Compact horizontal pill — phone widths, sits above the "hi, i'm ___" heading.
 export function TabBarNav({ data, activeTab, onSelect }: TabNavProps) {
   return (
-    <div className="flex items-center gap-1 rounded-full border-[0.5px] border-gray-200 bg-white p-1.5">
+    <div className="flex items-center gap-0.5 rounded-full border-[0.5px] border-gray-200 bg-white p-0.5">
       {data.map((tab, index) => {
         const Icon = TAB_ICONS[tab.key]
         return (
@@ -44,7 +44,7 @@ export function TabBarNav({ data, activeTab, onSelect }: TabNavProps) {
             aria-label={tab.label}
             aria-current={activeTab === index ? 'page' : undefined}
             title={tab.label}
-            className="relative w-10 h-10 flex items-center justify-center hover:cursor-pointer"
+            className="relative flex h-7 w-7 items-center justify-center hover:cursor-pointer"
           >
             {activeTab === index && (
               <motion.div
@@ -84,14 +84,14 @@ export function TabRailNav({ data, activeTab, onSelect, layoutId, tooltipSide = 
       : "right-full mr-3 before:left-full before:border-l-gray-800"
 
   return (
-    <div className="flex flex-col items-center gap-1 rounded-full border-[0.5px] border-gray-200 bg-white p-1.5">
+    <div className="flex flex-col items-center gap-0.5 rounded-full border-[0.5px] border-gray-200 bg-white p-0.5">
       {data.map((tab, index) => {
         const Icon = TAB_ICONS[tab.key]
         return (
           <button
             key={index}
             onClick={() => onSelect(index)}
-            className="relative w-10 h-10 flex items-center justify-center group hover:cursor-pointer"
+            className="group relative flex h-7 w-7 items-center justify-center hover:cursor-pointer"
           >
             {activeTab === index && (
               <motion.div

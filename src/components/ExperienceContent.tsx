@@ -32,7 +32,7 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
           className="flex-shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-gray-600 group-hover:bg-gray-800 transition-colors duration-200"
           aria-hidden="true"
         />
-        <p className="flex-1 min-w-0 text-xs sm:text-sm font-sans text-gray-600 group-hover:text-gray-800 leading-relaxed transition-colors duration-200">
+        <p className="min-w-0 flex-1 font-sans text-[11px] leading-relaxed text-gray-600 transition-colors duration-200 group-hover:text-gray-800 sm:text-xs">
           <InlineMarkdown text={e.text ?? ''} />
         </p>
       </div>
@@ -46,15 +46,15 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
             className="overflow-hidden ml-8 mt-2"
           >
             <div className="border-[0.5px] border-gray-300 bg-gray-50 shadow-sm rounded-md p-3 flex flex-col gap-1.5">
-              <span className="self-end text-[11px] sm:text-xs font-sans text-gray-400">{dateRange(e)}</span>
+              <span className="self-end font-sans text-[10px] text-gray-400 sm:text-[11px]">{dateRange(e)}</span>
               {details.map((para, i) => (
-                <p key={i} className="text-xs sm:text-sm font-sans text-gray-500 flex gap-1.5">
+                <p key={i} className="flex gap-1.5 font-sans text-[11px] text-gray-500 sm:text-xs">
                   <span className="flex-shrink-0">↳</span>
                   <span>{para}</span>
                 </p>
               ))}
               {e.location && (
-                <span className="text-[11px] sm:text-xs font-sans text-gray-400 text-right">
+                <span className="text-right font-sans text-[10px] text-gray-400 sm:text-[11px]">
                   📍 {e.location.toLowerCase()}
                 </span>
               )}
@@ -87,11 +87,11 @@ export function ExperienceContent({ current, prev }: ExperienceContentProps) {
     })
 
   return (
-    <motion.div variants={loadListVariants} className="mt-3 lowercase">
-      <motion.h3 variants={loadItemVariants} className="text-lg sm:text-xl font-serif text-gray-900 mb-1">current</motion.h3>
+    <motion.div variants={loadListVariants} className="mt-2 lowercase">
+      <motion.h3 variants={loadItemVariants} className="mb-1 font-serif text-sm text-gray-900 sm:text-base">current</motion.h3>
       {renderList(current, 'current')}
 
-      <motion.h3 variants={loadItemVariants} className="text-lg sm:text-xl font-serif text-gray-900 mt-4 mb-1">prev</motion.h3>
+      <motion.h3 variants={loadItemVariants} className="mb-1 mt-3 font-serif text-sm text-gray-900 sm:text-base">prev</motion.h3>
       {renderList(prev, 'prev')}
     </motion.div>
   )

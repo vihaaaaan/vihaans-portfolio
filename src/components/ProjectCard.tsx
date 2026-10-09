@@ -82,7 +82,7 @@ export function ProjectCard({
       whileTap={{ scale: 0.995, transition: { duration: 0.12 } }}
       transition={loadTransition}
     >
-      <div className="relative aspect-[36/25]">
+      <div className="relative aspect-[16/10]">
         {previewImage && previewIsVideo ? (
             <video
               src={previewImage}
@@ -120,12 +120,12 @@ export function ProjectCard({
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/5 transition-colors duration-300 group-hover:from-black/95 group-hover:via-black/35" />
 
-        <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+        <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
           <div className="min-w-0">
-            <h3 className={`${featured ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'} font-serif leading-none text-white`}>
+            <h3 className={`${featured ? 'text-lg sm:text-xl' : 'text-base sm:text-lg'} font-serif leading-none text-white`}>
               {name.toLowerCase()}
             </h3>
-            <p className="mt-1.5 line-clamp-2 text-[11px] font-sans leading-snug text-white/70 sm:text-xs">
+            <p className="mt-1 line-clamp-2 font-sans text-[9px] leading-snug text-white/70 sm:text-[10px]">
               {blurb.toLowerCase()}
             </p>
           </div>

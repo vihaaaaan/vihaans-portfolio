@@ -160,18 +160,18 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
       <div className="relative">
         <MarginStickers stickers={placedStickers} />
         <motion.div
-        className="min-h-screen max-w-2xl mx-auto px-6 sm:px-8 md:px-8 flex flex-col"
+        className="mx-auto flex min-h-screen max-w-2xl flex-col px-5 sm:px-6"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="flex flex-col pt-20 sm:pt-28 pb-8 sm:pb-10">
+        <div className="flex flex-col pb-6 pt-16 sm:pb-8 sm:pt-20">
           {/* One nav at every width: the pill sits inline to the right of the
               heading, and wraps beneath it only when the viewport is too narrow
               to fit both on one line. */}
-          <div className="flex flex-wrap items-end justify-between gap-4 mb-4">
+          <div className="mb-2.5 flex flex-wrap items-end justify-between gap-3">
             <motion.div variants={loadItemVariants}>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif tracking-normal text-gray-900">
+              <h1 className="font-serif text-lg tracking-normal text-gray-900 sm:text-xl">
                 {profile.headline}
               </h1>
               {profile.sublines && profile.sublines.length > 0 && (
@@ -198,7 +198,7 @@ export function HomeClient({ data: initialData, isAdmin }: Props) {
           layout="position"
           variants={loadItemVariants}
           transition={{ layout: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] } }}
-          className="pb-20 flex items-center space-x-6"
+          className="flex items-center space-x-3 pb-14"
         >
           {profile.socials?.github && <SocialLink icon={FaGithub} link={profile.socials.github} />}
           {profile.socials?.linkedin && <SocialLink icon={FaLinkedin} link={profile.socials.linkedin} />}

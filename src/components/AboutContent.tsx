@@ -10,9 +10,9 @@ interface AboutContentProps {
 
 export function AboutContent({ bio }: AboutContentProps) {
   return (
-    <motion.div variants={loadListVariants} className="space-y-5">
+    <motion.div variants={loadListVariants} className="space-y-4">
       {bio.map((para, i) => (
-        <motion.p key={i} variants={loadItemVariants} className="text-xs sm:text-sm font-sans text-gray-600">
+        <motion.p key={i} variants={loadItemVariants} className="font-sans text-[11px] leading-relaxed text-gray-600 sm:text-xs">
           <InlineMarkdown text={para} />
         </motion.p>
       ))}
