@@ -1,10 +1,3 @@
-/* Both faces are variable and requested as a weight RANGE (300..600), not a
-   single pinned weight. Pinning Inter at 300 was why every piece of sans text
-   on the site rendered Light no matter what the CSS asked for.
-   Roman only — nothing here sets `italic`, so italic faces would double the
-   font payload to sit unused. Add `ital,` back if that changes. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300..600&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -12,8 +5,8 @@
      for screens. Cormorant is a display cut with hairline strokes and an
      x-height 33% smaller than Inter's, so it never looked the same size beside
      the sans and turned to mush at the 11-12px it was used at in places. */
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "Newsreader", Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), Georgia, serif;
 }
 
 /* Weight dials. Both faces are variable across 300..600, so these take any
@@ -45,10 +38,65 @@ body {
   min-height: 100vh;
 }
 
+@keyframes section-enter {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-enter {
+  animation: section-enter 180ms ease-out both;
+}
+
+.quote-enter {
+  animation: section-enter 220ms ease-out both;
+}
+
 /* Flipbook stickers: the art is one horizontal strip of frames, and stepping
    the mask across it plays them back. See components/stickers/Sticker.tsx. */
 @keyframes sticker-flip {
   to { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+}
+
+@keyframes sticker-swing {
+  0%, 100% { transform: rotate(-15deg); }
+  50% { transform: rotate(13deg); }
+}
+
+@keyframes sticker-drift {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  25% { transform: translate(6px, -8px) rotate(4deg); }
+  50% { transform: translate(-3px, -2px) rotate(-3deg); }
+  75% { transform: translate(5px, -10px) rotate(2deg); }
+}
+
+@keyframes sticker-bob {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50% { transform: translateY(-4px) rotate(1.5deg); }
+}
+
+@keyframes sticker-twinkle {
+  0%, 100% { opacity: 0.35; transform: scale(0.92); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+.sticker-motion-swing {
+  animation: sticker-swing 4.2s ease-in-out infinite;
+  transform-origin: 50% 0%;
+}
+
+.sticker-motion-drift {
+  animation: sticker-drift 9s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+.sticker-motion-bob {
+  animation: sticker-bob 5.5s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+.sticker-motion-twinkle {
+  animation: sticker-twinkle 3.6s ease-in-out infinite;
+  transform-origin: 50% 50%;
 }
 
 /* The contribution grid powers on with an uneven CRT-like flicker instead of
@@ -79,6 +127,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .section-enter,
+  .quote-enter,
+  [class*="sticker-motion-"],
+  .sticker-flipbook,
   .github-cell-loading,
   .github-cell-reveal {
     animation: none;

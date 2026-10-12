@@ -1,10 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
 import { FadeInCoverImage } from '@/components/FadeInCoverImage'
 import type { BookItemProps, BookshelfAdmin } from '@/types'
-import { useBookshelfImages } from '@/context/BookshelfImagesContext'
 
 const typeEmoji: Record<string, string> = {
   book: '📖',
@@ -31,7 +29,6 @@ interface Props {
 }
 
 export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: Props) {
-  const coverImages = useBookshelfImages()
   const canEdit = !!admin?.unlocked && !!onSave
 
   // null = viewing grid, 'new' = adding, number = editing that index
@@ -124,21 +121,13 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
   }
 
   return (
-    <motion.div
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
     >
       <div className="absolute inset-0 bg-black/30" onClick={onClose} />
 
-      <motion.div
-        className="relative bg-white border border-gray-200 shadow-xl w-full max-w-2xl max-h-[80vh] overflow-y-auto p-6"
-        initial={{ opacity: 0, y: 12, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 12, scale: 0.98 }}
-        transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+      <div
+        className="section-enter relative max-h-[80vh] w-full max-w-2xl overflow-y-auto border border-gray-200 bg-white p-6 shadow-xl"
       >
         <div className="flex items-baseline justify-between mb-5">
           <h3 className="text-lg sm:text-xl font-serif text-gray-900">{title}</h3>
@@ -216,7 +205,7 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-x-4 gap-y-6">
                 {books.map((item, index) => {
                   const emoji = typeEmoji[item.type.toLowerCase()] ?? '📄'
-                  const coverUrl = item.coverUrl || coverImages[item.title]
+                  const coverUrl = item.coverUrl
                   const isSquare = SQUARE_TYPES.has(item.type.toLowerCase())
 
                   return (
@@ -274,7 +263,7 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
             )}
           </>
         )}
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }

@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { BookshelfCatalogModal } from '@/components/BookshelfCatalogModal'
-import { loadItemVariants, loadListVariants } from '@/lib/motion'
+import dynamic from 'next/dynamic'
 import type { BookItemProps, DigitalBookshelfContentProps } from '@/types'
+
+const BookshelfCatalogModal = dynamic(
+  () => import('@/components/BookshelfCatalogModal').then((module) => module.BookshelfCatalogModal),
+)
 
 type BucketKey = 'current' | 'future'
 
@@ -40,6 +42,12 @@ function imageRatioFor(item: BookItemProps) {
   if (type === 'podcast' || type === 'music') return 1
   if (type === 'movie' && item.coverSource === 'tmdb') return 16 / 9
   return 2 / 3
+}
+
+function displayCoverUrl(url: string) {
+  if (url.includes('image.tmdb.org')) return url.replace(/\/w\d+\//, '/w342/')
+  if (url.includes('mzstatic.com')) return url.replace(/\/\d+x\d+bb\./, '/300x300bb.')
+  return url
 }
 
 interface CollageTile {
@@ -155,10 +163,12 @@ function MediaTile({ item, index, width, height }: CollageTile) {
       {item.coverUrl && !failed && (
         <img
           key={item.coverUrl}
-          src={item.coverUrl}
+          src={displayCoverUrl(item.coverUrl)}
           alt=""
           width={item.imageWidth}
           height={item.imageHeight}
+          loading="lazy"
+          fetchPriority="low"
           decoding="async"
           onLoad={() => setLoaded(true)}
           onError={() => setFailed(true)}
@@ -233,7 +243,7 @@ interface ListSectionProps {
 
 function BookshelfListSection({ title, books, canEdit, onEdit }: ListSectionProps) {
   return (
-    <motion.section variants={loadItemVariants} className="mt-5 first:mt-3">
+    <section className="mt-5 first:mt-3">
       <div className="mb-2 flex items-baseline justify-between gap-2 border-b border-gray-200 pb-0.5">
         <div className="min-w-0">
           <h3 className="font-serif text-sm lowercase text-gray-900 sm:text-base">{title}</h3>
@@ -255,7 +265,7 @@ function BookshelfListSection({ title, books, canEdit, onEdit }: ListSectionProp
       ) : (
         <BookshelfCollage books={books} />
       )}
-    </motion.section>
+    </section>
   )
 }
 
@@ -287,7 +297,7 @@ export function DigitalBookshelfContent({ current, future, buckets, admin }: Dig
 
   return (
     <>
-      <motion.div variants={loadListVariants}>
+      <div>
         <BookshelfListSection
           title={BUCKET_TITLES.current}
           books={currentBooks}
@@ -300,10 +310,9 @@ export function DigitalBookshelfContent({ current, future, buckets, admin }: Dig
           canEdit={canEdit}
           onEdit={() => setOpenKey('future')}
         />
-      </motion.div>
+      </div>
 
-      <AnimatePresence>
-        {openKey && (
+      {openKey ? (
           <BookshelfCatalogModal
             title={BUCKET_TITLES[openKey]}
             books={booksFor(openKey)}
@@ -311,8 +320,7 @@ export function DigitalBookshelfContent({ current, future, buckets, admin }: Dig
             onSave={admin ? (books) => handleSave(openKey, books) : undefined}
             onClose={() => setOpenKey(null)}
           />
-        )}
-      </AnimatePresence>
+      ) : null}
     </>
   )
 }

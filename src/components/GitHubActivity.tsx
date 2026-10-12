@@ -1,9 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
 import type { ContributionCalendar, ContributionDay } from '@/lib/github'
-import { loadTransition, LOAD_Y } from '@/lib/motion'
 
 // Grayscale, not GitHub green. The nav emoji and project emoji were both pulled
 // for reading inconsistently against the serif/grayscale page; a block of green
@@ -69,10 +67,7 @@ function GitHubActivityLoading() {
   const height = ROWS * STEP - GAP
 
   return (
-    <motion.section
-      initial={{ opacity: 0, y: LOAD_Y }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={loadTransition}
+    <section
       className="border-[0.5px] border-gray-200 bg-white p-2.5 sm:p-3"
       aria-label="loading GitHub contribution activity"
       aria-busy="true"
@@ -103,7 +98,7 @@ function GitHubActivityLoading() {
       <p className="mt-2 font-sans text-[10px] lowercase text-gray-400 sm:text-[11px]">
         loading github activity
       </p>
-    </motion.section>
+    </section>
   )
 }
 
@@ -152,10 +147,7 @@ export function GitHubActivity() {
   const height = ROWS * STEP - GAP
 
   return (
-    <motion.section
-      initial={{ opacity: 0, y: LOAD_Y }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={loadTransition}
+    <section
       className="border-[0.5px] border-gray-200 bg-white p-2.5 sm:p-3"
       aria-label={`${total} GitHub contributions in the last year`}
     >
@@ -206,6 +198,6 @@ export function GitHubActivity() {
       <p className="mt-2 font-sans text-[10px] lowercase text-gray-500 sm:text-[11px]">
         {total.toLocaleString()} contributions in the last year
       </p>
-    </motion.section>
+    </section>
   )
 }

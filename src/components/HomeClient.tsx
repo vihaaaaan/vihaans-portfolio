@@ -1,251 +1,107 @@
 'use client'
 
-import { ContentBox } from '@/components/ContentBox'
-import { TabBarNav, TAB_HASHES } from '@/components/TabNav'
-import { RotatingQuote } from '@/components/RotatingQuote'
-import { SocialLink } from '@/components/SocialLink'
+import dynamic from 'next/dynamic'
+import { useCallback, useEffect, useState } from 'react'
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
-import { useState, useRef, useEffect } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
-import { BookshelfImagesContext } from '@/context/BookshelfImagesContext'
-import { MarginStickers } from '@/components/MarginStickers'
-import { placedStickers } from '@/data/stickers'
-import { loadItemVariants, LOAD_STAGGER } from '@/lib/motion'
-import type { BookItemProps } from '@/types'
+import { RotatingQuote } from '@/components/RotatingQuote'
+import { SectionViewport, preloadSectionModule } from '@/components/SectionViewport'
+import { SocialLink } from '@/components/SocialLink'
+import { TAB_HASHES, TABS, TabBarNav } from '@/components/TabNav'
+import type { Profile, RemoteSectionKey, SectionKey } from '@/types'
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: LOAD_STAGGER, delayChildren: 0.08 },
-  },
+const AdminLoginModal = dynamic(
+  () => import('@/components/AdminLoginModal').then((module) => module.AdminLoginModal),
+)
+
+function sectionFromHash(): SectionKey {
+  const hash = window.location.hash.slice(1)
+  return TABS.find((tab) => tab.hash === hash)?.key ?? 'about'
 }
 
-interface Profile {
-  headline: string
-  sublines?: Array<{ quote: string; author: string }>
-  bio: string[]
-  location: string
-  socials: { github?: string; linkedin?: string; twitter?: string }
-  aboutEmoji?: string
-  illustration?: string
-}
-
-interface DataShape {
-  profile: Profile
-  tabs: Array<any>
-}
-
-interface Props {
-  data: DataShape
-  isAdmin: boolean
-}
-
-export function HomeClient({ data: initialData, isAdmin }: Props) {
-  const router = useRouter()
-  const pathname = usePathname()
-
-  const [data, setData] = useState<DataShape>(initialData)
-  const [adminUnlocked, setAdminUnlocked] = useState(isAdmin)
+export function HomeClient({ profile }: { profile: Profile }) {
+  const [activeKey, setActiveKey] = useState<SectionKey>('about')
+  const [adminUnlocked, setAdminUnlocked] = useState(false)
+  const [sessionReady, setSessionReady] = useState(false)
   const [showPasswordModal, setShowPasswordModal] = useState(false)
-  const [password, setPassword] = useState('')
-  const [authError, setAuthError] = useState(false)
-  const [authLoading, setAuthLoading] = useState(false)
 
-  const [activeTab, setActiveTab] = useState(0)
-  const directionRef = useRef(0)
-
-  const { profile } = data
-
-  // Cover URLs are stored on each item now — build the lookup map directly (no live fetching).
-  const bookshelfTab = data.tabs.find((t: any) => t.key === 'digital_bookshelf')
-  const bookshelfItems = [
-    ...(bookshelfTab?.content?.current ?? []),
-    ...(bookshelfTab?.content?.future ?? []),
-  ]
-  const coverImages: Record<string, string> = {}
-  for (const it of bookshelfItems) {
-    if (it.coverUrl) coverImages[it.title] = it.coverUrl
-  }
-
-  const aboutTab = { key: 'about', label: 'about', emoji: profile.aboutEmoji ?? '👋', subtitle: '', content: { bio: profile.bio } }
-  const tabs = [aboutTab, ...data.tabs]
-
-  // After mount: sync to hash and listen for back/forward nav
   useEffect(() => {
-    const syncHash = () => {
-      const hash = window.location.hash.replace('#', '')
-      const idx = tabs.findIndex((t) => TAB_HASHES[t.key] === hash)
-      if (idx >= 0 && idx !== activeTab) {
-        directionRef.current = idx > activeTab ? 1 : -1
-        setActiveTab(idx)
-      }
-    }
+    const syncHash = () => setActiveKey(sectionFromHash())
     syncHash()
     window.addEventListener('hashchange', syncHash)
     return () => window.removeEventListener('hashchange', syncHash)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleActiveTabChange = (index: number) => {
-    if (index === activeTab) return
-    directionRef.current = index > activeTab ? 1 : -1
-    setActiveTab(index)
-    const hash = TAB_HASHES[tabs[index].key]
-    router.push(`${pathname}#${hash}`, { scroll: false })
-  }
-
-  // Persist an updated bookshelf bucket (current | future) to its section document.
-  const updateBucket = async (bucketKey: 'current' | 'future', books: BookItemProps[]) => {
-    const newTabs = data.tabs.map((t: any) =>
-      t.key === 'digital_bookshelf'
-        ? { ...t, content: { ...t.content, [bucketKey]: books } }
-        : t
-    )
-    setData({ ...data, tabs: newTabs })
-    const bs = newTabs.find((t: any) => t.key === 'digital_bookshelf')
-    await fetch('/api/section', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        section: 'bookshelf',
-        doc: { title: bs.label, emoji: bs.emoji, subtitle: bs.subtitle, buckets: bs.content.buckets, current: bs.content.current, future: bs.content.future },
-      }),
-    })
-  }
-
-  const handleLogin = async () => {
-    setAuthLoading(true)
-    setAuthError(false)
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password }),
-    })
-    setAuthLoading(false)
-    if (res.ok) {
-      setAdminUnlocked(true)
-      setShowPasswordModal(false)
-      setPassword('')
-    } else {
-      setAuthError(true)
-    }
-  }
-
-  const handleLogout = async () => {
-    await fetch('/api/logout', { method: 'POST' })
-    setAdminUnlocked(false)
-  }
-
-  // With the footer lock gone, edit mode is reached by URL: visiting #edit
-  // opens the password prompt, or signs out if already unlocked. The fragment
-  // is cleared straight away so it isn't left sitting in the address bar (and
-  // so the prompt can be reopened by visiting #edit again).
   useEffect(() => {
-    const openEditor = () => {
-      if (window.location.hash !== '#edit') return
-      history.replaceState(null, '', window.location.pathname + window.location.search)
-      if (adminUnlocked) handleLogout()
-      else setShowPasswordModal(true)
+    let active = true
+    fetch('/api/session')
+      .then((response) => response.json())
+      .then((session) => {
+        if (active) setAdminUnlocked(Boolean(session.authenticated))
+      })
+      .catch(() => undefined)
+      .finally(() => {
+        if (active) setSessionReady(true)
+      })
+    return () => { active = false }
+  }, [])
+
+  const handleEditHash = useCallback(async () => {
+    if (!sessionReady || window.location.hash !== '#edit') return
+    history.replaceState(null, '', window.location.pathname + window.location.search)
+    if (adminUnlocked) {
+      await fetch('/api/logout', { method: 'POST' })
+      setAdminUnlocked(false)
+    } else {
+      setShowPasswordModal(true)
     }
-    openEditor()
-    window.addEventListener('hashchange', openEditor)
-    return () => window.removeEventListener('hashchange', openEditor)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [adminUnlocked])
+  }, [adminUnlocked, sessionReady])
+
+  useEffect(() => {
+    void handleEditHash()
+    window.addEventListener('hashchange', handleEditHash)
+    return () => window.removeEventListener('hashchange', handleEditHash)
+  }, [handleEditHash])
+
+  const selectSection = (key: SectionKey) => {
+    setActiveKey(key)
+    history.pushState(null, '', `${window.location.pathname}${window.location.search}#${TAB_HASHES[key]}`)
+  }
+
+  const signalIntent = (key: SectionKey) => {
+    if (key !== 'about') preloadSectionModule(key as RemoteSectionKey)
+  }
 
   return (
-    <BookshelfImagesContext.Provider value={coverImages}>
-      <div className="relative">
-        <MarginStickers stickers={placedStickers} />
-        <motion.div
-        className="mx-auto flex min-h-screen max-w-2xl flex-col px-5 sm:px-6"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <div className="flex flex-col pb-6 pt-16 sm:pb-8 sm:pt-20">
-          {/* One nav at every width: the pill sits inline to the right of the
-              heading, and wraps beneath it only when the viewport is too narrow
-              to fit both on one line. */}
-          <div className="mb-2.5 flex flex-wrap items-end justify-between gap-3">
-            <motion.div variants={loadItemVariants}>
-              <h1 className="font-serif text-lg tracking-normal text-gray-900 sm:text-xl">
-                {profile.headline}
-              </h1>
-              {profile.sublines && profile.sublines.length > 0 && (
-                <RotatingQuote quotes={profile.sublines} />
-              )}
-            </motion.div>
-
-            <motion.div variants={loadItemVariants} className="flex-shrink-0">
-              <TabBarNav data={tabs} activeTab={activeTab} onSelect={handleActiveTabChange} />
-            </motion.div>
+    <div className="mx-auto flex min-h-screen max-w-2xl flex-col px-5 sm:px-6">
+      <main className="flex flex-col pb-6 pt-16 sm:pb-8 sm:pt-20">
+        <div className="mb-2.5 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h1 className="font-serif text-lg tracking-normal text-gray-900 sm:text-xl">{profile.headline}</h1>
+            {profile.sublines?.length ? <RotatingQuote quotes={profile.sublines} /> : null}
           </div>
 
-          <div className="flex-1 relative">
-            <ContentBox
-              data={tabs}
-              activeTab={activeTab}
-              direction={directionRef.current}
-              admin={{ unlocked: adminUnlocked, updateBucket }}
-            />
+          <div className="flex-shrink-0">
+            <TabBarNav activeKey={activeKey} onSelect={selectSection} onIntent={signalIntent} />
           </div>
         </div>
 
-        <motion.footer
-          layout="position"
-          variants={loadItemVariants}
-          transition={{ layout: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] } }}
-          className="flex items-center space-x-3 pb-14"
-        >
-          {profile.socials?.github && <SocialLink icon={FaGithub} link={profile.socials.github} />}
-          {profile.socials?.linkedin && <SocialLink icon={FaLinkedin} link={profile.socials.linkedin} />}
-          {profile.socials?.twitter && <SocialLink icon={FaTwitter} link={profile.socials.twitter} />}
-        </motion.footer>
-        </motion.div>
-      </div>
+        <div className="min-w-0 flex-1">
+          <SectionViewport activeKey={activeKey} profile={profile} adminUnlocked={adminUnlocked} />
+        </div>
+      </main>
 
-      <AnimatePresence>
-        {showPasswordModal && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="absolute inset-0 bg-black/30" onClick={() => setShowPasswordModal(false)} />
-            <motion.div
-              className="relative bg-white border border-gray-200 shadow-xl p-6 w-full max-w-xs flex flex-col gap-3"
-              initial={{ opacity: 0, y: 12, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 12, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-            >
-              <h2 className="text-lg font-serif text-gray-900">enter password</h2>
-              <input
-                autoFocus
-                type="password"
-                value={password}
-                onChange={(e) => { setPassword(e.target.value); setAuthError(false) }}
-                onKeyDown={(e) => { if (e.key === 'Enter' && password) handleLogin() }}
-                placeholder="password"
-                className="w-full text-sm font-sans border border-gray-200 focus:border-gray-400 px-3 py-2 outline-none transition-colors duration-200"
-              />
-              {authError && <p className="text-[11px] font-sans text-red-400 -mt-1">incorrect password</p>}
-              <button
-                onClick={handleLogin}
-                disabled={authLoading || !password}
-                className="text-sm font-sans bg-gray-800 text-white py-2 hover:bg-gray-700 transition-colors duration-200 disabled:opacity-40 cursor-pointer disabled:cursor-default"
-              >
-                {authLoading ? 'unlocking…' : 'unlock'}
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </BookshelfImagesContext.Provider>
+      <footer className="flex items-center space-x-3 pb-14">
+        {profile.socials?.github ? <SocialLink icon={FaGithub} link={profile.socials.github} /> : null}
+        {profile.socials?.linkedin ? <SocialLink icon={FaLinkedin} link={profile.socials.linkedin} /> : null}
+        {profile.socials?.twitter ? <SocialLink icon={FaTwitter} link={profile.socials.twitter} /> : null}
+      </footer>
+
+      {showPasswordModal ? (
+        <AdminLoginModal
+          onAuthenticated={() => { setAdminUnlocked(true); setShowPasswordModal(false) }}
+          onClose={() => setShowPasswordModal(false)}
+        />
+      ) : null}
+    </div>
   )
 }
