@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { revalidateTag } from 'next/cache'
 import { getDB } from '@/lib/adapters/mongodb'
 import { mergeLetterboxdItems } from '@/lib/bookshelf'
 import { syncLetterboxd } from '@/lib/letterboxd'
@@ -47,6 +48,7 @@ export async function POST(request: Request) {
   )
 
   await db.collection('bookshelf').updateOne({}, { $set: { current, future } })
+  revalidateTag('portfolio-content')
 
   return NextResponse.json({
     ok: true,

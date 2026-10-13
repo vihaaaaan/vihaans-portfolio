@@ -184,7 +184,11 @@
             "creators": ["George R. R. Martin"],
             "type": "Book",
             "category": "Fantasy",
-            "notes": "Classic retelling of Batman's origin with gritty realism."
+            "notes": "Classic retelling of Batman's origin with gritty realism.",
+            "coverUrl": "/assets/books/a-game-of-thrones.jpg",
+            "coverSource": "local",
+            "imageWidth": 313,
+            "imageHeight": 500
           }
         ]
       }

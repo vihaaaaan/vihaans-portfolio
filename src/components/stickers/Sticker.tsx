@@ -1,8 +1,7 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
 import type { StickerArt } from '@/data/stickers.generated'
-import { MOTIONS, type MotionName } from './motions'
+import type { MotionName } from './motions'
 
 interface Props {
   art: StickerArt
@@ -25,8 +24,6 @@ interface Props {
  * instead of being baked into the PNG.
  */
 export function Sticker({ art, move = 'none', flipDuration = 1, width, className, style }: Props) {
-  const reduced = useReducedMotion()
-  const preset = move === 'none' ? null : MOTIONS[move]
   const height = (width * art.height) / art.width
   const isFlipbook = art.frames > 1
 
@@ -46,19 +43,14 @@ export function Sticker({ art, move = 'none', flipDuration = 1, width, className
     // (strip width - frame width), so plain steps(n) lands between frames and
     // shows two of them at once. jump-none puts a stop on 0% and 100% both,
     // which is exactly one stop per frame.
-    ...(isFlipbook && !reduced
+    ...(isFlipbook
       ? { animation: `sticker-flip ${flipDuration}s steps(${art.frames}, jump-none) infinite` }
       : null),
   }
 
   return (
-    <motion.div
-      className={className}
-      style={{ transformOrigin: preset?.origin, ...style }}
-      animate={preset && !reduced ? preset.animate : undefined}
-      transition={preset?.transition}
-    >
-      <div style={mask} />
-    </motion.div>
+    <div className={[className, move !== 'none' ? `sticker-motion-${move}` : ''].filter(Boolean).join(' ')} style={style}>
+      <div className={isFlipbook ? 'sticker-flipbook' : undefined} style={mask} />
+    </div>
   )
 }

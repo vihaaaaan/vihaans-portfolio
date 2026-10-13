@@ -2,7 +2,6 @@
 
 import { ProjectImageCarousel } from '@/components/ProjectImageCarousel'
 import type { ProjectItemProps } from '@/types'
-import { motion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 
 interface ProjectDetailsModalProps {
@@ -53,12 +52,8 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
   }, [onClose])
 
   return (
-    <motion.div
+    <div
       className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-5"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
     >
       <button
         type="button"
@@ -67,16 +62,12 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
         onClick={onClose}
       />
 
-      <motion.article
+      <article
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="project-dialog-title"
-        className="relative z-10 max-h-[94dvh] w-full max-w-xl overflow-y-auto rounded-t-xl bg-[#f7f6f2] shadow-2xl sm:max-h-[90vh] sm:rounded-lg"
-        initial={{ opacity: 0, y: 28, scale: 0.985 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 18, scale: 0.99 }}
-        transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="section-enter relative z-10 max-h-[94dvh] w-full max-w-xl overflow-y-auto rounded-t-xl bg-[#f7f6f2] shadow-2xl sm:max-h-[90vh] sm:rounded-lg"
       >
         <button
           ref={closeButtonRef}
@@ -150,7 +141,7 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
             </div>
           </div>
         </div>
-      </motion.article>
-    </motion.div>
+      </article>
+    </div>
   )
 }

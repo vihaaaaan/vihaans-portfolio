@@ -21,8 +21,6 @@ const STEP = CELL + GAP
 const ROWS = 7
 
 const DAYS_SHOWN = 365
-const SKELETON_WEEKS = 53
-
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 
 /**
@@ -65,49 +63,14 @@ function describe(day: ContributionDay): string {
 }
 
 function GitHubActivityLoading() {
-  const width = SKELETON_WEEKS * STEP - GAP
-  const height = ROWS * STEP - GAP
-
   return (
-    <motion.section
-      initial={{ opacity: 0, y: LOAD_Y }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={loadTransition}
-      className="border-[0.5px] border-gray-200 bg-white p-2.5 sm:p-3"
-      aria-label="loading GitHub contribution activity"
-      aria-busy="true"
-    >
-      <div className="relative h-3 mb-1" />
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        className="block h-auto w-full"
-        role="img"
-        aria-label="Loading contribution calendar"
-      >
-        {Array.from({ length: SKELETON_WEEKS }).map((_, w) =>
-          Array.from({ length: ROWS }).map((__, d) => (
-            <rect
-              key={`${w}-${d}`}
-              className="github-cell-loading"
-              x={w * STEP}
-              y={d * STEP}
-              width={CELL}
-              height={CELL}
-              rx={2}
-              fill={LEVEL_INK[(w + d) % 5 === 0 ? 1 : 0]}
-              style={{ animationDelay: `${-((w * ROWS + d) % 31) * 47}ms` }}
-            />
-          ))
-        )}
-      </svg>
-      <p className="mt-2 font-sans text-[10px] lowercase text-gray-400 sm:text-[11px]">
-        loading github activity
-      </p>
-    </motion.section>
+    <div className="min-h-24" role="status" aria-label="Loading GitHub contribution activity">
+      <span className="sr-only">loading GitHub activity</span>
+    </div>
   )
 }
 
-export function GitHubActivity() {
+export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
   const [calendar, setCalendar] = useState<ContributionCalendar | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
 
@@ -155,7 +118,7 @@ export function GitHubActivity() {
     <motion.section
       initial={{ opacity: 0, y: LOAD_Y }}
       animate={{ opacity: 1, y: 0 }}
-      transition={loadTransition}
+      transition={{ ...loadTransition, delay: revealDelay }}
       className="border-[0.5px] border-gray-200 bg-white p-2.5 sm:p-3"
       aria-label={`${total} GitHub contributions in the last year`}
     >
@@ -187,14 +150,12 @@ export function GitHubActivity() {
             day ? (
               <rect
                 key={`${w}-${d}`}
-                className="github-cell-reveal"
                 x={w * STEP}
                 y={d * STEP}
                 width={CELL}
                 height={CELL}
                 rx={2}
                 fill={LEVEL_INK[day.level] ?? LEVEL_INK[0]}
-                style={{ animationDelay: `${((w * ROWS + d) * 37) % 720}ms` }}
               >
                 <title>{describe(day)}</title>
               </rect>

@@ -1,22 +1,9 @@
 import type { ComponentType } from 'react'
 import type { IconBaseProps } from 'react-icons'
 
-export interface ContentHeaderProps {
-  sectionTitle: string
-  sectionSubtitle: string
-}
-
 export interface BookshelfAdmin {
   unlocked: boolean
   updateBucket: (bucketKey: 'current' | 'future', books: Array<BookItemProps>) => void | Promise<void>
-}
-
-export interface ContentBoxProps {
-  data: Array<any>
-  activeTab: number
-  direction: number
-  admin?: BookshelfAdmin
-  children?: React.ReactNode
 }
 
 export interface ExperienceContentProps {
@@ -47,6 +34,7 @@ export interface ProjectItemProps {
   containsImages: boolean
   links: Array<[string, string]>
   status: string
+  images?: string[]
 }
 
 export interface ProjectsContentProps {
@@ -80,4 +68,49 @@ export interface DigitalBookshelfContentProps {
   future: Array<BookItemProps>
   buckets?: { current?: string; future?: string }
   admin?: BookshelfAdmin
+}
+
+export interface Profile {
+  headline: string
+  sublines?: Array<{ quote: string; author: string }>
+  bio: string[]
+  location: string
+  socials: { github?: string; linkedin?: string; twitter?: string }
+  aboutEmoji?: string
+  illustration?: string
+}
+
+export interface WorkSectionDocument {
+  title?: string
+  emoji?: string
+  subtitle?: string
+  current: ExperienceBlockProps[]
+  prev: ExperienceBlockProps[]
+}
+
+export interface ProjectsSectionDocument {
+  title?: string
+  emoji?: string
+  subtitle?: string
+  current?: ProjectItemProps[]
+  prev?: ProjectItemProps[]
+  items?: ProjectItemProps[]
+}
+
+export interface BookshelfSectionDocument {
+  title?: string
+  emoji?: string
+  subtitle?: string
+  current: BookItemProps[]
+  future: BookItemProps[]
+  buckets?: { current?: string; future?: string }
+}
+
+export type RemoteSectionKey = 'work' | 'projects' | 'bookshelf'
+export type SectionKey = 'about' | RemoteSectionKey
+
+export interface SectionDocumentMap {
+  work: WorkSectionDocument
+  projects: ProjectsSectionDocument
+  bookshelf: BookshelfSectionDocument
 }

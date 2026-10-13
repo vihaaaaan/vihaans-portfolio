@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import type { SocialLinkProps } from '@/types'
 import { motion } from 'framer-motion'
+import type { SocialLinkProps } from '@/types'
 import { ICON_COLOR, ICON_SIZE } from '@/components/icons'
 
 export function SocialLink({ icon, link }: SocialLinkProps) {

@@ -3,7 +3,7 @@
 import type { ExperienceContentProps, ExperienceBlockProps } from '@/types'
 import { InlineMarkdown } from '@/components/InlineMarkdown'
 import { loadItemVariants, loadListVariants } from '@/lib/motion'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 
 function dateRange(e: ExperienceBlockProps) {
@@ -25,25 +25,39 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
   return (
     <motion.div variants={loadItemVariants} className="py-1.5">
       <div
-        className={`flex items-start gap-3 ${hasMore ? 'cursor-pointer group' : ''}`}
-        onClick={hasMore ? onToggle : undefined}
+        className={`flex w-full items-start gap-1 text-left ${hasMore ? 'group cursor-pointer' : ''}`}
+        onClick={hasMore ? (event) => {
+          if ((event.target as Element).closest('a, button')) return
+          onToggle()
+        } : undefined}
       >
-        <span
-          className="flex-shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-gray-600 group-hover:bg-gray-800 transition-colors duration-200"
-          aria-hidden="true"
-        />
+        {hasMore ? (
+          <button
+            type="button"
+            aria-expanded={isExpanded}
+            aria-label={`toggle details for ${e.companyName || e.role}`}
+            onClick={onToggle}
+            className="flex h-5 w-5 flex-shrink-0 cursor-pointer items-center justify-center"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-gray-600 transition-colors duration-150 group-hover:bg-gray-800" aria-hidden="true" />
+          </button>
+        ) : (
+          <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center" aria-hidden="true">
+            <span className="h-1.5 w-1.5 rounded-full bg-gray-600" />
+          </span>
+        )}
         <p className="min-w-0 flex-1 font-sans text-[11px] leading-relaxed text-gray-600 transition-colors duration-200 group-hover:text-gray-800 sm:text-xs">
           <InlineMarkdown text={e.text ?? ''} />
         </p>
       </div>
 
       <AnimatePresence initial={false}>
-        {isExpanded && hasMore && (
+        {isExpanded && hasMore ? (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1, transition: { height: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }, opacity: { duration: 0.22, delay: 0.05 } } }}
             exit={{ height: 0, opacity: 0, transition: { height: { duration: 0.22 }, opacity: { duration: 0.12 } } }}
-            className="overflow-hidden ml-8 mt-2"
+            className="ml-8 mt-2 overflow-hidden"
           >
             <div className="border-[0.5px] border-gray-300 bg-gray-50 shadow-sm rounded-md p-3 flex flex-col gap-1.5">
               <span className="self-end font-sans text-[10px] text-gray-400 sm:text-[11px]">{dateRange(e)}</span>
@@ -60,7 +74,7 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
               )}
             </div>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </motion.div>
   )
@@ -88,10 +102,10 @@ export function ExperienceContent({ current, prev }: ExperienceContentProps) {
 
   return (
     <motion.div variants={loadListVariants} className="mt-2 lowercase">
-      <motion.h3 variants={loadItemVariants} className="mb-1 font-serif text-sm text-gray-900 sm:text-base">current</motion.h3>
+      <motion.h3 variants={loadItemVariants} className="mb-1 font-sans text-sm text-gray-900 sm:text-base">current</motion.h3>
       {renderList(current, 'current')}
 
-      <motion.h3 variants={loadItemVariants} className="mb-1 mt-3 font-serif text-sm text-gray-900 sm:text-base">prev</motion.h3>
+      <motion.h3 variants={loadItemVariants} className="mb-1 mt-3 font-sans text-sm text-gray-900 sm:text-base">prev</motion.h3>
       {renderList(prev, 'prev')}
     </motion.div>
   )
