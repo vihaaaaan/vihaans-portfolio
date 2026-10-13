@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { LOAD_EASE } from '@/lib/motion'
 import type { BookItemProps, DigitalBookshelfContentProps } from '@/types'
 
 const BookshelfCatalogModal = dynamic(
@@ -113,7 +115,11 @@ function buildCollageRows(items: BookItemProps[], containerWidth: number, gap: n
     const targetHeight = messyTargetHeight(containerWidth, groupIndex)
     const isLast = groupIndex === groups.length - 1
     const shouldFill = !isLast || filledHeight <= targetHeight * 1.1
-    const rowHeight = Math.max(containerWidth < 460 ? 58 : 70, shouldFill ? filledHeight : targetHeight)
+    const preferredHeight = shouldFill ? filledHeight : targetHeight
+    const rowHeight = Math.max(
+      containerWidth < 460 ? 58 : 70,
+      Math.min(preferredHeight, targetHeight * 1.18),
+    )
 
     return group.map(({ item, index, ratio }) => ({
       item,
@@ -192,9 +198,14 @@ function MediaTile({ item, index, width, height }: CollageTile) {
   )
 }
 
-function BookshelfCollage({ books }: { books: BookItemProps[] }) {
+function BookshelfCollage({ books, revealStart, centered = false }: {
+  books: BookItemProps[]
+  revealStart: number
+  centered?: boolean
+}) {
   const ref = useRef<HTMLDivElement | null>(null)
   const [width, setWidth] = useState(620)
+  const reduceMotion = useReducedMotion()
   const gap = 8
   const rows = buildCollageRows(books, width, gap).map((tiles, rowIndex) => ({
     tiles,
@@ -216,20 +227,35 @@ function BookshelfCollage({ books }: { books: BookItemProps[] }) {
 
   return (
     <div ref={ref} className="mx-auto flex w-full max-w-[620px] flex-col" style={{ gap }}>
-      {rows.map((row, rowIndex) => (
-        <div
-          key={rowIndex}
-          className="flex items-start"
-          style={{ gap, justifyContent: row.align, flexDirection: row.direction, width: '100%' }}
-        >
-          {row.tiles.map((tile) => (
-            <MediaTile
-              key={`${tile.item.source ?? 'manual'}-${tile.item.title}-${tile.index}`}
-              {...tile}
-            />
-          ))}
-        </div>
-      ))}
+      {rows.map((row, rowIndex) => {
+        const seed = rowSeed(row.tiles, rowIndex)
+        return (
+          <motion.div
+            key={rowIndex}
+            className="flex items-start"
+            style={{
+              gap,
+              justifyContent: centered ? 'center' : row.align,
+              flexDirection: row.direction,
+              width: '100%',
+            }}
+            initial={reduceMotion ? false : { opacity: 0, x: seed % 2 === 0 ? -14 : 14, y: 8 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            transition={reduceMotion ? { duration: 0 } : {
+              duration: 0.56,
+              delay: revealStart + 0.14 + rowIndex * 0.14,
+              ease: LOAD_EASE,
+            }}
+          >
+            {row.tiles.map((tile) => (
+              <MediaTile
+                key={`${tile.item.source ?? 'manual'}-${tile.item.title}-${tile.index}`}
+                {...tile}
+              />
+            ))}
+          </motion.div>
+        )
+      })}
     </div>
   )
 }
@@ -237,16 +263,29 @@ function BookshelfCollage({ books }: { books: BookItemProps[] }) {
 interface ListSectionProps {
   title: string
   books: BookItemProps[]
+  revealStart: number
+  centered?: boolean
   canEdit: boolean
   onEdit: () => void
 }
 
-function BookshelfListSection({ title, books, canEdit, onEdit }: ListSectionProps) {
+function BookshelfListSection({ title, books, revealStart, centered, canEdit, onEdit }: ListSectionProps) {
+  const reduceMotion = useReducedMotion()
+
   return (
-    <section className="mt-5 first:mt-3">
+    <motion.section
+      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={reduceMotion ? { duration: 0 } : {
+        duration: 0.48,
+        delay: revealStart,
+        ease: LOAD_EASE,
+      }}
+      className="mt-5 first:mt-3"
+    >
       <div className="mb-2 flex items-baseline justify-between gap-2 border-b border-gray-200 pb-0.5">
         <div className="min-w-0">
-          <h3 className="font-serif text-sm lowercase text-gray-900 sm:text-base">{title}</h3>
+          <h3 className="font-sans text-sm lowercase text-gray-900 sm:text-base">{title}</h3>
         </div>
         {canEdit && (
           <button
@@ -263,9 +302,9 @@ function BookshelfListSection({ title, books, canEdit, onEdit }: ListSectionProp
           nothing here yet
         </div>
       ) : (
-        <BookshelfCollage books={books} />
+        <BookshelfCollage books={books} revealStart={revealStart} centered={centered} />
       )}
-    </section>
+    </motion.section>
   )
 }
 
@@ -294,6 +333,8 @@ export function DigitalBookshelfContent({ current, future, buckets, admin }: Dig
   }
 
   const canEdit = !!admin?.unlocked
+  const currentRevealStart = 0.18
+  const futureRevealStart = currentRevealStart + (Math.ceil(currentBooks.length / 2) + 1) * 0.14
 
   return (
     <>
@@ -301,18 +342,22 @@ export function DigitalBookshelfContent({ current, future, buckets, admin }: Dig
         <BookshelfListSection
           title={BUCKET_TITLES.current}
           books={currentBooks}
+          revealStart={currentRevealStart}
           canEdit={canEdit}
           onEdit={() => setOpenKey('current')}
         />
         <BookshelfListSection
           title={BUCKET_TITLES.future}
           books={futureBooks}
+          revealStart={futureRevealStart}
+          centered
           canEdit={canEdit}
           onEdit={() => setOpenKey('future')}
         />
       </div>
 
-      {openKey ? (
+      <AnimatePresence>
+        {openKey ? (
           <BookshelfCatalogModal
             title={BUCKET_TITLES[openKey]}
             books={booksFor(openKey)}
@@ -320,7 +365,8 @@ export function DigitalBookshelfContent({ current, future, buckets, admin }: Dig
             onSave={admin ? (books) => handleSave(openKey, books) : undefined}
             onClose={() => setOpenKey(null)}
           />
-      ) : null}
+        ) : null}
+      </AnimatePresence>
     </>
   )
 }

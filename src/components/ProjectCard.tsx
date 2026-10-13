@@ -1,10 +1,13 @@
 'use client'
 
 import type { ProjectItemProps } from '@/types'
+import { loadTransition, LOAD_Y } from '@/lib/motion'
+import { motion } from 'framer-motion'
 import { useState } from 'react'
 
 interface ProjectCardProps extends ProjectItemProps {
   featured?: boolean
+  revealDelay?: number
   onOpen: (images: string[]) => void
 }
 
@@ -14,6 +17,7 @@ export function ProjectCard({
   blurb,
   images = [],
   featured = false,
+  revealDelay = 0,
   onOpen,
 }: ProjectCardProps) {
   const [mediaLoaded, setMediaLoaded] = useState(false)
@@ -21,15 +25,19 @@ export function ProjectCard({
   const videoPreview = images.find((src) => /\.(mp4|webm|mov)$/i.test(src))
   const previewImage = videoPreview ?? images[0]
   const previewIsVideo = /\.(mp4|webm|mov)$/i.test(previewImage ?? '')
-  const mediaReady = !previewImage || mediaLoaded
 
   return (
-    <button
+    <motion.button
       type="button"
       aria-label={`open ${name} project details`}
       aria-haspopup="dialog"
       onClick={() => onOpen(images)}
-      className={`group relative block w-full overflow-hidden bg-gray-900 text-left shadow-sm outline-none ring-1 ring-black/10 transition-[opacity,transform,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-gray-500 hover:-translate-y-[3px] hover:shadow-[0_12px_28px_rgba(17,24,39,0.16)] active:scale-[0.995] ${mediaReady ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}
+      className="group relative block w-full overflow-hidden bg-gray-900 text-left shadow-sm outline-none ring-1 ring-black/10 transition-shadow focus-visible:ring-2 focus-visible:ring-gray-500"
+      initial={{ opacity: 0, y: LOAD_Y }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -3, boxShadow: '0 12px 28px rgba(17, 24, 39, 0.16)', transition: { duration: 0.2 } }}
+      whileTap={{ scale: 0.995, transition: { duration: 0.12 } }}
+      transition={{ ...loadTransition, delay: revealDelay }}
     >
       <div className="relative aspect-[16/10]">
         {previewImage && previewIsVideo ? (
@@ -41,7 +49,7 @@ export function ProjectCard({
               playsInline
               preload="metadata"
               onLoadedData={() => setMediaLoaded(true)}
-              className="absolute inset-0 h-full w-full object-contain"
+              className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-500 ${mediaLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
         ) : previewImage ? (
           <img
@@ -51,7 +59,7 @@ export function ProjectCard({
             loading="lazy"
             decoding="async"
             onLoad={() => setMediaLoaded(true)}
-            className="absolute inset-0 h-full w-full object-contain"
+            className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-500 ${mediaLoaded ? 'opacity-100' : 'opacity-0'}`}
           />
         ) : null}
 
@@ -78,6 +86,6 @@ export function ProjectCard({
           </div>
         </div>
       </div>
-    </button>
+    </motion.button>
   )
 }

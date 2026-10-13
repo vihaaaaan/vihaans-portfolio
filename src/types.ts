@@ -1,11 +1,6 @@
 import type { ComponentType } from 'react'
 import type { IconBaseProps } from 'react-icons'
 
-export interface ContentHeaderProps {
-  sectionTitle: string
-  sectionSubtitle: string
-}
-
 export interface BookshelfAdmin {
   unlocked: boolean
   updateBucket: (bucketKey: 'current' | 'future', books: Array<BookItemProps>) => void | Promise<void>

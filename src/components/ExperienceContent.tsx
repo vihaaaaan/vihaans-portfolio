@@ -2,6 +2,8 @@
 
 import type { ExperienceContentProps, ExperienceBlockProps } from '@/types'
 import { InlineMarkdown } from '@/components/InlineMarkdown'
+import { loadItemVariants, loadListVariants } from '@/lib/motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 
 function dateRange(e: ExperienceBlockProps) {
@@ -21,7 +23,7 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
   const hasMore = details.length > 0 || (e.technologies?.length ?? 0) > 0
 
   return (
-    <div className="py-1.5">
+    <motion.div variants={loadItemVariants} className="py-1.5">
       <div
         className={`flex w-full items-start gap-1 text-left ${hasMore ? 'group cursor-pointer' : ''}`}
         onClick={hasMore ? (event) => {
@@ -49,8 +51,14 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
         </p>
       </div>
 
-      {isExpanded && hasMore ? (
-          <div className="section-enter ml-8 mt-2 overflow-hidden">
+      <AnimatePresence initial={false}>
+        {isExpanded && hasMore ? (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1, transition: { height: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }, opacity: { duration: 0.22, delay: 0.05 } } }}
+            exit={{ height: 0, opacity: 0, transition: { height: { duration: 0.22 }, opacity: { duration: 0.12 } } }}
+            className="ml-8 mt-2 overflow-hidden"
+          >
             <div className="border-[0.5px] border-gray-300 bg-gray-50 shadow-sm rounded-md p-3 flex flex-col gap-1.5">
               <span className="self-end font-sans text-[10px] text-gray-400 sm:text-[11px]">{dateRange(e)}</span>
               {details.map((para, i) => (
@@ -65,9 +73,10 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
                 </span>
               )}
             </div>
-          </div>
-      ) : null}
-    </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </motion.div>
   )
 }
 
@@ -92,12 +101,12 @@ export function ExperienceContent({ current, prev }: ExperienceContentProps) {
     })
 
   return (
-    <div className="mt-2 lowercase">
-      <h3 className="mb-1 font-serif text-sm text-gray-900 sm:text-base">current</h3>
+    <motion.div variants={loadListVariants} className="mt-2 lowercase">
+      <motion.h3 variants={loadItemVariants} className="mb-1 font-sans text-sm text-gray-900 sm:text-base">current</motion.h3>
       {renderList(current, 'current')}
 
-      <h3 className="mb-1 mt-3 font-serif text-sm text-gray-900 sm:text-base">prev</h3>
+      <motion.h3 variants={loadItemVariants} className="mb-1 mt-3 font-sans text-sm text-gray-900 sm:text-base">prev</motion.h3>
       {renderList(prev, 'prev')}
-    </div>
+    </motion.div>
   )
 }

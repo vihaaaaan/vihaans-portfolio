@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { PiBookOpenFill, PiFlaskFill, PiLaptopFill, PiUserCircleFill } from 'react-icons/pi'
 import type { IconType } from 'react-icons'
 import { ICON_COLOR, ICON_SIZE } from '@/components/icons'
@@ -43,11 +44,22 @@ export function TabBarNav({ activeKey, onSelect, onIntent }: TabNavProps) {
             aria-label={tab.label}
             aria-current={active ? 'page' : undefined}
             title={tab.label}
-            className={`relative flex h-7 w-7 items-center justify-center rounded-full transition-colors duration-150 hover:cursor-pointer ${active ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+            className="relative flex h-7 w-7 items-center justify-center hover:cursor-pointer"
           >
-            <span className={`relative z-10 inline-flex transition-transform duration-150 hover:scale-110 ${ICON_COLOR}`}>
+            {active ? (
+              <motion.span
+                layoutId="tab-indicator-bar"
+                className="absolute inset-0 rounded-full bg-gray-100"
+                transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+              />
+            ) : null}
+            <motion.span
+              className={`relative z-10 inline-flex ${ICON_COLOR}`}
+              whileHover={{ scale: 1.2 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+            >
               <Icon size={ICON_SIZE} />
-            </span>
+            </motion.span>
           </button>
         )
       })}
