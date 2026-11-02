@@ -7,6 +7,19 @@
      the sans and turned to mush at the 11-12px it was used at in places. */
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-serif: var(--font-newsreader), Georgia, serif;
+
+  /* Keep the existing type hierarchy while giving every standard text tier a
+     subtle readability bump. Fixed micro-copy sizes are raised alongside
+     these values at their call sites. */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.1875rem;
+  --text-xl: 1.3125rem;
+  --text-2xl: 1.5625rem;
+  --text-3xl: 1.9375rem;
+  --text-4xl: 2.3125rem;
+  --text-5xl: 3.0625rem;
 }
 
 /* Weight dials. Both faces are variable across 300..600, so these take any

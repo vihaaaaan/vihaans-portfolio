@@ -31,7 +31,7 @@ export function RotatingQuote({ quotes }: { quotes: Quote[] }) {
           transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           <h3 className="font-sans text-xs tracking-tight text-gray-500 sm:text-sm">“{current.quote}”</h3>
-          <p className="mt-1 font-sans text-[11px] text-gray-400 sm:text-xs">— {current.author}</p>
+          <p className="mt-1 font-sans text-[12px] text-gray-400 sm:text-xs">— {current.author}</p>
         </motion.div>
       </AnimatePresence>
     </div>

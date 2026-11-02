@@ -220,7 +220,7 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
                             fallback={
                               <div className="w-full h-full flex flex-col items-center justify-center p-1">
                               <span className="text-2xl mb-1">{emoji}</span>
-                              <span className="text-[8px] font-sans text-gray-400 text-center leading-tight line-clamp-2">
+                              <span className="text-[9px] font-sans text-gray-400 text-center leading-tight line-clamp-2">
                                 {item.title.toLowerCase()}
                               </span>
                               </div>
@@ -232,14 +232,14 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
                           <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover/item:opacity-100 transition-opacity duration-200">
                             <button
                               onClick={() => startEdit(index)}
-                              className="w-5 h-5 flex items-center justify-center bg-white/90 border border-gray-200 text-[10px] text-gray-600 hover:text-gray-900 cursor-pointer"
+                              className="w-5 h-5 flex items-center justify-center bg-white/90 border border-gray-200 text-[11px] text-gray-600 hover:text-gray-900 cursor-pointer"
                               aria-label="edit"
                             >
                               ✎
                             </button>
                             <button
                               onClick={() => deleteItem(index)}
-                              className="w-5 h-5 flex items-center justify-center bg-white/90 border border-gray-200 text-[10px] text-gray-600 hover:text-red-500 cursor-pointer"
+                              className="w-5 h-5 flex items-center justify-center bg-white/90 border border-gray-200 text-[11px] text-gray-600 hover:text-red-500 cursor-pointer"
                               aria-label="delete"
                             >
                               ✕
@@ -248,11 +248,11 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
                         )}
                       </div>
 
-                      <p className="mt-1.5 text-[11px] font-serif text-gray-800 leading-tight line-clamp-2">
+                      <p className="mt-1.5 text-[12px] font-serif text-gray-800 leading-tight line-clamp-2">
                         {item.title.toLowerCase()}
                       </p>
                       {item.creators?.length > 0 && (
-                        <p className="text-[10px] font-sans text-gray-400 leading-tight line-clamp-1">
+                        <p className="text-[11px] font-sans text-gray-400 leading-tight line-clamp-1">
                           {item.creators.join(', ').toLowerCase()}
                         </p>
                       )}

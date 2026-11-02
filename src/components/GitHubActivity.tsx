@@ -130,7 +130,7 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
           label ? (
             <span
               key={i}
-              className="absolute top-0 font-sans text-[9px] leading-none text-gray-400"
+              className="absolute top-0 font-sans text-[10px] leading-none text-gray-400"
               style={{ left: `${((i * STEP) / width) * 100}%` }}
             >
               {label}
@@ -164,7 +164,7 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
         )}
       </svg>
 
-      <p className="mt-2 font-sans text-[10px] lowercase text-gray-500 sm:text-[11px]">
+      <p className="mt-2 font-sans text-[11px] lowercase text-gray-500 sm:text-[12px]">
         {total.toLocaleString()} contributions in the last year
       </p>
     </motion.section>
