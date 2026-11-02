@@ -46,7 +46,7 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
             <span className="h-1.5 w-1.5 rounded-full bg-gray-600" />
           </span>
         )}
-        <p className="min-w-0 flex-1 font-sans text-[11px] leading-relaxed text-gray-600 transition-colors duration-200 group-hover:text-gray-800 sm:text-xs">
+        <p className="min-w-0 flex-1 font-sans text-[12px] leading-relaxed text-gray-600 transition-colors duration-200 group-hover:text-gray-800 sm:text-xs">
           <InlineMarkdown text={e.text ?? ''} />
         </p>
       </div>
@@ -60,15 +60,15 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
             className="ml-8 mt-2 overflow-hidden"
           >
             <div className="border-[0.5px] border-gray-300 bg-gray-50 shadow-sm rounded-md p-3 flex flex-col gap-1.5">
-              <span className="self-end font-sans text-[10px] text-gray-400 sm:text-[11px]">{dateRange(e)}</span>
+              <span className="self-end font-sans text-[11px] text-gray-400 sm:text-[12px]">{dateRange(e)}</span>
               {details.map((para, i) => (
-                <p key={i} className="flex gap-1.5 font-sans text-[11px] text-gray-500 sm:text-xs">
+                <p key={i} className="flex gap-1.5 font-sans text-[12px] text-gray-500 sm:text-xs">
                   <span className="flex-shrink-0">↳</span>
                   <span>{para}</span>
                 </p>
               ))}
               {e.location && (
-                <span className="text-right font-sans text-[10px] text-gray-400 sm:text-[11px]">
+                <span className="text-right font-sans text-[11px] text-gray-400 sm:text-[12px]">
                   📍 {e.location.toLowerCase()}
                 </span>
               )}

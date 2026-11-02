@@ -80,7 +80,7 @@ export function ProjectCard({
             <h3 className={`${featured ? 'text-lg sm:text-xl' : 'text-base sm:text-lg'} font-serif leading-none text-white`}>
               {name.toLowerCase()}
             </h3>
-            <p className="mt-1 line-clamp-2 font-sans text-[9px] leading-snug text-white/70 sm:text-[10px]">
+            <p className="mt-1 line-clamp-2 font-sans text-[10px] leading-snug text-white/70 sm:text-[11px]">
               {blurb.toLowerCase()}
             </p>
           </div>

@@ -95,12 +95,12 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
               <h2 id="project-dialog-title" className="font-serif text-2xl leading-none text-gray-900 sm:text-3xl">
                 {project.name.toLowerCase()}
               </h2>
-              <p className="mt-1.5 font-sans text-[11px] leading-relaxed text-gray-500 sm:text-xs">
+              <p className="mt-1.5 font-sans text-[12px] leading-relaxed text-gray-500 sm:text-xs">
                 {project.blurb.toLowerCase()}
               </p>
             </div>
             {project.status ? (
-              <span className="shrink-0 rounded-full border border-gray-300 px-2.5 py-1 font-sans text-[9px] tracking-[0.12em] text-gray-500">
+              <span className="shrink-0 rounded-full border border-gray-300 px-2.5 py-1 font-sans text-[10px] tracking-[0.12em] text-gray-500">
                 {project.status.toLowerCase()}
               </span>
             ) : null}
@@ -109,7 +109,7 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
           {project.description.length > 0 ? (
             <div className="mt-4 space-y-1.5 border-t border-gray-200 pt-4">
               {project.description.map((paragraph) => (
-                <p key={paragraph} className="font-sans text-[11px] leading-relaxed text-gray-600 sm:text-xs">
+                <p key={paragraph} className="font-sans text-[12px] leading-relaxed text-gray-600 sm:text-xs">
                   {paragraph.toLowerCase()}
                 </p>
               ))}
@@ -119,7 +119,7 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 pt-4">
             <div className="flex flex-wrap gap-1.5">
               {project.tags.map((tag) => (
-                <span key={tag} className="rounded-sm bg-gray-200/70 px-2 py-1 font-sans text-[9px] text-gray-500">
+                <span key={tag} className="rounded-sm bg-gray-200/70 px-2 py-1 font-sans text-[10px] text-gray-500">
                   {tag.toLowerCase()}
                 </span>
               ))}
@@ -132,7 +132,7 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 font-sans text-[11px] text-gray-600 underline decoration-gray-300 underline-offset-4 transition hover:text-gray-950"
+                  className="inline-flex items-center gap-1 font-sans text-[12px] text-gray-600 underline decoration-gray-300 underline-offset-4 transition hover:text-gray-950"
                 >
                   {label.toLowerCase()}
                   <span aria-hidden="true">↗</span>

@@ -53,7 +53,7 @@ export function AdminLoginModal({ onAuthenticated, onClose }: {
           placeholder="password"
           className="w-full border border-gray-200 px-3 py-2 font-sans text-sm outline-none transition-colors duration-150 focus:border-gray-400"
         />
-        {error ? <p className="-mt-1 font-sans text-[11px] text-red-400">incorrect password</p> : null}
+        {error ? <p className="-mt-1 font-sans text-[12px] text-red-400">incorrect password</p> : null}
         <button
           type="button"
           onClick={() => void login()}

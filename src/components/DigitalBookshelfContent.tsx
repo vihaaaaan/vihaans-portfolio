@@ -190,7 +190,7 @@ function MediaTile({ item, index, width, height }: CollageTile) {
         <h4 className="line-clamp-2 text-xs font-serif leading-tight text-white lowercase">
           {item.title}
         </h4>
-        <p className="mt-0.5 line-clamp-1 text-[10px] font-sans leading-tight text-gray-300 lowercase">
+        <p className="mt-0.5 line-clamp-1 text-[11px] font-sans leading-tight text-gray-300 lowercase">
           {typeLabel(item)}
         </p>
       </div>
@@ -290,7 +290,7 @@ function BookshelfListSection({ title, books, revealStart, centered, canEdit, on
         {canEdit && (
           <button
             onClick={onEdit}
-            className="shrink-0 cursor-pointer font-sans text-[11px] text-gray-400 transition-colors duration-200 hover:text-gray-700"
+            className="shrink-0 cursor-pointer font-sans text-[12px] text-gray-400 transition-colors duration-200 hover:text-gray-700"
           >
             edit
           </button>
