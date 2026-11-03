@@ -127,13 +127,13 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
       <div className="absolute inset-0 bg-black/30" onClick={onClose} />
 
       <div
-        className="section-enter relative max-h-[80vh] w-full max-w-2xl overflow-y-auto border border-gray-200 bg-white p-6 shadow-xl"
+        className="section-enter relative max-h-[80vh] w-full max-w-2xl overflow-y-auto border border-line bg-surface p-6 shadow-xl"
       >
         <div className="flex items-baseline justify-between mb-5">
-          <h3 className="text-lg sm:text-xl font-serif text-gray-900">{title}</h3>
+          <h3 className="font-serif text-lg text-foreground sm:text-xl">{title}</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-700 transition-colors duration-200 text-sm cursor-pointer leading-none"
+            className="cursor-pointer text-sm leading-none text-subtle transition-colors duration-200 hover:text-foreground"
             aria-label="close"
           >
             ✕
@@ -147,19 +147,19 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
               placeholder="title"
-              className="w-full text-sm font-sans border border-gray-200 focus:border-gray-400 px-3 py-2 outline-none transition-colors duration-200"
+              className="w-full border border-line px-3 py-2 font-sans text-sm outline-none transition-colors duration-200 focus:border-subtle"
             />
             <input
               value={form.creators}
               onChange={(e) => setForm({ ...form, creators: e.target.value })}
               placeholder="creators (comma separated)"
-              className="w-full text-sm font-sans border border-gray-200 focus:border-gray-400 px-3 py-2 outline-none transition-colors duration-200"
+              className="w-full border border-line px-3 py-2 font-sans text-sm outline-none transition-colors duration-200 focus:border-subtle"
             />
             <div className="flex gap-3">
               <select
                 value={form.type}
                 onChange={(e) => setForm({ ...form, type: e.target.value })}
-                className="flex-1 text-sm font-sans border border-gray-200 focus:border-gray-400 px-3 py-2 outline-none transition-colors duration-200 bg-white"
+                className="flex-1 border border-line bg-surface px-3 py-2 font-sans text-sm outline-none transition-colors duration-200 focus:border-subtle"
               >
                 {TYPE_OPTIONS.map((t) => (
                   <option key={t} value={t}>{t}</option>
@@ -169,20 +169,20 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
                 value={form.category}
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
                 placeholder="category"
-                className="flex-1 text-sm font-sans border border-gray-200 focus:border-gray-400 px-3 py-2 outline-none transition-colors duration-200"
+                className="flex-1 border border-line px-3 py-2 font-sans text-sm outline-none transition-colors duration-200 focus:border-subtle"
               />
             </div>
             <div className="flex gap-2 mt-1">
               <button
                 onClick={() => setEditing(null)}
-                className="flex-1 text-sm font-sans border border-gray-200 text-gray-500 py-2 hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+                className="flex-1 cursor-pointer border border-line py-2 font-sans text-sm text-muted transition-colors duration-200 hover:bg-surface-muted"
               >
                 cancel
               </button>
               <button
                 onClick={saveForm}
                 disabled={!form.title.trim() || saving}
-                className="flex-1 text-sm font-sans bg-gray-800 text-white py-2 hover:bg-gray-700 transition-colors duration-200 disabled:opacity-40 cursor-pointer disabled:cursor-default"
+                className="flex-1 cursor-pointer bg-control py-2 font-sans text-sm text-on-control transition-colors duration-200 hover:bg-control-hover disabled:cursor-default disabled:opacity-40"
               >
                 {saving ? 'saving…' : editing === 'new' ? 'add' : 'save'}
               </button>
@@ -193,14 +193,14 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
             {canEdit && (
               <button
                 onClick={startAdd}
-                className="mb-4 w-full border border-dashed border-gray-200 py-2 text-sm font-sans text-gray-400 hover:text-gray-600 hover:border-gray-300 transition-all duration-200 cursor-pointer"
+                className="mb-4 w-full cursor-pointer border border-dashed border-line py-2 font-sans text-sm text-subtle transition-all duration-200 hover:border-subtle hover:text-body"
               >
                 + add item
               </button>
             )}
 
             {books.length === 0 ? (
-              <p className="text-sm font-sans text-gray-400 py-6 text-center">nothing here yet</p>
+              <p className="py-6 text-center font-sans text-sm text-subtle">nothing here yet</p>
             ) : (
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-x-4 gap-y-6">
                 {books.map((item, index) => {
@@ -212,7 +212,7 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
                     <div key={index} className="group/item flex flex-col">
                       <div className="relative">
                         <div
-                          className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-[2/3]'} overflow-hidden border border-gray-200 bg-gray-100`}
+                          className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-[2/3]'} overflow-hidden border border-line bg-surface-muted`}
                         >
                           <FadeInCoverImage
                             src={coverUrl}
@@ -220,7 +220,7 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
                             fallback={
                               <div className="w-full h-full flex flex-col items-center justify-center p-1">
                               <span className="text-2xl mb-1">{emoji}</span>
-                              <span className="text-[9px] font-sans text-gray-400 text-center leading-tight line-clamp-2">
+                              <span className="line-clamp-2 text-center font-sans text-[9px] leading-tight text-subtle">
                                 {item.title.toLowerCase()}
                               </span>
                               </div>
@@ -232,14 +232,14 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
                           <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover/item:opacity-100 transition-opacity duration-200">
                             <button
                               onClick={() => startEdit(index)}
-                              className="w-5 h-5 flex items-center justify-center bg-white/90 border border-gray-200 text-[11px] text-gray-600 hover:text-gray-900 cursor-pointer"
+                              className="flex h-5 w-5 cursor-pointer items-center justify-center border border-line bg-surface/90 text-[11px] text-body hover:text-foreground"
                               aria-label="edit"
                             >
                               ✎
                             </button>
                             <button
                               onClick={() => deleteItem(index)}
-                              className="w-5 h-5 flex items-center justify-center bg-white/90 border border-gray-200 text-[11px] text-gray-600 hover:text-red-500 cursor-pointer"
+                              className="flex h-5 w-5 cursor-pointer items-center justify-center border border-line bg-surface/90 text-[11px] text-body hover:text-red-500"
                               aria-label="delete"
                             >
                               ✕
@@ -248,11 +248,11 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
                         )}
                       </div>
 
-                      <p className="mt-1.5 text-[12px] font-serif text-gray-800 leading-tight line-clamp-2">
+                      <p className="mt-1.5 line-clamp-2 font-serif text-[12px] leading-tight text-foreground">
                         {item.title.toLowerCase()}
                       </p>
                       {item.creators?.length > 0 && (
-                        <p className="text-[11px] font-sans text-gray-400 leading-tight line-clamp-1">
+                        <p className="line-clamp-1 font-sans text-[11px] leading-tight text-subtle">
                           {item.creators.join(', ').toLowerCase()}
                         </p>
                       )}

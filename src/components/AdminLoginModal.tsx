@@ -42,8 +42,8 @@ export function AdminLoginModal({ onAuthenticated, onClose }: {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <button type="button" aria-label="close login" className="absolute inset-0 bg-black/30" onClick={onClose} />
-      <div role="dialog" aria-modal="true" aria-labelledby="admin-login-title" className="section-enter relative flex w-full max-w-xs flex-col gap-3 border border-gray-200 bg-white p-6 shadow-xl">
-        <h2 id="admin-login-title" className="font-serif text-lg text-gray-900">enter password</h2>
+      <div role="dialog" aria-modal="true" aria-labelledby="admin-login-title" className="section-enter relative flex w-full max-w-xs flex-col gap-3 border border-line bg-surface p-6 shadow-xl">
+        <h2 id="admin-login-title" className="font-serif text-lg text-foreground">enter password</h2>
         <input
           autoFocus
           type="password"
@@ -51,14 +51,14 @@ export function AdminLoginModal({ onAuthenticated, onClose }: {
           onChange={(event) => { setPassword(event.target.value); setError(false) }}
           onKeyDown={(event) => { if (event.key === 'Enter') void login() }}
           placeholder="password"
-          className="w-full border border-gray-200 px-3 py-2 font-sans text-sm outline-none transition-colors duration-150 focus:border-gray-400"
+          className="w-full border border-line px-3 py-2 font-sans text-sm outline-none transition-colors duration-150 focus:border-subtle"
         />
         {error ? <p className="-mt-1 font-sans text-[12px] text-red-400">incorrect password</p> : null}
         <button
           type="button"
           onClick={() => void login()}
           disabled={loading || !password}
-          className="cursor-pointer bg-gray-800 py-2 font-sans text-sm text-white transition-colors duration-150 hover:bg-gray-700 disabled:cursor-default disabled:opacity-40"
+          className="cursor-pointer bg-control py-2 font-sans text-sm text-on-control transition-colors duration-150 hover:bg-control-hover disabled:cursor-default disabled:opacity-40"
         >
           {loading ? 'unlocking…' : 'unlock'}
         </button>

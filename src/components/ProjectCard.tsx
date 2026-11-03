@@ -32,7 +32,7 @@ export function ProjectCard({
       aria-label={`open ${name} project details`}
       aria-haspopup="dialog"
       onClick={() => onOpen(images)}
-      className="group relative block w-full overflow-hidden bg-gray-900 text-left shadow-sm outline-none ring-1 ring-black/10 transition-shadow focus-visible:ring-2 focus-visible:ring-gray-500"
+      className="group relative block w-full overflow-hidden bg-gray-900 text-left shadow-sm outline-none ring-1 ring-black/10 transition-shadow focus-visible:ring-2 focus-visible:ring-muted"
       initial={{ opacity: 0, y: LOAD_Y }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -3, boxShadow: '0 12px 28px rgba(17, 24, 39, 0.16)', transition: { duration: 0.2 } }}

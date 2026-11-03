@@ -16,14 +16,14 @@ export default function NotFound() {
           className="rounded-xl opacity-90"
         />
         <div className="flex flex-col gap-1">
-          <h1 className="text-4xl font-serif tracking-tight text-gray-900">
+          <h1 className="font-serif text-4xl tracking-tight text-foreground">
             you took a wrong turn.
           </h1>
-          <p className="text-sm font-sans text-gray-400">
+          <p className="font-sans text-sm text-subtle">
             this page doesn&apos;t exist.
           </p>
         </div>
-        <Link href="/" className="text-sm font-sans text-gray-400 underline underline-offset-4">
+        <Link href="/" className="font-sans text-sm text-subtle underline underline-offset-4 transition-colors hover:text-body">
           take me home
         </Link>
       </div>
