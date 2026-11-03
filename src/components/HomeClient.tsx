@@ -123,7 +123,7 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
       animate="visible"
     >
       <main className="flex flex-col pb-9 pt-14 sm:pb-12 sm:pt-20">
-        <div className="relative grid grid-cols-12 gap-x-4 gap-y-4 sm:gap-x-6 sm:gap-y-5">
+        <div className="grid grid-cols-12 gap-x-4 gap-y-4 sm:gap-x-6 sm:gap-y-5">
           <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 sm:col-span-4">
             <motion.h1
               key={activeKey}
@@ -139,7 +139,7 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
 
           <motion.div
             variants={loadItemVariants}
-            className="col-span-12 justify-self-center sm:absolute sm:inset-x-0 sm:top-0 sm:flex sm:justify-center"
+            className="col-span-12 justify-self-end sm:col-span-8"
           >
             <TabBarNav activeKey={activeKey} onSelect={selectSection} onIntent={signalIntent} />
           </motion.div>
