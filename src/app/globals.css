@@ -99,6 +99,7 @@
      one is ever added at a call site. */
   .font-serif {
     font-weight: var(--weight-serif);
+    text-transform: lowercase;
   }
 }
 

@@ -141,7 +141,10 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
             <TabBarNav activeKey={activeKey} onSelect={selectSection} onIntent={signalIntent} />
           </motion.div>
 
-          <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 flex-1">
+          <motion.div
+            variants={loadItemVariants}
+            className={`col-span-12 min-w-0 flex-1 ${activeKey === 'about' || activeKey === 'work' ? 'sm:col-span-9' : ''}`}
+          >
             <SectionViewport
               activeKey={activeKey}
               profile={profile}
