@@ -124,7 +124,7 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
     >
       <main className="flex flex-col pb-9 pt-14 sm:pb-12 sm:pt-20">
         <div className="grid grid-cols-12 gap-x-4 gap-y-5 sm:gap-x-6 sm:gap-y-7">
-          <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 sm:col-span-9">
+          <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 sm:col-span-6">
             <motion.h1
               key={activeKey}
               initial={{ opacity: 0, y: 4 }}
