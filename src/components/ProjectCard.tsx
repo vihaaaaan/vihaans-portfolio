@@ -39,7 +39,7 @@ export function ProjectCard({
       whileTap={{ scale: 0.995, transition: { duration: 0.12 } }}
       transition={{ ...loadTransition, delay: revealDelay }}
     >
-      <div className="relative aspect-[16/10]">
+      <div className={`relative ${featured ? 'aspect-[16/10] sm:aspect-[2/1]' : 'aspect-[16/10]'}`}>
         {previewImage && previewIsVideo ? (
             <video
               src={previewImage}
