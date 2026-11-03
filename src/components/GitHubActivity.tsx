@@ -124,18 +124,19 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
       initial={{ opacity: 0, y: LOAD_Y }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ ...loadTransition, delay: revealDelay }}
-      className="border-[0.5px] border-line bg-surface p-2.5 sm:p-3"
+      className="group rounded-sm py-1 outline-none focus-visible:ring-1 focus-visible:ring-line"
       aria-label={`${total} GitHub contributions in the last year`}
+      tabIndex={0}
     >
       {/* Labels stay HTML at a fixed size rather than scaling inside the SVG,
           where they'd be ~5px on a phone. Positioned as a percentage of the
           same track the columns below use, so they stay over their month. */}
-      <div className="relative h-3 mb-1">
+      <div className="relative mb-1 h-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus:opacity-100">
         {labels.map((label, i) =>
           label ? (
             <span
               key={i}
-              className="absolute top-0 font-sans text-[10px] leading-none text-subtle"
+              className="absolute top-0 font-sans text-[9px] leading-none text-subtle sm:text-[10px]"
               style={{ left: `${((i * STEP) / width) * 100}%` }}
             >
               {label}
@@ -169,7 +170,7 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
         )}
       </svg>
 
-      <p className="mt-2 font-sans text-[11px] lowercase text-muted sm:text-[12px]">
+      <p className="mt-1.5 font-sans text-[9px] lowercase text-muted opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus:opacity-100 sm:text-[10px]">
         {total.toLocaleString()} contributions in the last year
       </p>
     </motion.section>
