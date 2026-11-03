@@ -9,7 +9,14 @@ import { SectionViewport, preloadSectionModule } from '@/components/SectionViewp
 import { SocialLink } from '@/components/SocialLink'
 import { TAB_HASHES, TABS, TabBarNav } from '@/components/TabNav'
 import { ICON_GROUP_CLASS } from '@/components/icons'
-import { loadItemVariants, loadTransition, LOAD_STAGGER, LOAD_Y } from '@/lib/motion'
+import {
+  loadItemVariants,
+  loadTransition,
+  LOAD_DURATION,
+  LOAD_EASE,
+  LOAD_STAGGER,
+  LOAD_Y,
+} from '@/lib/motion'
 import type { Profile, RemoteSectionKey, SectionKey } from '@/types'
 
 const AdminLoginModal = dynamic(
@@ -20,7 +27,12 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: LOAD_STAGGER, delayChildren: 0.08 },
+    transition: {
+      duration: LOAD_DURATION,
+      ease: LOAD_EASE,
+      staggerChildren: LOAD_STAGGER,
+      delayChildren: 0.08,
+    },
   },
 }
 
@@ -112,20 +124,20 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
     >
       <main className="flex flex-col pb-9 pt-14 sm:pb-12 sm:pt-20">
         <div className="grid grid-cols-12 gap-x-4 gap-y-5 sm:gap-x-6 sm:gap-y-7">
-          <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 sm:col-span-8">
+          <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 sm:col-span-9">
             <motion.h1
               key={activeKey}
-              initial={{ opacity: 0, y: 6 }}
+              initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              className="max-w-[18ch] font-serif text-xl leading-[1.02] lowercase tracking-[-0.02em] text-foreground sm:text-2xl"
+              transition={{ duration: 0.64, ease: LOAD_EASE }}
+              className="font-serif text-xl leading-[1.02] lowercase tracking-[-0.02em] text-foreground sm:text-2xl"
             >
               {activeHeadline}
             </motion.h1>
             {activeKey === 'about' && profile.sublines?.length ? <RotatingQuote quotes={profile.sublines} /> : null}
           </motion.div>
 
-          <motion.div variants={loadItemVariants} className="col-span-12 flex-shrink-0 sm:col-span-4 sm:justify-self-end">
+          <motion.div variants={loadItemVariants} className="col-span-12 flex-shrink-0 sm:col-span-3 sm:justify-self-end">
             <TabBarNav activeKey={activeKey} onSelect={selectSection} onIntent={signalIntent} />
           </motion.div>
 
@@ -151,7 +163,7 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
         }}
         className="grid w-full grid-cols-12 gap-x-4 pb-14 sm:gap-x-6"
       >
-        <div className={`col-span-12 justify-self-end ${ICON_GROUP_CLASS}`}>
+        <div className={`col-span-12 -ml-1 justify-self-start ${ICON_GROUP_CLASS}`}>
           {profile.socials?.github ? <SocialLink icon={FaGithub} label="github" link={profile.socials.github} /> : null}
           {profile.socials?.linkedin ? <SocialLink icon={FaLinkedin} label="linkedin" link={profile.socials.linkedin} /> : null}
           {profile.socials?.twitter ? <SocialLink icon={FaTwitter} label="twitter" link={profile.socials.twitter} /> : null}

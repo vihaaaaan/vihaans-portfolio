@@ -1,9 +1,11 @@
 import type { Variants } from 'framer-motion'
 
-export const LOAD_EASE = [0.22, 1, 0.36, 1] as const
-export const LOAD_DURATION = 0.62
-export const LOAD_STAGGER = 0.09
-export const LOAD_Y = 16
+// A restrained editorial reveal: short travel, slow acceleration, and no
+// spring overshoot. It should feel like a camera dissolve, not a UI bounce.
+export const LOAD_EASE = [0.25, 0.1, 0.25, 1] as const
+export const LOAD_DURATION = 0.78
+export const LOAD_STAGGER = 0.07
+export const LOAD_Y = 7
 
 export const loadItemVariants: Variants = {
   hidden: { opacity: 0, y: LOAD_Y },
