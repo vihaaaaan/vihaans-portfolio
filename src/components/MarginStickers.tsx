@@ -2,9 +2,9 @@ import { Sticker } from '@/components/stickers/Sticker'
 import { STICKER_ART } from '@/data/stickers.generated'
 import type { StickerConfig } from '@/data/stickers'
 
-// Content column is max-w-2xl (672px), centered — half-width is 336px.
+// Content column is max-w-3xl (768px), centered, with a 384px half-width.
 // Stickers sit GAP px beyond that edge, in the margin gutter.
-const HALF_CONTENT_WIDTH = 336
+const HALF_CONTENT_WIDTH = 384
 const GAP = 32
 
 // Only rendered once the viewport is wide enough to have real margin space.
