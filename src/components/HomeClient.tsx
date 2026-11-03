@@ -117,7 +117,7 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
 
   return (
     <motion.div
-      className="mx-auto flex min-h-screen max-w-3xl flex-col px-5 sm:px-7"
+      className="mx-auto flex min-h-screen max-w-2xl flex-col px-5 sm:px-6"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -146,7 +146,7 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
 
           <motion.div
             variants={loadItemVariants}
-            className={`col-span-12 min-w-0 flex-1 ${activeKey === 'about' || activeKey === 'work' ? 'sm:col-span-9' : ''}`}
+            className="col-span-12 min-w-0 flex-1"
           >
             <SectionViewport
               activeKey={activeKey}
