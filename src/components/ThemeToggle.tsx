@@ -19,7 +19,13 @@ export function ThemeToggle() {
 
   const toggleTheme = () => {
     const nextTheme: Theme = documentTheme() === 'dark' ? 'light' : 'dark'
-    document.documentElement.dataset.theme = nextTheme
+    const root = document.documentElement
+
+    root.dataset.themeChanging = 'true'
+    root.dataset.theme = nextTheme
+    void root.offsetWidth
+    delete root.dataset.themeChanging
+
     setTheme(nextTheme)
 
     try {
