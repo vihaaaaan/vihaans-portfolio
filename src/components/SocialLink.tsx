@@ -3,7 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import type { SocialLinkProps } from '@/types'
-import { ICON_COLOR, ICON_CONTROL_CLASS, ICON_SIZE } from '@/components/icons'
+import { ICON_CONTROL_CLASS, SOCIAL_ICON_SIZE } from '@/components/icons'
 
 export function SocialLink({ icon, label, link }: SocialLinkProps) {
   return (
@@ -17,7 +17,7 @@ export function SocialLink({ icon, label, link }: SocialLinkProps) {
       whileTap={{ scale: 0.9 }}
       transition={{ type: 'spring', stiffness: 420, damping: 18 }}
     >
-      {React.createElement(icon, { size: ICON_SIZE, className: ICON_COLOR })}
+      {React.createElement(icon, { size: SOCIAL_ICON_SIZE, className: 'text-body' })}
     </motion.a>
   )
 }

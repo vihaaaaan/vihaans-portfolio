@@ -46,7 +46,7 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
             <span className="h-1.5 w-1.5 rounded-full bg-body" />
           </span>
         )}
-        <p className="min-w-0 flex-1 font-sans text-[12px] leading-relaxed text-body transition-colors duration-200 group-hover:text-foreground sm:text-xs">
+        <p className="min-w-0 flex-1 font-sans text-[11px] leading-[1.65] text-body transition-colors duration-200 group-hover:text-foreground sm:text-xs">
           <InlineMarkdown text={e.text ?? ''} />
         </p>
       </div>
@@ -59,16 +59,16 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
             exit={{ height: 0, opacity: 0, transition: { height: { duration: 0.22 }, opacity: { duration: 0.12 } } }}
             className="ml-8 mt-2 overflow-hidden"
           >
-            <div className="flex flex-col gap-1.5 rounded-md border-[0.5px] border-line bg-surface-muted p-3 shadow-sm">
-              <span className="self-end font-sans text-[11px] text-subtle sm:text-[12px]">{dateRange(e)}</span>
+            <div className="flex flex-col gap-2 rounded-md border-[0.5px] border-line bg-surface-muted p-4 shadow-sm">
+              <span className="self-end font-sans text-[10px] text-subtle sm:text-[11px]">{dateRange(e)}</span>
               {details.map((para, i) => (
-                <p key={i} className="flex gap-1.5 font-sans text-[12px] text-muted sm:text-xs">
+                <p key={i} className="flex gap-2 font-sans text-[11px] leading-[1.6] text-muted sm:text-xs">
                   <span className="flex-shrink-0">↳</span>
                   <span>{para}</span>
                 </p>
               ))}
               {e.location && (
-                <span className="text-right font-sans text-[11px] text-subtle sm:text-[12px]">
+                <span className="text-right font-sans text-[10px] text-subtle sm:text-[11px]">
                   📍 {e.location.toLowerCase()}
                 </span>
               )}
@@ -101,11 +101,11 @@ export function ExperienceContent({ current, prev }: ExperienceContentProps) {
     })
 
   return (
-    <motion.div variants={loadListVariants} className="mt-2 lowercase">
-      <motion.h3 variants={loadItemVariants} className="mb-1 font-sans text-sm text-foreground sm:text-base">current</motion.h3>
+    <motion.div variants={loadListVariants} className="mt-1 max-w-[62ch] lowercase">
+      <motion.h3 variants={loadItemVariants} className="mb-2 font-sans text-sm font-medium text-foreground sm:text-base">current</motion.h3>
       {renderList(current, 'current')}
 
-      <motion.h3 variants={loadItemVariants} className="mb-1 mt-3 font-sans text-sm text-foreground sm:text-base">prev</motion.h3>
+      <motion.h3 variants={loadItemVariants} className="mb-2 mt-5 font-sans text-sm font-medium text-foreground sm:text-base">prev</motion.h3>
       {renderList(prev, 'prev')}
     </motion.div>
   )

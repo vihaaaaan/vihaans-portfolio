@@ -1,10 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  /* Newsreader replaces Cormorant Garamond: same literary register, but drawn
-     for screens. Cormorant is a display cut with hairline strokes and an
-     x-height 33% smaller than Inter's, so it never looked the same size beside
-     the sans and turned to mush at the 11-12px it was used at in places. */
+  /* Inter handles interface and body copy; Newsreader is reserved for the
+     larger editorial moments where its contrast can do useful work. */
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-serif: var(--font-newsreader), Georgia, serif;
 
@@ -37,16 +35,9 @@
   --text-5xl: 3.0625rem;
 }
 
-/* Weight dials. Both faces are variable across 300..600, so these take any
-   value in that range — not just the 300/400 stops a static font would give
-   you. Nothing in the app sets an explicit font-weight class, so between them
-   these two control every piece of text on the site.
-     300 = the old washed-out Light the sans was stuck at
-     400 = regular, which read too heavy here
-     350 = current */
 :root {
-  --weight-sans: 350;
-  --weight-serif: 350;
+  --weight-sans: 400;
+  --weight-serif: 450;
 
   color-scheme: light;
   --page-top: #fbf9f4;
@@ -72,29 +63,31 @@
   --activity-4: #252a32;
 }
 
-html[data-theme='dark'] {
-  color-scheme: dark;
-  --page-top: #2d3035;
-  --page-bottom: #22252a;
-  --theme-surface: #30343a;
-  --theme-surface-muted: #383c43;
-  --theme-surface-strong: #474b53;
-  --theme-foreground: #f2efe8;
-  --theme-body: #cbc8c0;
-  --theme-muted: #aca9a2;
-  --theme-subtle: #969ca4;
-  --theme-line: #4a4e56;
-  --theme-icon: #e2ded6;
-  --theme-control: #dedad1;
-  --theme-control-hover: #f0ede6;
-  --theme-on-control: #25282d;
-  --theme-tooltip: #f1eee7;
-  --theme-tooltip-text: #25282d;
-  --activity-0: #3a3e45;
-  --activity-1: #575c65;
-  --activity-2: #858b94;
-  --activity-3: #b7b8b5;
-  --activity-4: #ece9e2;
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --page-top: #2d3035;
+    --page-bottom: #22252a;
+    --theme-surface: #30343a;
+    --theme-surface-muted: #383c43;
+    --theme-surface-strong: #474b53;
+    --theme-foreground: #f2efe8;
+    --theme-body: #cbc8c0;
+    --theme-muted: #aca9a2;
+    --theme-subtle: #969ca4;
+    --theme-line: #4a4e56;
+    --theme-icon: #e2ded6;
+    --theme-control: #dedad1;
+    --theme-control-hover: #f0ede6;
+    --theme-on-control: #25282d;
+    --theme-tooltip: #f1eee7;
+    --theme-tooltip-text: #25282d;
+    --activity-0: #3a3e45;
+    --activity-1: #575c65;
+    --activity-2: #858b94;
+    --activity-3: #b7b8b5;
+    --activity-4: #ece9e2;
+  }
 }
 
 @layer base {
@@ -117,7 +110,6 @@ body {
   background: linear-gradient(180deg, var(--page-top) 0%, var(--page-bottom) 100%);
   color: var(--theme-foreground);
   min-height: 100vh;
-  transition: background 220ms ease, color 220ms ease;
 }
 
 input,
@@ -128,23 +120,6 @@ select {
 
 input::placeholder {
   color: var(--theme-subtle);
-}
-
-.theme-toggle-thumb {
-  transform: translateX(0);
-}
-
-html[data-theme='dark'] .theme-toggle-thumb {
-  transform: translateX(1.25rem);
-}
-
-/* Existing hover transitions should not stagger a theme change. The toggle
-   applies this attribute for one forced style pass so every page color lands
-   in the same frame; the thumb is excluded so the switch can still slide. */
-html[data-theme-changing='true'] body,
-html[data-theme-changing='true'] body *:not(.theme-toggle-thumb) {
-  transition-delay: 0s !important;
-  transition-duration: 0s !important;
 }
 
 @keyframes section-enter {
@@ -205,11 +180,6 @@ html[data-theme-changing='true'] body *:not(.theme-toggle-thumb) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body,
-  .theme-toggle-thumb {
-    transition: none;
-  }
-
   .section-enter,
   [class*="sticker-motion-"],
   .sticker-flipbook {

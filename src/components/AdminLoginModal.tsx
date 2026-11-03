@@ -43,7 +43,7 @@ export function AdminLoginModal({ onAuthenticated, onClose }: {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <button type="button" aria-label="close login" className="absolute inset-0 bg-black/30" onClick={onClose} />
       <div role="dialog" aria-modal="true" aria-labelledby="admin-login-title" className="section-enter relative flex w-full max-w-xs flex-col gap-3 border border-line bg-surface p-6 shadow-xl">
-        <h2 id="admin-login-title" className="font-serif text-lg text-foreground">enter password</h2>
+        <h2 id="admin-login-title" className="font-serif text-base text-foreground">enter password</h2>
         <input
           autoFocus
           type="password"
