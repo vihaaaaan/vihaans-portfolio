@@ -130,7 +130,7 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.64, ease: LOAD_EASE }}
-              className="font-serif text-xl leading-[1.02] lowercase tracking-[-0.02em] text-foreground sm:text-2xl"
+              className="font-serif text-xl leading-[1.02] tracking-[-0.02em] text-foreground sm:text-2xl"
             >
               {activeHeadline}
             </motion.h1>
