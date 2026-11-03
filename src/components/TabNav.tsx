@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { PiBookOpenFill, PiFlaskFill, PiLaptopFill, PiUserCircleFill } from 'react-icons/pi'
 import type { IconType } from 'react-icons'
-import { ICON_COLOR, ICON_CONTROL_CLASS, ICON_GROUP_CLASS, ICON_TOOLTIP_CLASS, NAV_ICON_SIZE } from '@/components/icons'
+import { ICON_COLOR, ICON_CONTROL_CLASS, ICON_TOOLTIP_CLASS, NAV_ICON_SIZE } from '@/components/icons'
 import type { SectionKey } from '@/types'
 
 export interface TabDefinition {
@@ -30,7 +30,7 @@ interface TabNavProps {
 
 export function TabBarNav({ activeKey, onSelect, onIntent }: TabNavProps) {
   return (
-    <nav aria-label="Portfolio sections" className={`${ICON_GROUP_CLASS} rounded-full border-[0.5px] border-line bg-surface p-0.5`}>
+    <nav aria-label="Portfolio sections" className="flex w-40 items-center justify-between rounded-full border-[0.5px] border-line bg-surface px-1.5 py-0.5">
       {TABS.map((tab) => {
         const Icon = tab.icon
         const active = activeKey === tab.key

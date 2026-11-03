@@ -123,8 +123,8 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
       animate="visible"
     >
       <main className="flex flex-col pb-9 pt-14 sm:pb-12 sm:pt-20">
-        <div className="grid grid-cols-12 gap-x-4 gap-y-5 sm:gap-x-6 sm:gap-y-7">
-          <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 sm:col-span-6">
+        <div className="relative grid grid-cols-12 gap-x-4 gap-y-4 sm:gap-x-6 sm:gap-y-5">
+          <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 sm:col-span-4">
             <motion.h1
               key={activeKey}
               initial={{ opacity: 0, y: 4 }}
@@ -137,7 +137,10 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
             {activeKey === 'about' && profile.sublines?.length ? <RotatingQuote quotes={profile.sublines} /> : null}
           </motion.div>
 
-          <motion.div variants={loadItemVariants} className="col-span-12 flex-shrink-0 sm:col-span-3 sm:justify-self-end">
+          <motion.div
+            variants={loadItemVariants}
+            className="col-span-12 justify-self-center sm:absolute sm:inset-x-0 sm:top-0 sm:flex sm:justify-center"
+          >
             <TabBarNav activeKey={activeKey} onSelect={selectSection} onIntent={signalIntent} />
           </motion.div>
 
