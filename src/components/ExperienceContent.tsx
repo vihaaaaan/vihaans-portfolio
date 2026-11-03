@@ -101,7 +101,7 @@ export function ExperienceContent({ current, prev }: ExperienceContentProps) {
     })
 
   return (
-    <motion.div variants={loadListVariants} className="mt-1 max-w-[68ch] lowercase">
+    <motion.div variants={loadListVariants} className="mt-1 max-w-[65ch] lowercase">
       <motion.h3 variants={loadItemVariants} className="mb-2 font-sans text-sm font-medium text-foreground sm:text-base">current</motion.h3>
       {renderList(current, 'current')}
 
