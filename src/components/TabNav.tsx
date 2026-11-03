@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { PiBookOpenFill, PiFlaskFill, PiLaptopFill, PiUserCircleFill } from 'react-icons/pi'
 import type { IconType } from 'react-icons'
-import { ICON_COLOR, ICON_SIZE } from '@/components/icons'
+import { ICON_COLOR, ICON_CONTROL_CLASS, ICON_GROUP_CLASS, ICON_SIZE, ICON_TOOLTIP_CLASS } from '@/components/icons'
 import type { SectionKey } from '@/types'
 
 export interface TabDefinition {
@@ -30,7 +30,7 @@ interface TabNavProps {
 
 export function TabBarNav({ activeKey, onSelect, onIntent }: TabNavProps) {
   return (
-    <nav aria-label="Portfolio sections" className="flex items-center gap-1.5 rounded-full border-[0.5px] border-gray-200 bg-white p-0.5">
+    <nav aria-label="Portfolio sections" className={`${ICON_GROUP_CLASS} rounded-full border-[0.5px] border-gray-200 bg-white p-0.5`}>
       {TABS.map((tab) => {
         const Icon = tab.icon
         const active = activeKey === tab.key
@@ -43,8 +43,7 @@ export function TabBarNav({ activeKey, onSelect, onIntent }: TabNavProps) {
             onFocus={() => onIntent?.(tab.key)}
             aria-label={tab.label}
             aria-current={active ? 'page' : undefined}
-            title={tab.label}
-            className="relative flex h-7 w-7 items-center justify-center hover:cursor-pointer"
+            className={`${ICON_CONTROL_CLASS} hover:cursor-pointer`}
           >
             {active ? (
               <motion.span
@@ -60,6 +59,9 @@ export function TabBarNav({ activeKey, onSelect, onIntent }: TabNavProps) {
             >
               <Icon size={ICON_SIZE} />
             </motion.span>
+            <span aria-hidden="true" className={`${ICON_TOOLTIP_CLASS} top-full mt-1.5`}>
+              {tab.label}
+            </span>
           </button>
         )
       })}

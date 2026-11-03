@@ -17,13 +17,11 @@ export const ICON_SIZE = 20
 export const ICON_COLOR = 'text-gray-700'
 
 /**
- * Every icon in the chrome sits 24px from its neighbour, edge to edge, whichever
- * group it's in. That number is reached two different ways, so both have to
- * move together if it changes:
- *
- *   nav bar + rail   28px button - 20px icon + gap-1.5 (6px) = 14px
- *   footer socials   icons are tight to their links, so space-x-3.5 = 14px
- *
- * Tailwind needs those as literal class names, so they can't be read from this
- * file — this comment is the record of where the numbers come from.
+ * Shared geometry keeps the navigation and footer icons optically aligned:
+ * 20px glyphs inside 28px controls, with a 6px gap between controls. That
+ * produces the same 34px center-to-center rhythm in both groups.
  */
+export const ICON_CONTROL_CLASS = 'group relative flex h-7 w-7 items-center justify-center'
+export const ICON_GROUP_CLASS = 'flex items-center gap-1.5'
+
+export const ICON_TOOLTIP_CLASS = 'pointer-events-none absolute left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 font-sans text-[10px] leading-none text-white opacity-0 shadow-sm transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100'

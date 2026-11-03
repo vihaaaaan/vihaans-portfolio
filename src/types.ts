@@ -44,6 +44,7 @@ export interface ProjectsContentProps {
 
 export interface SocialLinkProps {
   icon: ComponentType<IconBaseProps>
+  label: string
   link: string
 }
 

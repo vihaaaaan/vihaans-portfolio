@@ -8,6 +8,7 @@ import { RotatingQuote } from '@/components/RotatingQuote'
 import { SectionViewport, preloadSectionModule } from '@/components/SectionViewport'
 import { SocialLink } from '@/components/SocialLink'
 import { TAB_HASHES, TABS, TabBarNav } from '@/components/TabNav'
+import { ICON_GROUP_CLASS } from '@/components/icons'
 import { loadItemVariants, loadTransition, LOAD_STAGGER, LOAD_Y } from '@/lib/motion'
 import type { Profile, RemoteSectionKey, SectionKey } from '@/types'
 
@@ -148,11 +149,11 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
           ...loadTransition,
           layout: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
         }}
-        className="flex items-center space-x-3.5 pb-14"
+        className={`${ICON_GROUP_CLASS} pb-14`}
       >
-        {profile.socials?.github ? <SocialLink icon={FaGithub} link={profile.socials.github} /> : null}
-        {profile.socials?.linkedin ? <SocialLink icon={FaLinkedin} link={profile.socials.linkedin} /> : null}
-        {profile.socials?.twitter ? <SocialLink icon={FaTwitter} link={profile.socials.twitter} /> : null}
+        {profile.socials?.github ? <SocialLink icon={FaGithub} label="github" link={profile.socials.github} /> : null}
+        {profile.socials?.linkedin ? <SocialLink icon={FaLinkedin} label="linkedin" link={profile.socials.linkedin} /> : null}
+        {profile.socials?.twitter ? <SocialLink icon={FaTwitter} label="twitter" link={profile.socials.twitter} /> : null}
       </motion.footer>
 
       {showPasswordModal ? (
