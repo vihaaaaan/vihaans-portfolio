@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import type { ContributionCalendar, ContributionDay } from '@/lib/github'
 import { loadTransition, LOAD_Y } from '@/lib/motion'
@@ -27,6 +27,21 @@ const ROWS = 7
 
 const DAYS_SHOWN = 365
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+const GLOW_FADE_DELAY = 180
+
+type GlowLevel = 'primary' | 'near' | 'soft'
+
+const GLOW_FIELD: Array<[weekOffset: number, dayOffset: number, level: GlowLevel]> = [
+  [0, 0, 'primary'],
+  [-1, 0, 'near'],
+  [1, 0, 'near'],
+  [0, -1, 'near'],
+  [0, 1, 'near'],
+  [-1, -1, 'soft'],
+  [-1, 1, 'soft'],
+  [1, -1, 'soft'],
+  [1, 1, 'soft'],
+]
 
 /**
  * Chronological days → columns of 7, one column per calendar week starting
@@ -78,6 +93,9 @@ function GitHubActivityLoading() {
 export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
   const [calendar, setCalendar] = useState<ContributionCalendar | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [glowLevels, setGlowLevels] = useState<Record<string, GlowLevel>>({})
+  const glowLevelsRef = useRef<Record<string, GlowLevel>>({})
+  const glowTimersRef = useRef(new Map<string, number>())
 
   useEffect(() => {
     const controller = new AbortController()
@@ -99,6 +117,11 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
     return () => controller.abort()
   }, [])
 
+  useEffect(() => () => {
+    glowTimersRef.current.forEach((timer) => window.clearTimeout(timer))
+    glowTimersRef.current.clear()
+  }, [])
+
   if (status === 'loading') return <GitHubActivityLoading />
 
   // Nothing to say if GitHub was unreachable or the markup moved: the section
@@ -118,6 +141,56 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
   // smaller on a phone, which is the tradeoff for never hiding half the year.
   const width = weeks.length * STEP - GAP
   const height = ROWS * STEP - GAP
+
+  const queueGlowFade = (key: string) => {
+    if (glowTimersRef.current.has(key)) return
+
+    const timer = window.setTimeout(() => {
+      glowTimersRef.current.delete(key)
+      const current = glowLevelsRef.current
+      if (!(key in current)) return
+
+      const next = { ...current }
+      delete next[key]
+      glowLevelsRef.current = next
+      setGlowLevels(next)
+    }, GLOW_FADE_DELAY)
+
+    glowTimersRef.current.set(key, timer)
+  }
+
+  const showGlowField = (weekIndex: number, dayIndex: number) => {
+    const active = new Map<string, GlowLevel>()
+
+    GLOW_FIELD.forEach(([weekOffset, dayOffset, level]) => {
+      const week = weekIndex + weekOffset
+      const day = dayIndex + dayOffset
+      if (!weeks[week]?.[day]) return
+      active.set(`${week}-${day}`, level)
+    })
+
+    const current = glowLevelsRef.current
+    Object.keys(current).forEach((key) => {
+      if (!active.has(key)) queueGlowFade(key)
+    })
+
+    const next = { ...current }
+    active.forEach((level, key) => {
+      const timer = glowTimersRef.current.get(key)
+      if (timer !== undefined) {
+        window.clearTimeout(timer)
+        glowTimersRef.current.delete(key)
+      }
+      next[key] = level
+    })
+
+    glowLevelsRef.current = next
+    setGlowLevels(next)
+  }
+
+  const fadeGlowField = () => {
+    Object.keys(glowLevelsRef.current).forEach(queueGlowFade)
+  }
 
   return (
     <motion.section
@@ -150,6 +223,7 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
         className="block h-auto w-full overflow-visible"
         role="img"
         aria-label={`Contribution calendar, ${total} contributions`}
+        onPointerLeave={fadeGlowField}
       >
         {weeks.map((week, w) =>
           week.map((day, d) =>
@@ -162,7 +236,9 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
                 height={CELL}
                 rx={2}
                 className="contribution-cell"
+                data-glow={glowLevels[`${w}-${d}`]}
                 fill={LEVEL_INK[day.level] ?? LEVEL_INK[0]}
+                onPointerEnter={() => showGlowField(w, d)}
               >
                 <title>{describe(day)}</title>
               </rect>
