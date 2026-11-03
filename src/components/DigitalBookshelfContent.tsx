@@ -163,7 +163,7 @@ function MediaTile({ item, index, width, height }: CollageTile) {
     <article
       tabIndex={0}
       aria-label={`${item.title}, ${typeLabel(item)}`}
-      className="group relative shrink-0 overflow-hidden bg-transparent focus:outline-none focus:ring-1 focus:ring-gray-400"
+      className="group relative shrink-0 overflow-hidden bg-transparent focus:outline-none focus:ring-1 focus:ring-subtle"
       style={{ width, height }}
     >
       {item.coverUrl && !failed && (
@@ -182,7 +182,7 @@ function MediaTile({ item, index, width, height }: CollageTile) {
         />
       )}
       {(!item.coverUrl || failed) && (
-        <div className="flex aspect-[2/3] items-center justify-center text-xl text-gray-400" aria-hidden="true">
+        <div className="flex aspect-[2/3] items-center justify-center text-xl text-subtle" aria-hidden="true">
           {emoji}
         </div>
       )}
@@ -283,14 +283,14 @@ function BookshelfListSection({ title, books, revealStart, centered, canEdit, on
       }}
       className="mt-5 first:mt-3"
     >
-      <div className="mb-2 flex items-baseline justify-between gap-2 border-b border-gray-200 pb-0.5">
+      <div className="mb-2 flex items-baseline justify-between gap-2 border-b border-line pb-0.5">
         <div className="min-w-0">
-          <h3 className="font-sans text-sm lowercase text-gray-900 sm:text-base">{title}</h3>
+          <h3 className="font-sans text-sm lowercase text-foreground sm:text-base">{title}</h3>
         </div>
         {canEdit && (
           <button
             onClick={onEdit}
-            className="shrink-0 cursor-pointer font-sans text-[12px] text-gray-400 transition-colors duration-200 hover:text-gray-700"
+            className="shrink-0 cursor-pointer font-sans text-[12px] text-subtle transition-colors duration-200 hover:text-foreground"
           >
             edit
           </button>
@@ -298,7 +298,7 @@ function BookshelfListSection({ title, books, revealStart, centered, canEdit, on
       </div>
 
       {books.length === 0 ? (
-        <div className="py-4 font-sans text-xs lowercase text-gray-400">
+        <div className="py-4 font-sans text-xs lowercase text-subtle">
           nothing here yet
         </div>
       ) : (

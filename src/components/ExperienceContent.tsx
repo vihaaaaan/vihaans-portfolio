@@ -39,14 +39,14 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
             onClick={onToggle}
             className="flex h-5 w-5 flex-shrink-0 cursor-pointer items-center justify-center"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-gray-600 transition-colors duration-150 group-hover:bg-gray-800" aria-hidden="true" />
+            <span className="h-1.5 w-1.5 rounded-full bg-body transition-colors duration-150 group-hover:bg-foreground" aria-hidden="true" />
           </button>
         ) : (
           <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center" aria-hidden="true">
-            <span className="h-1.5 w-1.5 rounded-full bg-gray-600" />
+            <span className="h-1.5 w-1.5 rounded-full bg-body" />
           </span>
         )}
-        <p className="min-w-0 flex-1 font-sans text-[12px] leading-relaxed text-gray-600 transition-colors duration-200 group-hover:text-gray-800 sm:text-xs">
+        <p className="min-w-0 flex-1 font-sans text-[12px] leading-relaxed text-body transition-colors duration-200 group-hover:text-foreground sm:text-xs">
           <InlineMarkdown text={e.text ?? ''} />
         </p>
       </div>
@@ -59,16 +59,16 @@ function WorkEntry({ e, isExpanded, onToggle }: WorkEntryProps) {
             exit={{ height: 0, opacity: 0, transition: { height: { duration: 0.22 }, opacity: { duration: 0.12 } } }}
             className="ml-8 mt-2 overflow-hidden"
           >
-            <div className="border-[0.5px] border-gray-300 bg-gray-50 shadow-sm rounded-md p-3 flex flex-col gap-1.5">
-              <span className="self-end font-sans text-[11px] text-gray-400 sm:text-[12px]">{dateRange(e)}</span>
+            <div className="flex flex-col gap-1.5 rounded-md border-[0.5px] border-line bg-surface-muted p-3 shadow-sm">
+              <span className="self-end font-sans text-[11px] text-subtle sm:text-[12px]">{dateRange(e)}</span>
               {details.map((para, i) => (
-                <p key={i} className="flex gap-1.5 font-sans text-[12px] text-gray-500 sm:text-xs">
+                <p key={i} className="flex gap-1.5 font-sans text-[12px] text-muted sm:text-xs">
                   <span className="flex-shrink-0">↳</span>
                   <span>{para}</span>
                 </p>
               ))}
               {e.location && (
-                <span className="text-right font-sans text-[11px] text-gray-400 sm:text-[12px]">
+                <span className="text-right font-sans text-[11px] text-subtle sm:text-[12px]">
                   📍 {e.location.toLowerCase()}
                 </span>
               )}
@@ -102,10 +102,10 @@ export function ExperienceContent({ current, prev }: ExperienceContentProps) {
 
   return (
     <motion.div variants={loadListVariants} className="mt-2 lowercase">
-      <motion.h3 variants={loadItemVariants} className="mb-1 font-sans text-sm text-gray-900 sm:text-base">current</motion.h3>
+      <motion.h3 variants={loadItemVariants} className="mb-1 font-sans text-sm text-foreground sm:text-base">current</motion.h3>
       {renderList(current, 'current')}
 
-      <motion.h3 variants={loadItemVariants} className="mb-1 mt-3 font-sans text-sm text-gray-900 sm:text-base">prev</motion.h3>
+      <motion.h3 variants={loadItemVariants} className="mb-1 mt-3 font-sans text-sm text-foreground sm:text-base">prev</motion.h3>
       {renderList(prev, 'prev')}
     </motion.div>
   )

@@ -8,6 +8,7 @@ import { RotatingQuote } from '@/components/RotatingQuote'
 import { SectionViewport, preloadSectionModule } from '@/components/SectionViewport'
 import { SocialLink } from '@/components/SocialLink'
 import { TAB_HASHES, TABS, TabBarNav } from '@/components/TabNav'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { ICON_GROUP_CLASS } from '@/components/icons'
 import { loadItemVariants, loadTransition, LOAD_STAGGER, LOAD_Y } from '@/lib/motion'
 import type { Profile, RemoteSectionKey, SectionKey } from '@/types'
@@ -118,7 +119,7 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              className="font-serif text-lg lowercase tracking-normal text-gray-900 sm:text-xl"
+              className="font-serif text-lg lowercase tracking-normal text-foreground sm:text-xl"
             >
               {activeHeadline}
             </motion.h1>
@@ -149,11 +150,14 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
           ...loadTransition,
           layout: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
         }}
-        className={`${ICON_GROUP_CLASS} pb-14`}
+        className="flex w-full items-center justify-between pb-14"
       >
-        {profile.socials?.github ? <SocialLink icon={FaGithub} label="github" link={profile.socials.github} /> : null}
-        {profile.socials?.linkedin ? <SocialLink icon={FaLinkedin} label="linkedin" link={profile.socials.linkedin} /> : null}
-        {profile.socials?.twitter ? <SocialLink icon={FaTwitter} label="twitter" link={profile.socials.twitter} /> : null}
+        <div className={ICON_GROUP_CLASS}>
+          {profile.socials?.github ? <SocialLink icon={FaGithub} label="github" link={profile.socials.github} /> : null}
+          {profile.socials?.linkedin ? <SocialLink icon={FaLinkedin} label="linkedin" link={profile.socials.linkedin} /> : null}
+          {profile.socials?.twitter ? <SocialLink icon={FaTwitter} label="twitter" link={profile.socials.twitter} /> : null}
+        </div>
+        <ThemeToggle />
       </motion.footer>
 
       {showPasswordModal ? (

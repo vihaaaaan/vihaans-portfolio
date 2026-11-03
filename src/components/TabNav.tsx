@@ -30,7 +30,7 @@ interface TabNavProps {
 
 export function TabBarNav({ activeKey, onSelect, onIntent }: TabNavProps) {
   return (
-    <nav aria-label="Portfolio sections" className={`${ICON_GROUP_CLASS} rounded-full border-[0.5px] border-gray-200 bg-white p-0.5`}>
+    <nav aria-label="Portfolio sections" className={`${ICON_GROUP_CLASS} rounded-full border-[0.5px] border-line bg-surface p-0.5`}>
       {TABS.map((tab) => {
         const Icon = tab.icon
         const active = activeKey === tab.key
@@ -48,7 +48,7 @@ export function TabBarNav({ activeKey, onSelect, onIntent }: TabNavProps) {
             {active ? (
               <motion.span
                 layoutId="tab-indicator-bar"
-                className="absolute inset-0 rounded-full bg-gray-100"
+                className="absolute inset-0 rounded-full bg-surface-strong"
                 transition={{ type: 'spring', stiffness: 420, damping: 32 }}
               />
             ) : null}
@@ -59,8 +59,9 @@ export function TabBarNav({ activeKey, onSelect, onIntent }: TabNavProps) {
             >
               <Icon size={ICON_SIZE} />
             </motion.span>
-            <span aria-hidden="true" className={`${ICON_TOOLTIP_CLASS} top-full mt-1.5`}>
+            <span aria-hidden="true" className={`${ICON_TOOLTIP_CLASS} bottom-full mb-2`}>
               {tab.label}
+              <span className="absolute left-1/2 top-full -translate-x-1/2 border-x-[5px] border-t-[5px] border-x-transparent border-t-tooltip" />
             </span>
           </button>
         )

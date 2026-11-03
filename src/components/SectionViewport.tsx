@@ -49,7 +49,7 @@ function SectionLoading() {
 }
 
 function LoadFailure() {
-  return <p className="py-6 font-sans text-xs text-gray-400">this section could not be loaded.</p>
+  return <p className="py-6 font-sans text-xs text-subtle">this section could not be loaded.</p>
 }
 
 function useSequenceComplete(

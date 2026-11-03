@@ -12,7 +12,7 @@ export function MarginStickers({ stickers }: { stickers: StickerConfig[] }) {
   if (!stickers.length) return null
 
   return (
-    <div className="hidden xl:block absolute inset-0 pointer-events-none z-0 text-gray-700" aria-hidden="true">
+    <div className="pointer-events-none absolute inset-0 z-0 hidden text-icon xl:block" aria-hidden="true">
       {stickers.map((s) => {
         // A sticker in the RIGHT margin is offset from the left edge, and vice
         // versa — anchoring `right` would push it back across the page.

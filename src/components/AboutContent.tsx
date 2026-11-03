@@ -8,7 +8,7 @@ export function AboutContent({ bio }: { bio: string[] }) {
   return (
     <motion.div variants={loadListVariants} className="space-y-4">
       {bio.map((paragraph, index) => (
-        <motion.p key={index} variants={loadItemVariants} className="font-sans text-[12px] leading-relaxed text-gray-600 sm:text-xs">
+        <motion.p key={index} variants={loadItemVariants} className="font-sans text-[12px] leading-relaxed text-body sm:text-xs">
           <InlineMarkdown text={paragraph} />
         </motion.p>
       ))}

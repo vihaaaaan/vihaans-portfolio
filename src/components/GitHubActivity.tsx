@@ -8,9 +8,14 @@ import { loadTransition, LOAD_Y } from '@/lib/motion'
 // Grayscale, not GitHub green. The nav emoji and project emoji were both pulled
 // for reading inconsistently against the serif/grayscale page; a block of green
 // in the middle of the projects tab would be the loudest thing on the site.
-// Hex rather than Tailwind classes because these are SVG fills — gray-100, 300,
-// 500, 700, 900.
-const LEVEL_INK = ['#f3f4f6', '#d1d5db', '#6b7280', '#374151', '#111827']
+// CSS variables keep the contribution scale legible in both color schemes.
+const LEVEL_INK = [
+  'var(--activity-0)',
+  'var(--activity-1)',
+  'var(--activity-2)',
+  'var(--activity-3)',
+  'var(--activity-4)',
+]
 
 // SVG user units, not pixels. The whole grid scales to whatever width the card
 // gives it, so these set the grid's proportions — square cells, gaps that
@@ -119,7 +124,7 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
       initial={{ opacity: 0, y: LOAD_Y }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ ...loadTransition, delay: revealDelay }}
-      className="border-[0.5px] border-gray-200 bg-white p-2.5 sm:p-3"
+      className="border-[0.5px] border-line bg-surface p-2.5 sm:p-3"
       aria-label={`${total} GitHub contributions in the last year`}
     >
       {/* Labels stay HTML at a fixed size rather than scaling inside the SVG,
@@ -130,7 +135,7 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
           label ? (
             <span
               key={i}
-              className="absolute top-0 font-sans text-[10px] leading-none text-gray-400"
+              className="absolute top-0 font-sans text-[10px] leading-none text-subtle"
               style={{ left: `${((i * STEP) / width) * 100}%` }}
             >
               {label}
@@ -164,7 +169,7 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
         )}
       </svg>
 
-      <p className="mt-2 font-sans text-[11px] lowercase text-gray-500 sm:text-[12px]">
+      <p className="mt-2 font-sans text-[11px] lowercase text-muted sm:text-[12px]">
         {total.toLocaleString()} contributions in the last year
       </p>
     </motion.section>
