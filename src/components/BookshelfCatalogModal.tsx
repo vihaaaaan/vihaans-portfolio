@@ -130,7 +130,7 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
         className="section-enter relative max-h-[80vh] w-full max-w-2xl overflow-y-auto border border-line bg-surface p-6 shadow-xl"
       >
         <div className="flex items-baseline justify-between mb-5">
-          <h3 className="font-serif text-lg text-foreground sm:text-xl">{title}</h3>
+          <h3 className="font-serif text-base text-foreground sm:text-lg">{title}</h3>
           <button
             onClick={onClose}
             className="cursor-pointer text-sm leading-none text-subtle transition-colors duration-200 hover:text-foreground"
@@ -248,7 +248,7 @@ export function BookshelfCatalogModal({ title, books, admin, onSave, onClose }: 
                         )}
                       </div>
 
-                      <p className="mt-1.5 line-clamp-2 font-serif text-[12px] leading-tight text-foreground">
+                      <p className="mt-1.5 line-clamp-2 font-serif text-xs leading-tight text-foreground">
                         {item.title.toLowerCase()}
                       </p>
                       {item.creators?.length > 0 && (

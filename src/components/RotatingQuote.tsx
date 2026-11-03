@@ -21,7 +21,7 @@ export function RotatingQuote({ quotes }: { quotes: Quote[] }) {
   const current = quotes[index]
 
   return (
-    <div className="flex min-h-[3.25rem] items-start sm:min-h-[3.75rem]">
+    <div className="mt-3 flex min-h-[3.75rem] items-start sm:min-h-[4.25rem]">
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
@@ -30,8 +30,8 @@ export function RotatingQuote({ quotes }: { quotes: Quote[] }) {
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h3 className="font-sans text-xs tracking-tight text-muted sm:text-sm">“{current.quote}”</h3>
-          <p className="mt-1 font-sans text-[12px] text-subtle sm:text-xs">— {current.author}</p>
+          <h3 className="font-sans text-xs leading-snug tracking-tight text-muted sm:text-sm">“{current.quote}”</h3>
+          <p className="mt-1.5 font-sans text-[11px] text-subtle sm:text-xs">— {current.author}</p>
         </motion.div>
       </AnimatePresence>
     </div>

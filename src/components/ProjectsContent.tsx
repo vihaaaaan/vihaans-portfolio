@@ -40,9 +40,9 @@ export function ProjectsContent({ current, prev }: ProjectsContentProps) {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: revealDelay(headerOrder), ease: LOAD_EASE }}
-        className="mb-5 border-b border-line pb-1"
+        className="mb-5 border-b border-line pb-2"
       >
-        <h3 className="font-sans text-sm text-foreground sm:text-base">{title}</h3>
+        <h3 className="font-sans text-sm font-medium text-foreground sm:text-base">{title}</h3>
       </motion.div>
 
       <div className={featured && items.length === 1 ? 'mx-auto grid w-full max-w-sm grid-cols-1 gap-6' : 'grid grid-cols-1 gap-6 sm:grid-cols-2'}>

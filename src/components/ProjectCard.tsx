@@ -77,10 +77,10 @@ export function ProjectCard({
 
         <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
           <div className="min-w-0">
-            <h3 className={`${featured ? 'text-lg sm:text-xl' : 'text-base sm:text-lg'} font-serif leading-none text-white`}>
+            <h3 className={`${featured ? 'text-base sm:text-lg' : 'text-sm sm:text-base'} font-serif leading-none text-white`}>
               {name.toLowerCase()}
             </h3>
-            <p className="mt-1 line-clamp-2 font-sans text-[10px] leading-snug text-white/70 sm:text-[11px]">
+            <p className="mt-1.5 line-clamp-2 font-sans text-[9px] leading-snug text-white/75 sm:text-[10px]">
               {blurb.toLowerCase()}
             </p>
           </div>

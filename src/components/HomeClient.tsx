@@ -8,7 +8,6 @@ import { RotatingQuote } from '@/components/RotatingQuote'
 import { SectionViewport, preloadSectionModule } from '@/components/SectionViewport'
 import { SocialLink } from '@/components/SocialLink'
 import { TAB_HASHES, TABS, TabBarNav } from '@/components/TabNav'
-import { ThemeToggle } from '@/components/ThemeToggle'
 import { ICON_GROUP_CLASS } from '@/components/icons'
 import { loadItemVariants, loadTransition, LOAD_STAGGER, LOAD_Y } from '@/lib/motion'
 import type { Profile, RemoteSectionKey, SectionKey } from '@/types'
@@ -106,39 +105,39 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
 
   return (
     <motion.div
-      className="mx-auto flex min-h-screen max-w-2xl flex-col px-5 sm:px-6"
+      className="mx-auto flex min-h-screen max-w-3xl flex-col px-5 sm:px-7"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <main className="flex flex-col pb-6 pt-16 sm:pb-8 sm:pt-20">
-        <div className="mb-2.5 flex flex-wrap items-end justify-between gap-3">
-          <motion.div variants={loadItemVariants}>
+      <main className="flex flex-col pb-9 pt-14 sm:pb-12 sm:pt-20">
+        <div className="grid grid-cols-12 gap-x-4 gap-y-5 sm:gap-x-6 sm:gap-y-7">
+          <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 sm:col-span-8">
             <motion.h1
               key={activeKey}
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              className="font-serif text-lg lowercase tracking-normal text-foreground sm:text-xl"
+              className="max-w-[18ch] font-serif text-xl leading-[1.02] lowercase tracking-[-0.02em] text-foreground sm:text-2xl"
             >
               {activeHeadline}
             </motion.h1>
             {activeKey === 'about' && profile.sublines?.length ? <RotatingQuote quotes={profile.sublines} /> : null}
           </motion.div>
 
-          <motion.div variants={loadItemVariants} className="flex-shrink-0">
+          <motion.div variants={loadItemVariants} className="col-span-12 flex-shrink-0 sm:col-span-4 sm:justify-self-end">
             <TabBarNav activeKey={activeKey} onSelect={selectSection} onIntent={signalIntent} />
           </motion.div>
-        </div>
 
-        <motion.div variants={loadItemVariants} className="min-w-0 flex-1">
-          <SectionViewport
-            activeKey={activeKey}
-            profile={profile}
-            adminUnlocked={adminUnlocked}
-            onSequenceComplete={handleSequenceComplete}
-          />
-        </motion.div>
+          <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 flex-1">
+            <SectionViewport
+              activeKey={activeKey}
+              profile={profile}
+              adminUnlocked={adminUnlocked}
+              onSequenceComplete={handleSequenceComplete}
+            />
+          </motion.div>
+        </div>
       </main>
 
       <motion.footer
@@ -150,14 +149,13 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
           ...loadTransition,
           layout: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
         }}
-        className="flex w-full items-center justify-between pb-14"
+        className="grid w-full grid-cols-12 gap-x-4 pb-14 sm:gap-x-6"
       >
-        <div className={ICON_GROUP_CLASS}>
+        <div className={`col-span-12 justify-self-end ${ICON_GROUP_CLASS}`}>
           {profile.socials?.github ? <SocialLink icon={FaGithub} label="github" link={profile.socials.github} /> : null}
           {profile.socials?.linkedin ? <SocialLink icon={FaLinkedin} label="linkedin" link={profile.socials.linkedin} /> : null}
           {profile.socials?.twitter ? <SocialLink icon={FaTwitter} label="twitter" link={profile.socials.twitter} /> : null}
         </div>
-        <ThemeToggle />
       </motion.footer>
 
       {showPasswordModal ? (

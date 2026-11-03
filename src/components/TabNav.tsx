@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { PiBookOpenFill, PiFlaskFill, PiLaptopFill, PiUserCircleFill } from 'react-icons/pi'
 import type { IconType } from 'react-icons'
-import { ICON_COLOR, ICON_CONTROL_CLASS, ICON_GROUP_CLASS, ICON_SIZE, ICON_TOOLTIP_CLASS } from '@/components/icons'
+import { ICON_COLOR, ICON_CONTROL_CLASS, ICON_GROUP_CLASS, ICON_TOOLTIP_CLASS, NAV_ICON_SIZE } from '@/components/icons'
 import type { SectionKey } from '@/types'
 
 export interface TabDefinition {
@@ -57,7 +57,7 @@ export function TabBarNav({ activeKey, onSelect, onIntent }: TabNavProps) {
               whileHover={{ scale: 1.2 }}
               transition={{ type: 'spring', stiffness: 400, damping: 20 }}
             >
-              <Icon size={ICON_SIZE} />
+              <Icon size={NAV_ICON_SIZE} />
             </motion.span>
             <span aria-hidden="true" className={`${ICON_TOOLTIP_CLASS} bottom-full mb-2`}>
               {tab.label}

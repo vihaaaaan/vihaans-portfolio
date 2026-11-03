@@ -92,10 +92,10 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
         <div className="p-4 lowercase sm:p-5">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 id="project-dialog-title" className="font-serif text-2xl leading-none text-foreground sm:text-3xl">
+              <h2 id="project-dialog-title" className="font-serif text-xl leading-none text-foreground sm:text-2xl">
                 {project.name.toLowerCase()}
               </h2>
-              <p className="mt-1.5 font-sans text-[12px] leading-relaxed text-muted sm:text-xs">
+              <p className="mt-2 font-sans text-[11px] leading-relaxed text-muted sm:text-xs">
                 {project.blurb.toLowerCase()}
               </p>
             </div>
@@ -109,7 +109,7 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
           {project.description.length > 0 ? (
             <div className="mt-4 space-y-1.5 border-t border-line pt-4">
               {project.description.map((paragraph) => (
-                <p key={paragraph} className="font-sans text-[12px] leading-relaxed text-body sm:text-xs">
+                <p key={paragraph} className="font-sans text-[11px] leading-[1.65] text-body sm:text-xs">
                   {paragraph.toLowerCase()}
                 </p>
               ))}
@@ -132,7 +132,7 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 font-sans text-[12px] text-body underline decoration-line underline-offset-4 transition hover:text-foreground"
+                  className="inline-flex items-center gap-1 font-sans text-[10px] text-body underline decoration-line underline-offset-4 sm:text-[11px]"
                 >
                   {label.toLowerCase()}
                   <span aria-hidden="true">↗</span>

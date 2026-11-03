@@ -17,7 +17,7 @@ export function InlineMarkdown({ text }: { text: string }): ReactNode {
         key={key++}
         href={href}
         {...(isMail ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
-        className="text-foreground underline decoration-dotted transition-colors duration-200 hover:text-body"
+        className="text-inherit underline decoration-current underline-offset-2"
       >
         {label}
       </a>

@@ -1,24 +1,20 @@
 /**
- * One size for every icon in the page chrome: the tab nav (both the desktop
- * rail and the phone bar), the footer socials, and the edit-mode lock.
- *
- * These live in three different components and render at different viewports,
- * which is how they drifted to 13/17/18/24/21px in the first place. Change it
- * here, not at the call site.
+ * Navigation is intentionally a touch quieter than the footer socials. The
+ * surrounding controls still share one rhythm, so both groups align cleanly.
  */
-export const ICON_SIZE = 20
+export const NAV_ICON_SIZE = 18
+export const SOCIAL_ICON_SIZE = 20
 
 /**
- * One ink for every icon, in every state. The nav's active tab is marked by the
- * grey circle behind it, not by a darker glyph, and hover is answered by the
- * scale/lift motion each control already has — so nothing here needs a second
- * shade.
+ * One ink for every navigation state. The active tab is marked by the grey
+ * circle behind it, not by a darker glyph. Social links inherit body color so
+ * hyperlinks keep the same contrast in both themes.
  */
 export const ICON_COLOR = 'text-icon'
 
 /**
  * Shared geometry keeps the navigation and footer icons optically aligned:
- * 20px glyphs inside 28px controls, with a 6px gap between controls. That
+ * 18–20px glyphs inside 28px controls, with a 6px gap between controls. That
  * produces the same 34px center-to-center rhythm in both groups.
  */
 export const ICON_CONTROL_CLASS = 'group relative flex h-7 w-7 items-center justify-center'
