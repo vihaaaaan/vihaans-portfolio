@@ -49,7 +49,7 @@ export function ProjectCard({
               playsInline
               preload="metadata"
               onLoadedData={() => setMediaLoaded(true)}
-              className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-500 ${mediaLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${mediaLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
         ) : previewImage ? (
           <img
@@ -59,7 +59,7 @@ export function ProjectCard({
             loading="lazy"
             decoding="async"
             onLoad={() => setMediaLoaded(true)}
-            className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-500 ${mediaLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${mediaLoaded ? 'opacity-100' : 'opacity-0'}`}
           />
         ) : null}
 

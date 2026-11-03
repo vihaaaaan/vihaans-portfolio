@@ -101,7 +101,7 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
             </div>
             {project.status ? (
               <span className="shrink-0 rounded-full border border-line px-2.5 py-1 font-sans text-[10px] tracking-[0.12em] text-muted">
-                {project.status.toLowerCase()}
+                {project.status.toLowerCase() === 'current' ? 'in development' : project.status.toLowerCase()}
               </span>
             ) : null}
           </div>
