@@ -147,7 +147,7 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
 
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="w-full h-auto block"
+        className="block h-auto w-full overflow-visible"
         role="img"
         aria-label={`Contribution calendar, ${total} contributions`}
       >
@@ -161,6 +161,7 @@ export function GitHubActivity({ revealDelay = 0 }: { revealDelay?: number }) {
                 width={CELL}
                 height={CELL}
                 rx={2}
+                className="contribution-cell"
                 fill={LEVEL_INK[day.level] ?? LEVEL_INK[0]}
               >
                 <title>{describe(day)}</title>

@@ -2,6 +2,7 @@
 
 import { ProjectImageCarousel } from '@/components/ProjectImageCarousel'
 import type { ProjectItemProps } from '@/types'
+import { PiWrenchFill } from 'react-icons/pi'
 import { useEffect, useRef } from 'react'
 
 interface ProjectDetailsModalProps {
@@ -100,8 +101,9 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
               </p>
             </div>
             {project.status ? (
-              <span className="shrink-0 rounded-full border border-line px-2.5 py-1 font-sans text-[10px] tracking-[0.12em] text-muted">
-                {project.status.toLowerCase() === 'current' ? 'in development' : project.status.toLowerCase()}
+              <span className="inline-flex shrink-0 items-center gap-1.5 pt-0.5 font-sans text-[10px] font-medium text-muted sm:text-[11px]">
+                <PiWrenchFill className="h-3 w-3" aria-hidden="true" />
+                <span>{project.status.toLowerCase() === 'current' ? 'in development' : project.status.toLowerCase()}</span>
               </span>
             ) : null}
           </div>
