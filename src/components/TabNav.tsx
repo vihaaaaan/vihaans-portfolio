@@ -30,7 +30,7 @@ interface TabNavProps {
 
 export function TabBarNav({ activeKey, onSelect, onIntent }: TabNavProps) {
   return (
-    <nav aria-label="Portfolio sections" className="flex items-center gap-0.5 rounded-full border-[0.5px] border-gray-200 bg-white p-0.5">
+    <nav aria-label="Portfolio sections" className="flex items-center gap-1.5 rounded-full border-[0.5px] border-gray-200 bg-white p-0.5">
       {TABS.map((tab) => {
         const Icon = tab.icon
         const active = activeKey === tab.key

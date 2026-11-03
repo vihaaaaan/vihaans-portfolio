@@ -148,7 +148,7 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
           ...loadTransition,
           layout: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
         }}
-        className="flex items-center space-x-3 pb-14"
+        className="flex items-center space-x-3.5 pb-14"
       >
         {profile.socials?.github ? <SocialLink icon={FaGithub} link={profile.socials.github} /> : null}
         {profile.socials?.linkedin ? <SocialLink icon={FaLinkedin} link={profile.socials.linkedin} /> : null}
