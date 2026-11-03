@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { LOAD_EASE } from '@/lib/motion'
 
 interface Quote {
   quote: string
@@ -25,13 +26,13 @@ export function RotatingQuote({ quotes }: { quotes: Quote[] }) {
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
-          initial={{ opacity: 0, y: 6 }}
+          initial={{ opacity: 0, y: 3 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+          exit={{ opacity: 0, y: -3 }}
+          transition={{ duration: 0.64, ease: LOAD_EASE }}
         >
           <h3 className="font-sans text-xs leading-snug tracking-tight text-muted sm:text-sm">“{current.quote}”</h3>
-          <p className="mt-1.5 font-sans text-[11px] text-subtle sm:text-xs">— {current.author}</p>
+          <p className="mt-1.5 font-sans text-[11px] text-subtle sm:text-xs">by {current.author}</p>
         </motion.div>
       </AnimatePresence>
     </div>

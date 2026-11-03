@@ -66,16 +66,16 @@
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --page-top: #2d3035;
-    --page-bottom: #22252a;
-    --theme-surface: #30343a;
-    --theme-surface-muted: #383c43;
-    --theme-surface-strong: #474b53;
+    --page-top: #24262a;
+    --page-bottom: #1a1c1f;
+    --theme-surface: #292c30;
+    --theme-surface-muted: #303338;
+    --theme-surface-strong: #40444a;
     --theme-foreground: #f2efe8;
     --theme-body: #cbc8c0;
     --theme-muted: #aca9a2;
     --theme-subtle: #969ca4;
-    --theme-line: #4a4e56;
+    --theme-line: #41454b;
     --theme-icon: #e2ded6;
     --theme-control: #dedad1;
     --theme-control-hover: #f0ede6;
