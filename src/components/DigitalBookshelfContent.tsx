@@ -285,7 +285,7 @@ function BookshelfListSection({ title, books, revealStart, centered, canEdit, on
     >
       <div className="mb-2 flex items-baseline justify-between gap-2 border-b border-line pb-0.5">
         <div className="min-w-0">
-          <h3 className="font-sans text-xs font-normal lowercase text-foreground sm:text-sm">{title}</h3>
+          <h3 className="font-sans text-xs font-light lowercase text-foreground sm:text-sm">{title}</h3>
         </div>
         {canEdit && (
           <button
