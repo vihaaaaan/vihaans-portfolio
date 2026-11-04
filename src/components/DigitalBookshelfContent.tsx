@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { PiCaretDownBold } from 'react-icons/pi'
 import { LOAD_EASE } from '@/lib/motion'
 import type { BookItemProps, DigitalBookshelfContentProps } from '@/types'
 
@@ -302,7 +303,8 @@ function BookshelfListSection({
 }: ListSectionProps) {
   const reduceMotion = useReducedMotion()
   const hiddenCount = Math.max(0, books.length - INITIAL_ITEM_LIMIT)
-  const visibleBooks = expanded ? books : books.slice(0, INITIAL_ITEM_LIMIT)
+  const visibleBooks = books.slice(0, INITIAL_ITEM_LIMIT)
+  const overflowBooks = books.slice(INITIAL_ITEM_LIMIT)
 
   return (
     <motion.section
@@ -336,14 +338,38 @@ function BookshelfListSection({
       ) : (
         <>
           <BookshelfCollage books={visibleBooks} revealStart={revealStart} centered={centered} />
+          <AnimatePresence initial={false}>
+            {expanded && overflowBooks.length > 0 ? (
+              <motion.div
+                key="bookshelf-overflow"
+                initial={reduceMotion ? false : { height: 0, opacity: 0, y: -10 }}
+                animate={{ height: 'auto', opacity: 1, y: 0 }}
+                exit={reduceMotion ? { height: 0 } : { height: 0, opacity: 0, y: -8 }}
+                transition={reduceMotion ? { duration: 0 } : { duration: 0.48, ease: LOAD_EASE }}
+                className="overflow-hidden"
+              >
+                <div className="pt-2">
+                  <BookshelfCollage books={overflowBooks} revealStart={0} centered />
+                </div>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
           {hiddenCount > 0 ? (
             <button
               type="button"
               onClick={onToggleExpanded}
               aria-expanded={expanded}
-              className="mx-auto mt-3 block cursor-pointer font-sans text-[10px] text-subtle underline decoration-line underline-offset-4 transition-colors duration-200 hover:text-foreground sm:text-[11px]"
+              className="mx-auto mt-3 flex cursor-pointer items-center gap-1 font-sans text-[10px] text-subtle underline decoration-line underline-offset-4 transition-colors duration-200 hover:text-foreground sm:text-[11px]"
             >
-              {expanded ? 'show less' : `show ${hiddenCount} more`}
+              <span>{expanded ? 'show less' : `show ${hiddenCount} more`}</span>
+              <motion.span
+                aria-hidden="true"
+                className="inline-flex"
+                animate={{ rotate: expanded ? 180 : 0 }}
+                transition={reduceMotion ? { duration: 0 } : { duration: 0.3, ease: LOAD_EASE }}
+              >
+                <PiCaretDownBold size={10} />
+              </motion.span>
             </button>
           ) : null}
         </>
