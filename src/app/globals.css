@@ -40,11 +40,11 @@
   --weight-serif: 450;
 
   color-scheme: light;
-  --page-top: #faf7f0;
-  --page-bottom: #f1ebe2;
-  --theme-surface: #fdfaf4;
-  --theme-surface-muted: #f4efe7;
-  --theme-surface-strong: #e8e0d5;
+  --page-top: #f8f4ec;
+  --page-bottom: #eee7dc;
+  --theme-surface: #fbf7f0;
+  --theme-surface-muted: #f2ece3;
+  --theme-surface-strong: #e5dccf;
   --theme-foreground: #292521;
   --theme-body: #5c5550;
   --theme-muted: #68605a;
