@@ -8,6 +8,7 @@ import { RotatingQuote } from '@/components/RotatingQuote'
 import { SectionViewport, preloadSectionModule } from '@/components/SectionViewport'
 import { SocialLink } from '@/components/SocialLink'
 import { TAB_HASHES, TABS, TabBarNav } from '@/components/TabNav'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { ICON_GROUP_CLASS } from '@/components/icons'
 import {
   loadItemVariants,
@@ -141,7 +142,10 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
             variants={loadItemVariants}
             className="col-span-12 justify-self-end sm:col-span-8"
           >
-            <TabBarNav activeKey={activeKey} onSelect={selectSection} onIntent={signalIntent} />
+            <div className="flex items-center gap-2">
+              <TabBarNav activeKey={activeKey} onSelect={selectSection} onIntent={signalIntent} />
+              <ThemeToggle />
+            </div>
           </motion.div>
 
           <motion.div

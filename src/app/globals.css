@@ -63,8 +63,33 @@
   --activity-4: #252a32;
 }
 
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page-top: #24262a;
+  --page-bottom: #1a1c1f;
+  --theme-surface: #292c30;
+  --theme-surface-muted: #303338;
+  --theme-surface-strong: #40444a;
+  --theme-foreground: #f2efe8;
+  --theme-body: #cbc8c0;
+  --theme-muted: #aca9a2;
+  --theme-subtle: #969ca4;
+  --theme-line: #41454b;
+  --theme-icon: #e2ded6;
+  --theme-control: #dedad1;
+  --theme-control-hover: #f0ede6;
+  --theme-on-control: #25282d;
+  --theme-tooltip: #f1eee7;
+  --theme-tooltip-text: #25282d;
+  --activity-0: #3a3e45;
+  --activity-1: #575c65;
+  --activity-2: #858b94;
+  --activity-3: #b7b8b5;
+  --activity-4: #ece9e2;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     color-scheme: dark;
     --page-top: #24262a;
     --page-bottom: #1a1c1f;
