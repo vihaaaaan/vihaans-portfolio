@@ -163,7 +163,7 @@ function MediaTile({ item, index, width, height }: CollageTile) {
     <article
       tabIndex={0}
       aria-label={`${item.title}, ${typeLabel(item)}`}
-      className="group relative shrink-0 overflow-hidden bg-transparent focus:outline-none focus:ring-1 focus:ring-subtle"
+      className="group relative shrink-0 overflow-hidden bg-transparent focus:outline-none focus-visible:ring-1 focus-visible:ring-subtle"
       style={{ width, height }}
     >
       {item.coverUrl && !failed && (
@@ -285,7 +285,7 @@ function BookshelfListSection({ title, books, revealStart, centered, canEdit, on
     >
       <div className="mb-2 flex items-baseline justify-between gap-2 border-b border-line pb-0.5">
         <div className="min-w-0">
-          <h3 className="font-sans text-sm font-medium lowercase text-foreground sm:text-base">{title}</h3>
+          <h3 className="font-sans text-xs font-normal lowercase text-foreground sm:text-sm">{title}</h3>
         </div>
         {canEdit && (
           <button

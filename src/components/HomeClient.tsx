@@ -123,7 +123,7 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
       initial="hidden"
       animate="visible"
     >
-      <main className="flex flex-col pb-9 pt-14 sm:pb-12 sm:pt-20">
+      <main className="flex flex-col pb-5 pt-14 sm:pb-7 sm:pt-20">
         <div className="grid grid-cols-12 gap-x-4 gap-y-4 sm:gap-x-6 sm:gap-y-5">
           <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 sm:col-span-4">
             <motion.h1
