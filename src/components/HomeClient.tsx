@@ -124,25 +124,25 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
       animate="visible"
     >
       <main className="flex flex-col pb-5 pt-14 sm:pb-7 sm:pt-20">
-        <div className="grid grid-cols-12 gap-x-4 gap-y-4 sm:gap-x-6 sm:gap-y-5">
-          <motion.div variants={loadItemVariants} className="col-span-12 min-w-0 sm:col-span-4">
-            <motion.h1
-              key={activeKey}
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.64, ease: LOAD_EASE }}
-              className="font-serif text-xl leading-[1.02] tracking-[-0.02em] text-foreground sm:text-2xl"
-            >
-              {activeHeadline}
-            </motion.h1>
-            {activeKey === 'about' && profile.sublines?.length ? <RotatingQuote quotes={profile.sublines} /> : null}
-          </motion.div>
-
+        <div className="grid grid-cols-12 gap-x-4 gap-y-6 sm:gap-x-6 sm:gap-y-7">
           <motion.div
             variants={loadItemVariants}
-            className="col-span-12 justify-self-end sm:col-span-8"
+            className="col-span-12 flex min-w-0 flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
           >
-            <div className="flex items-center gap-2">
+            <div className="min-w-0">
+              <motion.h1
+                key={activeKey}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.64, ease: LOAD_EASE }}
+                className="font-serif text-xl leading-[1.02] tracking-[-0.02em] text-foreground sm:text-2xl"
+              >
+                {activeHeadline}
+              </motion.h1>
+              {activeKey === 'about' && profile.sublines?.length ? <RotatingQuote quotes={profile.sublines} /> : null}
+            </div>
+
+            <div className="flex shrink-0 items-center gap-2 self-end">
               <TabBarNav activeKey={activeKey} onSelect={selectSection} onIntent={signalIntent} />
               <ThemeToggle />
             </div>
