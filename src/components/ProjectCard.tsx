@@ -6,7 +6,6 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 
 interface ProjectCardProps extends ProjectItemProps {
-  featured?: boolean
   revealDelay?: number
   onOpen: (images: string[]) => void
 }
@@ -16,7 +15,6 @@ export function ProjectCard({
   emoji,
   blurb,
   images = [],
-  featured = false,
   revealDelay = 0,
   onOpen,
 }: ProjectCardProps) {
@@ -32,14 +30,13 @@ export function ProjectCard({
       aria-label={`open ${name} project details`}
       aria-haspopup="dialog"
       onClick={() => onOpen(images)}
-      className="group relative block w-full overflow-hidden bg-gray-900 text-left shadow-sm outline-none ring-1 ring-black/10 transition-shadow focus-visible:ring-2 focus-visible:ring-muted"
+      className="group relative block w-full overflow-hidden bg-transparent text-left outline-none focus-visible:ring-1 focus-visible:ring-subtle"
       initial={{ opacity: 0, y: LOAD_Y }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -3, boxShadow: '0 12px 28px rgba(17, 24, 39, 0.16)', transition: { duration: 0.2 } }}
       whileTap={{ scale: 0.995, transition: { duration: 0.12 } }}
       transition={{ ...loadTransition, delay: revealDelay }}
     >
-      <div className={`relative ${featured ? 'aspect-[16/10] sm:aspect-[2/1]' : 'aspect-[16/10]'}`}>
+      <div className="relative aspect-[36/25] overflow-hidden">
         {previewImage && previewIsVideo ? (
             <video
               src={previewImage}
@@ -49,7 +46,7 @@ export function ProjectCard({
               playsInline
               preload="metadata"
               onLoadedData={() => setMediaLoaded(true)}
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${mediaLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[620ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${mediaLoaded ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}
             />
         ) : previewImage ? (
           <img
@@ -59,7 +56,7 @@ export function ProjectCard({
             loading="lazy"
             decoding="async"
             onLoad={() => setMediaLoaded(true)}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${mediaLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[620ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${mediaLoaded ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}
           />
         ) : null}
 
@@ -73,11 +70,9 @@ export function ProjectCard({
           </div>
         ) : null}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/5 transition-colors duration-300 group-hover:from-black/95 group-hover:via-black/35" />
-
-        <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+        <div className="absolute inset-0 flex flex-col justify-end bg-gray-950/75 p-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus:opacity-100">
           <div className="min-w-0">
-            <h3 className={`${featured ? 'text-base sm:text-lg' : 'text-sm sm:text-base'} font-serif leading-none text-white`}>
+            <h3 className="font-serif text-sm leading-none text-white sm:text-base">
               {name.toLowerCase()}
             </h3>
             <p className="mt-1.5 line-clamp-2 font-sans text-[9px] leading-snug text-white/75 sm:text-[10px]">

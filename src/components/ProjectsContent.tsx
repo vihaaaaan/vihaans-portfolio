@@ -29,19 +29,21 @@ export function ProjectsContent({ current, prev }: ProjectsContentProps) {
 
   return (
     <>
-      <div className="mt-2 grid grid-cols-1 gap-6 lowercase sm:grid-cols-2">
+      <div className="mx-auto mt-3 grid w-full max-w-[620px] grid-cols-1 gap-2 lowercase sm:grid-cols-2">
         {projects.map((project, index) => (
-          <div key={`${project.name}-${index}`} className={index === 0 ? 'sm:col-span-2' : undefined}>
+          <div
+            key={`${project.name}-${index}`}
+            className={projects.length % 2 === 1 && index === projects.length - 1 ? 'sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.25rem)]' : undefined}
+          >
             <ProjectCard
               {...project}
-              featured={index === 0}
               revealDelay={revealDelay(index)}
               onOpen={(images) => setSelected({ project, images })}
             />
           </div>
         ))}
 
-        <div className="mt-4 sm:col-span-2">
+        <div className="mt-6 sm:col-span-2">
           <GitHubActivity revealDelay={revealDelay(projects.length)} />
         </div>
       </div>
