@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { LOAD_EASE } from '@/lib/motion'
@@ -13,8 +13,27 @@ const BookshelfCatalogModal = dynamic(
 type BucketKey = 'current' | 'future'
 
 const DEFAULT_BUCKET_TITLES: Record<'current' | 'future', string> = {
-  current: 'current + just finished',
-  future: 'future',
+  current: 'now + lately',
+  future: 'up next',
+}
+
+const INITIAL_ITEM_LIMIT = 9
+
+function sortBooks(books: BookItemProps[], bucket: BucketKey) {
+  return books
+    .map((item, index) => ({
+      item,
+      index,
+      time: item.sortDate ? Date.parse(item.sortDate) : Number.NaN,
+    }))
+    .sort((a, b) => {
+      const aHasDate = Number.isFinite(a.time)
+      const bHasDate = Number.isFinite(b.time)
+      if (aHasDate && bHasDate) return bucket === 'current' ? b.time - a.time : a.time - b.time
+      if (aHasDate !== bHasDate) return aHasDate ? -1 : 1
+      return a.index - b.index
+    })
+    .map(({ item }) => item)
 }
 
 const TYPE_EMOJI: Record<string, string> = {
@@ -265,12 +284,25 @@ interface ListSectionProps {
   books: BookItemProps[]
   revealStart: number
   centered?: boolean
+  expanded: boolean
+  onToggleExpanded: () => void
   canEdit: boolean
   onEdit: () => void
 }
 
-function BookshelfListSection({ title, books, revealStart, centered, canEdit, onEdit }: ListSectionProps) {
+function BookshelfListSection({
+  title,
+  books,
+  revealStart,
+  centered,
+  expanded,
+  onToggleExpanded,
+  canEdit,
+  onEdit,
+}: ListSectionProps) {
   const reduceMotion = useReducedMotion()
+  const hiddenCount = Math.max(0, books.length - INITIAL_ITEM_LIMIT)
+  const visibleBooks = expanded ? books : books.slice(0, INITIAL_ITEM_LIMIT)
 
   return (
     <motion.section
@@ -302,7 +334,19 @@ function BookshelfListSection({ title, books, revealStart, centered, canEdit, on
           nothing here yet
         </div>
       ) : (
-        <BookshelfCollage books={books} revealStart={revealStart} centered={centered} />
+        <>
+          <BookshelfCollage books={visibleBooks} revealStart={revealStart} centered={centered} />
+          {hiddenCount > 0 ? (
+            <button
+              type="button"
+              onClick={onToggleExpanded}
+              aria-expanded={expanded}
+              className="mx-auto mt-3 block cursor-pointer font-sans text-[10px] text-subtle underline decoration-line underline-offset-4 transition-colors duration-200 hover:text-foreground sm:text-[11px]"
+            >
+              {expanded ? 'show less' : `show ${hiddenCount} more`}
+            </button>
+          ) : null}
+        </>
       )}
     </motion.section>
   )
@@ -310,9 +354,15 @@ function BookshelfListSection({ title, books, revealStart, centered, canEdit, on
 
 export function DigitalBookshelfContent({ current, future, buckets, admin }: DigitalBookshelfContentProps) {
   const [openKey, setOpenKey] = useState<'current' | 'future' | null>(null)
+  const [expandedBuckets, setExpandedBuckets] = useState<Record<BucketKey, boolean>>({
+    current: false,
+    future: false,
+  })
   const [currentBooks, setCurrentBooks] = useState(current)
   const [futureBooks, setFutureBooks] = useState(future)
   const BUCKET_TITLES = { ...DEFAULT_BUCKET_TITLES, ...(buckets ?? {}) }
+  const sortedCurrentBooks = useMemo(() => sortBooks(currentBooks, 'current'), [currentBooks])
+  const sortedFutureBooks = useMemo(() => sortBooks(futureBooks, 'future'), [futureBooks])
 
   useEffect(() => {
     setCurrentBooks(current)
@@ -334,23 +384,34 @@ export function DigitalBookshelfContent({ current, future, buckets, admin }: Dig
 
   const canEdit = !!admin?.unlocked
   const currentRevealStart = 0.18
-  const futureRevealStart = currentRevealStart + (Math.ceil(currentBooks.length / 2) + 1) * 0.14
+  const futureRevealStart = currentRevealStart + (Math.ceil(Math.min(currentBooks.length, INITIAL_ITEM_LIMIT) / 2) + 1) * 0.14
+
+  const toggleExpanded = (key: BucketKey) => {
+    setExpandedBuckets((currentState) => ({
+      ...currentState,
+      [key]: !currentState[key],
+    }))
+  }
 
   return (
     <>
       <div>
         <BookshelfListSection
           title={BUCKET_TITLES.current}
-          books={currentBooks}
+          books={sortedCurrentBooks}
           revealStart={currentRevealStart}
+          expanded={expandedBuckets.current}
+          onToggleExpanded={() => toggleExpanded('current')}
           canEdit={canEdit}
           onEdit={() => setOpenKey('current')}
         />
         <BookshelfListSection
           title={BUCKET_TITLES.future}
-          books={futureBooks}
+          books={sortedFutureBooks}
           revealStart={futureRevealStart}
           centered
+          expanded={expandedBuckets.future}
+          onToggleExpanded={() => toggleExpanded('future')}
           canEdit={canEdit}
           onEdit={() => setOpenKey('future')}
         />
