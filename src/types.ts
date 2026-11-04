@@ -53,6 +53,8 @@ export interface BookItemProps {
   creators: Array<string>
   type: string
   category: string
+  /** Optional ISO date used to order recent and upcoming items. */
+  sortDate?: string
   notes?: string
   coverSearchQuery?: string
   coverUrl?: string
