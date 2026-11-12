@@ -35,7 +35,7 @@ export function ProjectImageCarousel({ images, projectName }: ProjectImageCarous
   }
 
   return (
-    <div className="group relative overflow-hidden bg-gray-950">
+    <div className="group relative overflow-hidden bg-white">
       <div
         className="relative aspect-[16/10] w-full overflow-hidden"
         onTouchStart={handleTouchStart}

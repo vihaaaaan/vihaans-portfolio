@@ -77,23 +77,16 @@ export interface Profile {
   headline: string
   sublines?: Array<{ quote: string; author: string }>
   bio: string[]
-  location: string
   socials: { github?: string; linkedin?: string; twitter?: string }
-  aboutEmoji?: string
-  illustration?: string
 }
 
 export interface WorkSectionDocument {
-  title?: string
-  emoji?: string
   subtitle?: string
   current: ExperienceBlockProps[]
   prev: ExperienceBlockProps[]
 }
 
 export interface ProjectsSectionDocument {
-  title?: string
-  emoji?: string
   subtitle?: string
   current?: ProjectItemProps[]
   prev?: ProjectItemProps[]
@@ -101,8 +94,6 @@ export interface ProjectsSectionDocument {
 }
 
 export interface BookshelfSectionDocument {
-  title?: string
-  emoji?: string
   subtitle?: string
   current: BookItemProps[]
   future: BookItemProps[]

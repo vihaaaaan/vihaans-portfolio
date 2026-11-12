@@ -1,6 +1,8 @@
 import sharp from 'sharp'
 import { fetchBookCover, fetchMovieCover, fetchPodcastCover, fetchTVCover } from '@/hooks/coverApi'
 import type { BookItemProps } from '@/types'
+import { getDB } from '@/lib/adapters/mongodb'
+import { importCover } from '@/lib/imageStorage.mjs'
 
 type MediaImageFields = Pick<BookItemProps, 'coverUrl' | 'imageWidth' | 'imageHeight' | 'coverSource'>
 
@@ -85,7 +87,9 @@ export async function resolveMediaImage(
 
   if (!coverUrl) return {}
 
-  return completeMediaImage(type, { coverUrl, coverSource })
+  const image = await completeMediaImage(type, { coverUrl, coverSource })
+  image.coverUrl = await importCover(await getDB(), coverUrl, item.title)
+  return image
 }
 
 export async function attachStaticImage(
@@ -93,7 +97,8 @@ export async function attachStaticImage(
   { forceImageSearch = false }: { forceImageSearch?: boolean } = {}
 ): Promise<BookItemProps> {
   if (item.coverUrl && !forceImageSearch) {
-    return { ...item, ...(await completeMediaImage(item.type, item)) }
+    const image = await completeMediaImage(item.type, item)
+    return { ...item, ...image, coverUrl: await importCover(await getDB(), item.coverUrl, item.title) }
   }
 
   const resolved = await resolveMediaImage({

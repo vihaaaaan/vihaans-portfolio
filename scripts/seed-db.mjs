@@ -20,33 +20,40 @@ async function seedDatabase() {
     const db = client.db('portfolio');
 
     // Extract data from db.json
-    const profileData = { location: dbJson.location };
+    // The legacy seed file has no current profile content. Leave the profile
+    // managed in MongoDB instead of recreating its obsolete location field.
 
     const workTab = dbJson.tabs.find(t => t.title === 'work');
     const projectsTab = dbJson.tabs.find(t => t.title === 'projects');
     const bookshelfTab = dbJson.tabs.find(t => t.title === 'digital_bookshelf');
 
+    const workData = {
+      subtitle: workTab.subtitle,
+      current: workTab.current ?? workTab.content.current,
+      prev: workTab.prev ?? workTab.content.prev,
+    };
+    const bookshelfData = {
+      subtitle: bookshelfTab.subtitle,
+      current: bookshelfTab.current ?? bookshelfTab.content.current,
+      future: bookshelfTab.future ?? bookshelfTab.content.future,
+    };
+
     // For projects, flatten the structure since page.tsx expects top-level current/prev
     const projectsData = {
-      title: projectsTab.title,
-      emoji: projectsTab.emoji,
       subtitle: projectsTab.subtitle,
       current: projectsTab.current,
       prev: projectsTab.prev,
     };
 
     // Seed collections
-    console.log('Seeding profile...');
-    await db.collection('profile').updateOne({}, { $set: profileData }, { upsert: true });
-
     console.log('Seeding work...');
-    await db.collection('work').updateOne({}, { $set: workTab }, { upsert: true });
+    await db.collection('work').updateOne({}, { $set: workData }, { upsert: true });
 
     console.log('Seeding projects...');
     await db.collection('projects').updateOne({}, { $set: projectsData }, { upsert: true });
 
     console.log('Seeding bookshelf...');
-    await db.collection('bookshelf').updateOne({}, { $set: bookshelfTab }, { upsert: true });
+    await db.collection('bookshelf').updateOne({}, { $set: bookshelfData }, { upsert: true });
 
     console.log('Database seeded successfully!');
   } finally {

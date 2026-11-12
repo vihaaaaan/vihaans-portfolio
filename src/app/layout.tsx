@@ -1,14 +1,19 @@
 import type { Metadata } from 'next'
 import { Inter, Newsreader } from 'next/font/google'
+import { getDB } from '@/lib/adapters/mongodb'
+import { resolveOriginalUrls } from '@/lib/imageStorage.mjs'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
 const newsreader = Newsreader({ subsets: ['latin'], variable: '--font-newsreader', display: 'swap' })
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  const [icon] = await resolveOriginalUrls(await getDB(), ['/favicon.png'])
+  return {
   title: 'vihaan vulpala',
   description: 'software engineer & product builder',
-  icons: { icon: '/favicon.png' },
+  icons: { icon },
+  }
 }
 
 const themeScript = `(() => {

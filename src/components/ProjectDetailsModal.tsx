@@ -4,6 +4,7 @@ import { ProjectImageCarousel } from '@/components/ProjectImageCarousel'
 import type { ProjectItemProps } from '@/types'
 import { PiWrenchFill } from 'react-icons/pi'
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 
 interface ProjectDetailsModalProps {
   project: ProjectItemProps
@@ -52,9 +53,11 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
     }
   }, [onClose])
 
-  return (
+  if (typeof document === 'undefined') return null
+
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-5"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5"
     >
       <button
         type="button"
@@ -68,7 +71,7 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
         role="dialog"
         aria-modal="true"
         aria-labelledby="project-dialog-title"
-        className="section-enter relative z-10 max-h-[94dvh] w-full max-w-xl overflow-y-auto rounded-t-xl bg-surface shadow-2xl sm:max-h-[90vh] sm:rounded-lg"
+        className="section-enter relative z-10 max-h-[90dvh] w-full max-w-xl overflow-y-auto overscroll-contain rounded-lg bg-surface shadow-2xl"
       >
         <button
           ref={closeButtonRef}
@@ -92,8 +95,8 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
 
         <div className="p-4 lowercase sm:p-5">
           <div className="flex items-start justify-between gap-4">
-            <div>
-              <h2 id="project-dialog-title" className="font-serif text-xl leading-none text-foreground sm:text-2xl">
+            <div className="min-w-0 flex-1">
+              <h2 id="project-dialog-title" className="break-words font-serif text-xl leading-tight text-foreground sm:text-2xl">
                 {project.name.toLowerCase()}
               </h2>
               <p className="mt-2 font-sans text-[11px] leading-relaxed text-muted sm:text-xs">
@@ -144,6 +147,7 @@ export function ProjectDetailsModal({ project, images, onClose }: ProjectDetails
           </div>
         </div>
       </article>
-    </div>
+    </div>,
+    document.body,
   )
 }

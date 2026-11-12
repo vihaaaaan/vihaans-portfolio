@@ -24,6 +24,8 @@ const AdminLoginModal = dynamic(
   () => import('@/components/AdminLoginModal').then((module) => module.AdminLoginModal),
 )
 
+const ImageLibraryModal = dynamic(() => import('@/components/ImageLibraryModal').then(module => module.ImageLibraryModal), { ssr: false })
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -52,6 +54,8 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
   const [adminUnlocked, setAdminUnlocked] = useState(false)
   const [sessionReady, setSessionReady] = useState(false)
   const [showPasswordModal, setShowPasswordModal] = useState(false)
+  const [showImageLibrary, setShowImageLibrary] = useState(false)
+  const closeImageLibrary = useCallback(() => setShowImageLibrary(false), [])
   const [footerReadyKey, setFooterReadyKey] = useState<SectionKey | null>(null)
 
   useLayoutEffect(() => {
@@ -179,6 +183,9 @@ export function HomeClient({ profile, sectionHeadlines }: HomeClientProps) {
           {profile.socials?.twitter ? <SocialLink icon={FaTwitter} label="twitter" link={profile.socials.twitter} /> : null}
         </div>
       </motion.footer>
+
+      {adminUnlocked ? <button type="button" onClick={() => setShowImageLibrary(true)} className="mb-6 self-start rounded border border-line px-3 py-2 font-sans text-xs text-body">manage images</button> : null}
+      {adminUnlocked && showImageLibrary ? <ImageLibraryModal onClose={closeImageLibrary} /> : null}
 
       {showPasswordModal ? (
         <AdminLoginModal

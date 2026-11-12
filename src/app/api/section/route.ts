@@ -4,6 +4,7 @@ import { revalidateTag } from 'next/cache'
 import { getDB } from '@/lib/adapters/mongodb'
 import { getSection } from '@/lib/content'
 import { getProjectImages } from '@/lib/projectImages'
+import { resolveOriginalUrls } from '@/lib/imageStorage.mjs'
 import { isValidSession } from '@/lib/session'
 import type { ProjectItemProps, ProjectsSectionDocument, RemoteSectionKey } from '@/types'
 
@@ -14,11 +15,12 @@ async function checkAdmin() {
   return isValidSession(cookieStore.get('admin_session')?.value)
 }
 
-function withProjectImages(items: ProjectItemProps[] | undefined) {
-  return items?.map((project) => ({
+async function withProjectImages(items: ProjectItemProps[] | undefined) {
+  const db = await getDB()
+  return items ? Promise.all(items.map(async (project) => ({
     ...project,
-    images: project.containsImages ? getProjectImages(project.name) : [],
-  }))
+    images: await resolveOriginalUrls(db, project.images ?? (project.containsImages ? getProjectImages(project.name) : [])),
+  }))) : undefined
 }
 
 export async function GET(request: Request) {
@@ -31,13 +33,13 @@ export async function GET(request: Request) {
   if (!data) return NextResponse.json({ error: 'not found' }, { status: 404 })
 
   const response = section === 'projects'
-    ? (() => {
+    ? await (async () => {
         const projects = data as ProjectsSectionDocument
         return {
           ...projects,
-          current: withProjectImages(projects.current),
-          prev: withProjectImages(projects.prev),
-          items: withProjectImages(projects.items),
+          current: await withProjectImages(projects.current),
+          prev: await withProjectImages(projects.prev),
+          items: await withProjectImages(projects.items),
         }
       })()
     : data
