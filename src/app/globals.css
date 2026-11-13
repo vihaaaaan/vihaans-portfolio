@@ -61,6 +61,9 @@
   --activity-2: #8b8f97;
   --activity-3: #565c66;
   --activity-4: #252a32;
+  --activity-hover-primary: 0.62;
+  --activity-hover-near: 0.78;
+  --activity-hover-soft: 0.9;
 }
 
 :root[data-theme="dark"] {
@@ -86,6 +89,9 @@
   --activity-2: #858b94;
   --activity-3: #b7b8b5;
   --activity-4: #ece9e2;
+  --activity-hover-primary: 1.62;
+  --activity-hover-near: 1.26;
+  --activity-hover-soft: 1.11;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -112,6 +118,9 @@
     --activity-2: #858b94;
     --activity-3: #b7b8b5;
     --activity-4: #ece9e2;
+    --activity-hover-primary: 1.62;
+    --activity-hover-near: 1.26;
+    --activity-hover-soft: 1.11;
   }
 }
 
@@ -171,17 +180,17 @@ input::placeholder {
 }
 
 .contribution-cell[data-glow="primary"] {
-  filter: brightness(1.62);
+  filter: brightness(var(--activity-hover-primary));
   transform: scale(1.12);
 }
 
 .contribution-cell[data-glow="near"] {
-  filter: brightness(1.26);
+  filter: brightness(var(--activity-hover-near));
   transform: scale(1.045);
 }
 
 .contribution-cell[data-glow="soft"] {
-  filter: brightness(1.11);
+  filter: brightness(var(--activity-hover-soft));
   transform: scale(1.02);
 }
 
